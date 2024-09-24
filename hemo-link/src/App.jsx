@@ -1,7 +1,13 @@
+import Header from "./Components/Header";
+import { ChakraProvider } from "@chakra-ui/react";
+import theme from "./theme/theme";
+
 function App() {
   return (
     <>
-      <h1>This is the HemoLink App!</h1>
+      <ChakraProvider theme={ theme }>
+        <Header/>
+      </ChakraProvider>
     </>
   )
 }
