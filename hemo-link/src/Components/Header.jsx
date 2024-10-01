@@ -106,7 +106,7 @@ function Header() {
                 align="center"
                 gap={["4", "12"]}
               >
-                <Link to="/login">
+                <Link to="/login-doador">
                   <Button
                     bg="headerColor"
                     color="hemoPrimary"
@@ -114,7 +114,18 @@ function Header() {
                     fontSize={["2xl", "2xl", "5xl", "5xl"]}
                     onClick={onClose}
                   >
-                    Entrar
+                    Entrar como Doador
+                  </Button>
+                </Link>
+                <Link to="/login-clinica">
+                  <Button
+                    bg="headerColor"
+                    color="hemoPrimary"
+                    textDecoration="underline"
+                    fontSize={["2xl", "2xl", "5xl", "5xl"]}
+                    onClick={onClose}
+                  >
+                    Entrar como Clinica
                   </Button>
                 </Link>
                 <Button
