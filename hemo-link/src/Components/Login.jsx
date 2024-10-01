@@ -11,8 +11,9 @@ import {
 } from "@chakra-ui/react";
 import { Link } from "react-router-dom";
 import { useState } from "react";
+import { useDocumentTitle } from "./UseDocumentTitle";
 
-function Login() {
+function Login({ loginType }) {
   const [userName, setUserName] = useState("");
   const [password, setPassword] = useState("");
 
@@ -23,6 +24,8 @@ function Login() {
   function onPasswordChange(event) {
     setPassword(event.target.value);
   }
+
+  useDocumentTitle(loginType);
 
   return (
     <>
@@ -49,7 +52,7 @@ function Login() {
           boxShadow="dark-lg"
         >
           <Heading size="lg" mb="5">
-            Login
+            {loginType}
           </Heading>
           <FormControl>
             <Flex direction="column" gap="2">

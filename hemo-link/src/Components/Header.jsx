@@ -31,7 +31,7 @@ function Header() {
         </Heading>
 
         <Flex gap="3" display={["none", "none", "none", "flex"]}>
-          <Link to="/login">
+          <Link to="/login-doador">
             <Button
               bg="hemoPrimary"
               color="headerColor"
@@ -40,9 +40,23 @@ function Header() {
               borderRadius="23"
               _hover={{ bg: "hemoPrimaryHover" }}
             >
-              Entrar
+              Entrar como doador
             </Button>
           </Link>
+
+          <Link to="/login-clinica">
+            <Button
+              bg="hemoPrimary"
+              color="headerColor"
+              py="6"
+              px="10"
+              borderRadius="23"
+              _hover={{ bg: "hemoPrimaryHover" }}
+            >
+              Entrar como Clinica
+            </Button>
+          </Link>
+
           <Button
             bg="hemoPrimary"
             color="headerColor"

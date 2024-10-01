@@ -12,7 +12,8 @@ function App() {
         <Router>
         <Header/>
           <Routes>
-              <Route path="/login" element={ <Login/> }/>
+              <Route path="/login-doador" element={ <Login loginType={ "Login do Doador" }/> }/>
+              <Route path="/login-clinica" element={ <Login loginType={ "Login da Clinica" }/> }/>
               {/* <Route path="/" element={ <Header/> }/> */}
 
           </Routes>
