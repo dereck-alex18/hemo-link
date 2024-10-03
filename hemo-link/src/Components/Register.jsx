@@ -80,7 +80,12 @@ function Register() {
                   Cadastro
                 </Text>
                 <Grid
-                  templateColumns={["repeat(1, 1fr)", "repeat(1, 1fr)", "repeat(1, 1fr)","repeat(2, 1fr)"]}
+                  templateColumns={[
+                    "repeat(1, 1fr)",
+                    "repeat(1, 1fr)",
+                    "repeat(1, 1fr)",
+                    "repeat(2, 1fr)",
+                  ]}
                   columnGap={["2", "10"]}
                   rowGap="3"
                 >

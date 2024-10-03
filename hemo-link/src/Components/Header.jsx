@@ -57,16 +57,18 @@ function Header() {
             </Button>
           </Link>
 
-          <Button
-            bg="hemoPrimary"
-            color="headerColor"
-            py="6"
-            px="10"
-            borderRadius="23"
-            _hover={{ bg: "hemoPrimaryHover" }}
-          >
-            Cadastrar
-          </Button>
+          <Link to="/cadastro">
+            <Button
+              bg="hemoPrimary"
+              color="headerColor"
+              py="6"
+              px="10"
+              borderRadius="23"
+              _hover={{ bg: "hemoPrimaryHover" }}
+            >
+              Cadastrar
+            </Button>
+          </Link>
         </Flex>
 
         <AnimatePresence>
@@ -128,16 +130,18 @@ function Header() {
                     Entrar como Clinica
                   </Button>
                 </Link>
-                <Button
-                  bg="headerColor"
-                  color="hemoPrimary"
-                  borderRadius="23"
-                  textDecoration="underline"
-                  fontSize={["2xl", "2xl", "5xl", "5xl"]}
-                  onClick={onClose}
-                >
-                  Cadastrar
-                </Button>
+                <Link to="/cadastro">
+                  <Button
+                    bg="headerColor"
+                    color="hemoPrimary"
+                    borderRadius="23"
+                    textDecoration="underline"
+                    fontSize={["2xl", "2xl", "5xl", "5xl"]}
+                    onClick={onClose}
+                  >
+                    Cadastrar
+                  </Button>
+                </Link>
               </Flex>
             </MotionBox>
           ) : null}
