@@ -56,25 +56,30 @@ function Login({ loginType }) {
           </Heading>
           <FormControl>
             <Flex direction="column" gap="2">
-              <FormLabel>Email</FormLabel>
-              <Input
-                onChange={onUsernameChange}
-                type="email"
-                bg="hemoSeconary"
-                border="none"
-                color="textInput"
-                _focus={{ boxShadow: "none" }}
-              />
+              <FormControl isRequired>
+                <FormLabel>Email</FormLabel>
+                <Input
+                  onChange={onUsernameChange}
+                  type="email"
+                  bg="hemoSeconary"
+                  border="none"
+                  color="textInput"
+                  _focus={{ boxShadow: "none" }}
+                />
+              </FormControl>
 
-              <FormLabel>Senha</FormLabel>
-              <Input
-                onChange={onPasswordChange}
-                type="password"
-                bg="hemoSeconary"
-                border="none"
-                color="textInput"
-                _focus={{ boxShadow: "none" }}
-              />
+              <FormControl>
+                <FormLabel>Senha</FormLabel>
+                <Input
+                  onChange={onPasswordChange}
+                  type="password"
+                  bg="hemoSeconary"
+                  border="none"
+                  color="textInput"
+                  _focus={{ boxShadow: "none" }}
+                />
+              </FormControl>
+
               <Link>
                 <Text _hover={{ textDecoration: "underline" }}>
                   Esqueceu a senha?
@@ -124,7 +129,6 @@ function Login({ loginType }) {
           />
         </Box>
       </Flex>
-
     </>
   );
 }
