@@ -46,8 +46,8 @@ function Login({ loginType }) {
           m="3"
           p={["4", "7", "10", "10"]}
           border="1px"
-          bg="hemoPrimary"
-          borderColor="hemoPrimary"
+          bg="hemoSecondary"
+          borderColor="hemoSecondary"
           color="white"
           boxShadow="dark-lg"
         >
@@ -90,8 +90,8 @@ function Login({ loginType }) {
                 mt="2"
                 bg="hemoButton"
                 boxShadow="xl"
-                color="hemoSecondary"
-                _hover={{ bg: "hemoSecondary", color: "textInput" }}
+                color="white"
+                _hover={{ bg: "hemoSecondary"}}
                 _disabled={{
                   cursor: "not-allowed",
                   bg: "hemoButtonDisabled",

@@ -2,14 +2,15 @@ import { extendTheme } from "@chakra-ui/react";
 
 const theme = extendTheme({
   colors: {
-    hemoPrimary: "#d33636",
+    hemoPrimary: "#ededed",
     hemoPrimaryDisabled: "#d3363685",
-    hemoSecondary: "#ededed",
-    hemoPrimaryHover: "#e75252",
-    headerColor: "#d9d9d9",
+    hemoSecondary: "#d33636",
+    hemoPrimaryHover: "#c0c0c0",
+    headerColor: "#d33636",
     textInput: "#4a4a4a",
     hemoButton: "#ef5350", 
     hemoButtonDisabled: "#cacaca",
+    hemoTerciary: "#fafafa"
   },
   fonts: {
     heading: "Poppins, sans-serif",
@@ -18,7 +19,7 @@ const theme = extendTheme({
   styles: {
     global: {
       "html, body": {
-        bg: "#D33636",
+        bg: "#ededed",
         color: "gray.800",
       },
     },

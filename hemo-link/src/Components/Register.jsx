@@ -68,7 +68,7 @@ function Register() {
         {(props) => (
           <Box justify="center" align="center" mb={5}>
             <Flex
-              bg="hemoPrimary"
+              bg="#eee"
               width={["90%", "80%", "70%", "70%"]}
               mt="10"
               p={["2", "4", "4", "4"]}
@@ -77,7 +77,7 @@ function Register() {
             >
               <Box>
                 <Form>
-                  <Text fontSize="4xl" color="white" align="center">
+                  <Text fontSize="4xl" color="hemoSecondary" align="center" fontWeight="bold">
                     Cadastro
                   </Text>
                   <Grid
@@ -87,14 +87,14 @@ function Register() {
                       "repeat(1, 1fr)",
                       "repeat(2, 1fr)",
                     ]}
-                    columnGap={["2", "12"]}
-                    rowGap="3"
+                    columnGap={["2", "10"]}
+                    rowGap="10"
                   >
                     <Field name="name">
                       {({ field, form }) => (
                         <FormControl
                           isInvalid={form.errors.name && form.touched.name}
-                          color="white"
+                          color="hemoSecondary"
                         >
                           <FormLabel htmlFor="name">Nome</FormLabel>
                           <Input
@@ -106,7 +106,7 @@ function Register() {
                             color="textInput"
                             type="text"
                           />
-                          <FormErrorMessage color="white">
+                          <FormErrorMessage color="hemoSecondary" position="absolute">
                             {form.errors.name}
                           </FormErrorMessage>
                         </FormControl>
@@ -119,7 +119,7 @@ function Register() {
                           isInvalid={
                             form.errors.password && form.touched.password
                           }
-                          color="white"
+                          color="hemoSecondary"
                         >
                           <FormLabel htmlFor="password">Senha</FormLabel>
                           <Input
@@ -131,7 +131,7 @@ function Register() {
                             color="textInput"
                             type="password"
                           />
-                          <FormErrorMessage color="white">
+                          <FormErrorMessage color="hemoSecondary" position="absolute">
                             {form.errors.password}
                           </FormErrorMessage>
                         </FormControl>
@@ -142,7 +142,7 @@ function Register() {
                       {({ field, form }) => (
                         <FormControl
                           isInvalid={form.errors.email && form.touched.email}
-                          color="white"
+                          color="hemoSecondary"
                         >
                           <FormLabel htmlFor="email">Email</FormLabel>
                           <Input
@@ -154,7 +154,7 @@ function Register() {
                             color="textInput"
                             type="email"
                           />
-                          <FormErrorMessage color="white">
+                          <FormErrorMessage color="hemoSecondary" position="absolute">
                             {form.errors.email}
                           </FormErrorMessage>
                         </FormControl>
@@ -167,7 +167,7 @@ function Register() {
                           isInvalid={
                             form.errors.telefone && form.touched.telefone
                           }
-                          color="white"
+                          color="hemoSecondary"
                         >
                           <FormLabel htmlFor="telefone">Telefone</FormLabel>
                           <Input
@@ -184,7 +184,7 @@ function Register() {
                               )
                             }
                           />
-                          <FormErrorMessage color="white">
+                          <FormErrorMessage color="hemoSecondary" position="absolute">
                             {form.errors.telefone}
                           </FormErrorMessage>
                         </FormControl>
@@ -195,7 +195,7 @@ function Register() {
                       {({ field, form }) => (
                         <FormControl
                           isInvalid={form.errors.cpf && form.touched.cpf}
-                          color="white"
+                          color="hemoSecondary"
                         >
                           <FormLabel htmlFor="cpf">CPF</FormLabel>
                           <Input
@@ -213,7 +213,7 @@ function Register() {
                               )
                             }
                           />
-                          <FormErrorMessage color="white">
+                          <FormErrorMessage color="hemoSecondary" position="absolute">
                             {form.errors.cpf}
                           </FormErrorMessage>
                         </FormControl>
@@ -226,7 +226,7 @@ function Register() {
                           isInvalid={
                             form.errors.profissao && form.touched.profissao
                           }
-                          color="white"
+                          color="hemoSecondary"
                         >
                           <FormLabel htmlFor="profissao">Profissão</FormLabel>
                           <Input
@@ -238,7 +238,7 @@ function Register() {
                             color="textInput"
                             type="text"
                           />
-                          <FormErrorMessage color="white">
+                          <FormErrorMessage color="hemoSecondary" position="absolute">
                             {form.errors.profissao}
                           </FormErrorMessage>
                         </FormControl>
@@ -249,7 +249,7 @@ function Register() {
                       {({ field, form }) => (
                         <FormControl
                           isInvalid={form.errors.cep && form.touched.cep}
-                          color="white"
+                          color="hemoSecondary"
                         >
                           <FormLabel htmlFor="cep">CEP</FormLabel>
                           <Input
@@ -267,7 +267,7 @@ function Register() {
                               )
                             }
                           />
-                          <FormErrorMessage color="white">
+                          <FormErrorMessage color="hemoSecondary" position="absolute">
                             {form.errors.cep}
                           </FormErrorMessage>
                         </FormControl>
@@ -278,7 +278,7 @@ function Register() {
                       {({ field, form }) => (
                         <FormControl
                           isInvalid={form.errors.cidade && form.touched.cidade}
-                          color="white"
+                          color="hemoSecondary"
                         >
                           <FormLabel htmlFor="cidade">Cidade</FormLabel>
                           <Input
@@ -290,7 +290,7 @@ function Register() {
                             color="textInput"
                             type="text"
                           />
-                          <FormErrorMessage color="white">
+                          <FormErrorMessage color="hemoSecondary" position="absolute">
                             {form.errors.cidade}
                           </FormErrorMessage>
                         </FormControl>
@@ -300,7 +300,7 @@ function Register() {
                       {({ field, form }) => (
                         <FormControl
                           isInvalid={form.errors.estado && form.touched.estado}
-                          color="white"
+                          color="hemoSecondary"
                         >
                           <FormLabel htmlFor="estado">Estado</FormLabel>
                           <Input
@@ -312,7 +312,7 @@ function Register() {
                             color="textInput"
                             type="text"
                           />
-                          <FormErrorMessage color="white">
+                          <FormErrorMessage color="hemoSecondary" position="absolute">
                             {form.errors.estado}
                           </FormErrorMessage>
                         </FormControl>
@@ -324,7 +324,7 @@ function Register() {
                           isInvalid={
                             form.errors.endereco && form.touched.endereco
                           }
-                          color="white"
+                          color="hemoSecondary"
                         >
                           <FormLabel htmlFor="endereco">Endereço</FormLabel>
                           <Input
@@ -336,20 +336,20 @@ function Register() {
                             color="textInput"
                             type="text"
                           />
-                          <FormErrorMessage color="white">
+                          <FormErrorMessage color="hemoSecondary" position="absolute">
                             {form.errors.endereco}
                           </FormErrorMessage>
                         </FormControl>
                       )}
                     </Field>
 
-                    <Field name="bloodType" as="select">
+                    <Field name="bloodType" as="select" >
                       {({ field, form }) => (
                         <FormControl
                           isInvalid={
                             form.errors.bloodType && form.touched.bloodType
                           }
-                          color="white"
+                          color="hemoSecondary"
                         >
                           <FormLabel htmlFor="bloodType">
                             Tipo sanguíneo
@@ -357,9 +357,9 @@ function Register() {
                           <Select
                             {...field}
                             id="bloodType"
-                            bg="hemoSeconary"
                             border="none"
                             color="textInput"
+                            bgColor="hemoTerciary"
                           >
                             <option value="">Tipo Sanguíneo</option>
                             <option value="A+">A+</option>
@@ -371,7 +371,7 @@ function Register() {
                             <option value="O+">O+</option>
                             <option value="O-">O-</option>
                           </Select>
-                          <FormErrorMessage color="white">
+                          <FormErrorMessage color="hemoSecondary" position="absolute">
                             {form.errors.bloodType}
                           </FormErrorMessage>
                         </FormControl>
@@ -385,7 +385,7 @@ function Register() {
                             form.errors.disponibilidade &&
                             form.touched.disponibilidade
                           }
-                          color="white"
+                          color="hemoSecondary"
                         >
                           <FormLabel htmlFor="disponibilidade">
                             Disponibilidade
@@ -393,7 +393,7 @@ function Register() {
                           <Select
                             {...field}
                             id="disponibilidade"
-                            bg="hemoSeconary"
+                            bg="hemoTerciary"
                             border="none"
                             color="textInput"
                           >
@@ -401,7 +401,7 @@ function Register() {
                             <option value="Sim">Sim</option>
                             <option value="Nao">Não</option>
                           </Select>
-                          <FormErrorMessage color="white">
+                          <FormErrorMessage color="hemoSecondary" position="absolute">
                             {form.errors.disponibilidade}
                           </FormErrorMessage>
                         </FormControl>
@@ -414,8 +414,8 @@ function Register() {
                     fontSize="xl"
                     bg="hemoButton"
                     boxShadow="xl"
-                    color="hemoSecondary"
-                    _hover={{ bg: "hemoSecondary", color: "textInput" }}
+                    color="hemoTerciary"
+                    _hover={{ bg: "hemoSecondary",}}
                     isLoading={props.isSubmitting}
                     type="submit"
                     alignSelf="center"
