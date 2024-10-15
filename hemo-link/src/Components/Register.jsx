@@ -78,7 +78,7 @@ function Register() {
               <Box>
                 <Form>
                   <Text fontSize="4xl" color="hemoSecondary" align="center" fontWeight="bold">
-                    Cadastro
+                    Cadastro do Doador
                   </Text>
                   <Grid
                     templateColumns={[
@@ -94,7 +94,7 @@ function Register() {
                       {({ field, form }) => (
                         <FormControl
                           isInvalid={form.errors.name && form.touched.name}
-                          color="hemoSecondary"
+                          color="textInput"
                         >
                           <FormLabel htmlFor="name">Nome</FormLabel>
                           <Input
@@ -119,7 +119,7 @@ function Register() {
                           isInvalid={
                             form.errors.password && form.touched.password
                           }
-                          color="hemoSecondary"
+                          color="textInput"
                         >
                           <FormLabel htmlFor="password">Senha</FormLabel>
                           <Input
@@ -142,7 +142,7 @@ function Register() {
                       {({ field, form }) => (
                         <FormControl
                           isInvalid={form.errors.email && form.touched.email}
-                          color="hemoSecondary"
+                          color="textInput"
                         >
                           <FormLabel htmlFor="email">Email</FormLabel>
                           <Input
@@ -167,7 +167,7 @@ function Register() {
                           isInvalid={
                             form.errors.telefone && form.touched.telefone
                           }
-                          color="hemoSecondary"
+                          color="textInput"
                         >
                           <FormLabel htmlFor="telefone">Telefone</FormLabel>
                           <Input
@@ -175,6 +175,7 @@ function Register() {
                             id="telefone"
                             placeholder="(81) 9.9999-9999"
                             bg="hemoSeconary"
+                            border="none"
                             color="textInput"
                             type="text"
                             onChange={(e) =>
@@ -195,7 +196,7 @@ function Register() {
                       {({ field, form }) => (
                         <FormControl
                           isInvalid={form.errors.cpf && form.touched.cpf}
-                          color="hemoSecondary"
+                          color="textInput"
                         >
                           <FormLabel htmlFor="cpf">CPF</FormLabel>
                           <Input
@@ -204,6 +205,7 @@ function Register() {
                             id="cpf"
                             placeholder="999.999.999-99"
                             bg="hemoSeconary"
+                            border="none"
                             color="textInput"
                             type="text"
                             onChange={(e) =>
@@ -226,7 +228,7 @@ function Register() {
                           isInvalid={
                             form.errors.profissao && form.touched.profissao
                           }
-                          color="hemoSecondary"
+                          color="textInput"
                         >
                           <FormLabel htmlFor="profissao">Profissão</FormLabel>
                           <Input
@@ -249,7 +251,7 @@ function Register() {
                       {({ field, form }) => (
                         <FormControl
                           isInvalid={form.errors.cep && form.touched.cep}
-                          color="hemoSecondary"
+                          color="textInput"
                         >
                           <FormLabel htmlFor="cep">CEP</FormLabel>
                           <Input
@@ -278,7 +280,7 @@ function Register() {
                       {({ field, form }) => (
                         <FormControl
                           isInvalid={form.errors.cidade && form.touched.cidade}
-                          color="hemoSecondary"
+                          color="textInput"
                         >
                           <FormLabel htmlFor="cidade">Cidade</FormLabel>
                           <Input
@@ -300,7 +302,7 @@ function Register() {
                       {({ field, form }) => (
                         <FormControl
                           isInvalid={form.errors.estado && form.touched.estado}
-                          color="hemoSecondary"
+                          color="textInput"
                         >
                           <FormLabel htmlFor="estado">Estado</FormLabel>
                           <Input
@@ -324,7 +326,7 @@ function Register() {
                           isInvalid={
                             form.errors.endereco && form.touched.endereco
                           }
-                          color="hemoSecondary"
+                          color="textInput"
                         >
                           <FormLabel htmlFor="endereco">Endereço</FormLabel>
                           <Input
@@ -349,7 +351,7 @@ function Register() {
                           isInvalid={
                             form.errors.bloodType && form.touched.bloodType
                           }
-                          color="hemoSecondary"
+                          color="textInput"
                         >
                           <FormLabel htmlFor="bloodType">
                             Tipo sanguíneo
@@ -385,7 +387,7 @@ function Register() {
                             form.errors.disponibilidade &&
                             form.touched.disponibilidade
                           }
-                          color="hemoSecondary"
+                          color="textInput"
                         >
                           <FormLabel htmlFor="disponibilidade">
                             Disponibilidade
