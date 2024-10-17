@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { Formik, Field, Form } from "formik";
-import * as Yup from "yup";
 import {
   FormControl,
   FormLabel,
@@ -12,38 +11,53 @@ import {
   Text,
   Grid,
   Box,
+  useDisclosure,
 } from "@chakra-ui/react";
-
-const formValidation = Yup.object({
-  name: Yup.string().required("O nome é obrigatorio!"),
-  email: Yup.string()
-    .email("Email inválido")
-    .required("O email é obrigatório!"),
-  password: Yup.string()
-    .min(8, "A senha deve ter pelo menos 8 caracteres")
-    .required("A senha é obrigatória"),
-  address: Yup.string().required("Endereço é obrigatório!"),
-  bloodType: Yup.string().required("Tipo sanguíneo é obrigatório!"),
-  telefone: Yup.string()
-    .matches(/^\(\d{2}\)\s?9.?\d{4}-\d{4}$/, "Telefone inválido")
-    .required("O Telefone é obrigatorio"),
-  cpf: Yup.string()
-    .matches(/^\d{3}.?\d{3}.?\d{3}-?\d{2}$/, "CPF inválido!")
-    .required("CPF é obrigatório!"),
-  profissao: Yup.string().required("Profissão é obrigratório!"),
-  cep: Yup.string()
-    .matches(/^\d{5}-?\d{3}$/, "CEP inválido!")
-    .required("CEP é obrigatório!"),
-  cidade: Yup.string().required("Cidade é obrigratória!"),
-  estado: Yup.string().required("Estado é obrigratório!"),
-  endereco: Yup.string().required("Endereco é obrigratório!"),
-  disponibilidade: Yup.string().required("Disponibilidade é obrigatório"),
-});
+import formValidation from "../helpers/formValidator";
+import registerUser from "../api/registerUser";
+import AppModal from "./AppModal";
+import { Link } from "react-router-dom";
 
 function Register() {
+  const [successRegistration, setSuccessRegistration] = useState(false);
+  const [modalContent, setModalContent] = useState({});
   const sanitizeCPF = (cpfValue) => cpfValue.replace(/[^\d.-]/g, "");
   const sanitizeTel = (telValue) => telValue.replace(/[^\d().-\s]/g, "");
   const sanitizeCep = (cepValue) => cepValue.replace(/[^\d-]/g, "");
+
+  const { isOpen, onOpen, onClose } = useDisclosure();
+
+  const handleSubmit = async (values, actions) => {
+    actions.setSubmitting(true);
+
+    try {
+      const response = await registerUser(values);
+
+      if (response.id) {
+        actions.resetForm();
+        setModalContent({
+          header: "Cadastro realizado com sucesso!",
+          body: "Faça login com as credenciais utilizadas no cadastro",
+        });
+        setSuccessRegistration(true);
+      } else {
+        setModalContent({
+          header: "Cadastro não realizado.",
+          body: response.message,
+        });
+      }
+      onOpen();
+    } catch (error) {
+      setModalContent({
+        header: "Cadastro não realizado.",
+        body: response.message,
+      });
+
+      onOpen();
+    } finally {
+      actions.setSubmitting(false);
+    }
+  };
 
   return (
     <>
@@ -54,16 +68,17 @@ function Register() {
           password: "",
           address: "",
           cpf: "",
-          telefone: "",
-          profissao: "",
+          phone: "",
           cep: "",
-          cidade: "",
-          estado: "",
-          endereco: "",
+          city: "",
+          state: "",
           bloodType: "",
-          disponibilidade: "",
+          //   available: "",
         }}
         validationSchema={formValidation}
+        onSubmit={(value, actions) => {
+          handleSubmit(value, actions);
+        }}
       >
         {(props) => (
           <Box justify="center" align="center" mb={5}>
@@ -77,7 +92,12 @@ function Register() {
             >
               <Box>
                 <Form>
-                  <Text fontSize="4xl" color="hemoSecondary" align="center" fontWeight="bold">
+                  <Text
+                    fontSize="4xl"
+                    color="hemoSecondary"
+                    align="center"
+                    fontWeight="bold"
+                  >
                     Cadastro do Doador
                   </Text>
                   <Grid
@@ -106,7 +126,10 @@ function Register() {
                             color="textInput"
                             type="text"
                           />
-                          <FormErrorMessage color="hemoSecondary" position="absolute">
+                          <FormErrorMessage
+                            color="hemoSecondary"
+                            position="absolute"
+                          >
                             {form.errors.name}
                           </FormErrorMessage>
                         </FormControl>
@@ -131,7 +154,10 @@ function Register() {
                             color="textInput"
                             type="password"
                           />
-                          <FormErrorMessage color="hemoSecondary" position="absolute">
+                          <FormErrorMessage
+                            color="hemoSecondary"
+                            position="absolute"
+                          >
                             {form.errors.password}
                           </FormErrorMessage>
                         </FormControl>
@@ -154,25 +180,26 @@ function Register() {
                             color="textInput"
                             type="email"
                           />
-                          <FormErrorMessage color="hemoSecondary" position="absolute">
+                          <FormErrorMessage
+                            color="hemoSecondary"
+                            position="absolute"
+                          >
                             {form.errors.email}
                           </FormErrorMessage>
                         </FormControl>
                       )}
                     </Field>
 
-                    <Field name="telefone">
+                    <Field name="phone">
                       {({ field, form }) => (
                         <FormControl
-                          isInvalid={
-                            form.errors.telefone && form.touched.telefone
-                          }
+                          isInvalid={form.errors.phone && form.touched.phone}
                           color="textInput"
                         >
-                          <FormLabel htmlFor="telefone">Telefone</FormLabel>
+                          <FormLabel htmlFor="phone">Telefone</FormLabel>
                           <Input
                             {...field}
-                            id="telefone"
+                            id="phone"
                             placeholder="(81) 9.9999-9999"
                             bg="hemoSeconary"
                             border="none"
@@ -180,13 +207,16 @@ function Register() {
                             type="text"
                             onChange={(e) =>
                               form.setFieldValue(
-                                "telefone",
+                                "phone",
                                 sanitizeTel(e.target.value)
                               )
                             }
                           />
-                          <FormErrorMessage color="hemoSecondary" position="absolute">
-                            {form.errors.telefone}
+                          <FormErrorMessage
+                            color="hemoSecondary"
+                            position="absolute"
+                          >
+                            {form.errors.phone}
                           </FormErrorMessage>
                         </FormControl>
                       )}
@@ -215,33 +245,11 @@ function Register() {
                               )
                             }
                           />
-                          <FormErrorMessage color="hemoSecondary" position="absolute">
+                          <FormErrorMessage
+                            color="hemoSecondary"
+                            position="absolute"
+                          >
                             {form.errors.cpf}
-                          </FormErrorMessage>
-                        </FormControl>
-                      )}
-                    </Field>
-
-                    <Field name="profissao">
-                      {({ field, form }) => (
-                        <FormControl
-                          isInvalid={
-                            form.errors.profissao && form.touched.profissao
-                          }
-                          color="textInput"
-                        >
-                          <FormLabel htmlFor="profissao">Profissão</FormLabel>
-                          <Input
-                            {...field}
-                            id="profissao"
-                            placeholder="Profissão"
-                            bg="hemoSeconary"
-                            border="none"
-                            color="textInput"
-                            type="text"
-                          />
-                          <FormErrorMessage color="hemoSecondary" position="absolute">
-                            {form.errors.profissao}
                           </FormErrorMessage>
                         </FormControl>
                       )}
@@ -269,83 +277,95 @@ function Register() {
                               )
                             }
                           />
-                          <FormErrorMessage color="hemoSecondary" position="absolute">
+                          <FormErrorMessage
+                            color="hemoSecondary"
+                            position="absolute"
+                          >
                             {form.errors.cep}
                           </FormErrorMessage>
                         </FormControl>
                       )}
                     </Field>
 
-                    <Field name="cidade">
+                    <Field name="city">
                       {({ field, form }) => (
                         <FormControl
-                          isInvalid={form.errors.cidade && form.touched.cidade}
+                          isInvalid={form.errors.city && form.touched.city}
                           color="textInput"
                         >
-                          <FormLabel htmlFor="cidade">Cidade</FormLabel>
+                          <FormLabel htmlFor="city">Cidade</FormLabel>
                           <Input
                             {...field}
-                            id="cidade"
+                            id="city"
                             placeholder="Cidade"
                             bg="hemoSeconary"
                             border="none"
                             color="textInput"
                             type="text"
                           />
-                          <FormErrorMessage color="hemoSecondary" position="absolute">
-                            {form.errors.cidade}
+                          <FormErrorMessage
+                            color="hemoSecondary"
+                            position="absolute"
+                          >
+                            {form.errors.city}
                           </FormErrorMessage>
                         </FormControl>
                       )}
                     </Field>
-                    <Field name="estado">
+                    <Field name="state">
                       {({ field, form }) => (
                         <FormControl
-                          isInvalid={form.errors.estado && form.touched.estado}
+                          isInvalid={form.errors.state && form.touched.state}
                           color="textInput"
                         >
-                          <FormLabel htmlFor="estado">Estado</FormLabel>
+                          <FormLabel htmlFor="state">Estado</FormLabel>
                           <Input
                             {...field}
-                            id="estado"
+                            id="state"
                             placeholder="Estado"
                             bg="hemoSeconary"
                             border="none"
                             color="textInput"
                             type="text"
                           />
-                          <FormErrorMessage color="hemoSecondary" position="absolute">
-                            {form.errors.estado}
+                          <FormErrorMessage
+                            color="hemoSecondary"
+                            position="absolute"
+                          >
+                            {form.errors.state}
                           </FormErrorMessage>
                         </FormControl>
                       )}
                     </Field>
-                    <Field name="endereco">
+                    <Field name="address">
                       {({ field, form }) => (
                         <FormControl
                           isInvalid={
-                            form.errors.endereco && form.touched.endereco
+                            form.errors.address && form.touched.address
                           }
                           color="textInput"
                         >
-                          <FormLabel htmlFor="endereco">Endereço</FormLabel>
+                          <FormLabel htmlFor="address">Endereço</FormLabel>
                           <Input
                             {...field}
-                            id="endereco"
+                            id="address"
                             placeholder="Endereço"
                             bg="hemoSeconary"
                             border="none"
                             color="textInput"
                             type="text"
                           />
-                          <FormErrorMessage color="hemoSecondary" position="absolute">
-                            {form.errors.endereco}
+                          <FormErrorMessage
+                            color="hemoSecondary"
+                            position="absolute"
+                          >
+                            {form.errors.address}
                           </FormErrorMessage>
                         </FormControl>
                       )}
                     </Field>
 
-                    <Field name="bloodType" as="select" >
+                    <Field name="bloodType" as="select">
                       {({ field, form }) => (
                         <FormControl
                           isInvalid={
@@ -373,38 +393,11 @@ function Register() {
                             <option value="O+">O+</option>
                             <option value="O-">O-</option>
                           </Select>
-                          <FormErrorMessage color="hemoSecondary" position="absolute">
-                            {form.errors.bloodType}
-                          </FormErrorMessage>
-                        </FormControl>
-                      )}
-                    </Field>
-
-                    <Field name="disponibilidade" as="select">
-                      {({ field, form }) => (
-                        <FormControl
-                          isInvalid={
-                            form.errors.disponibilidade &&
-                            form.touched.disponibilidade
-                          }
-                          color="textInput"
-                        >
-                          <FormLabel htmlFor="disponibilidade">
-                            Disponibilidade
-                          </FormLabel>
-                          <Select
-                            {...field}
-                            id="disponibilidade"
-                            bg="hemoTerciary"
-                            border="none"
-                            color="textInput"
+                          <FormErrorMessage
+                            color="hemoSecondary"
+                            position="absolute"
                           >
-                            <option value="">Disponivel para doar</option>
-                            <option value="Sim">Sim</option>
-                            <option value="Nao">Não</option>
-                          </Select>
-                          <FormErrorMessage color="hemoSecondary" position="absolute">
-                            {form.errors.disponibilidade}
+                            {form.errors.bloodType}
                           </FormErrorMessage>
                         </FormControl>
                       )}
@@ -417,8 +410,9 @@ function Register() {
                     bg="hemoButton"
                     boxShadow="xl"
                     color="hemoTerciary"
-                    _hover={{ bg: "hemoSecondary",}}
+                    _hover={{ bg: "hemoSecondary" }}
                     isLoading={props.isSubmitting}
+                    isDisabled={props.isSubmitting}
                     type="submit"
                     alignSelf="center"
                   >
@@ -430,6 +424,23 @@ function Register() {
           </Box>
         )}
       </Formik>
+
+      <AppModal
+        isOpen={isOpen}
+        onClose={onClose}
+        modalContent={modalContent}
+        footerContent={
+          successRegistration && (
+            <>
+              <Link to="/login-doador">
+                <Button colorScheme="blue" onClick={onClose}>
+                  OK
+                </Button>
+              </Link>
+            </>
+          )
+        }
+      />
     </>
   );
 }
