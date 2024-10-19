@@ -13,25 +13,24 @@ import {
   Box,
   useDisclosure,
 } from "@chakra-ui/react";
-import formValidation from "../helpers/formValidator";
-import registerUser from "../api/registerUser";
+import getValidationSchema from "../helpers/formValidator";
+import register from "../api/register";
 import AppModal from "./AppModal";
 import { Link } from "react-router-dom";
 
-function Register() {
+function Register({ title, isDonor }) {
   const [successRegistration, setSuccessRegistration] = useState(false);
   const [modalContent, setModalContent] = useState({});
   const sanitizeCPF = (cpfValue) => cpfValue.replace(/[^\d.-]/g, "");
   const sanitizeTel = (telValue) => telValue.replace(/[^\d().-\s]/g, "");
   const sanitizeCep = (cepValue) => cepValue.replace(/[^\d-]/g, "");
-
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   const handleSubmit = async (values, actions) => {
     actions.setSubmitting(true);
 
     try {
-      const response = await registerUser(values);
+      const response = await register(values, isDonor);
 
       if (response.id) {
         actions.resetForm();
@@ -59,23 +58,30 @@ function Register() {
     }
   };
 
+  const getInitialValues = (isDonor, actions) => {
+    const initialValues = {
+      name: "",
+      email: "",
+      password: "",
+      address: "",
+      phone: "",
+      cep: "",
+      city: "",
+      state: "",
+    }
+    if(isDonor){
+      initialValues.cpf = "";
+      initialValues.bloodType = "";
+    }
+
+    return initialValues;
+  }
+
   return (
     <>
       <Formik
-        initialValues={{
-          name: "",
-          email: "",
-          password: "",
-          address: "",
-          cpf: "",
-          phone: "",
-          cep: "",
-          city: "",
-          state: "",
-          bloodType: "",
-          //   available: "",
-        }}
-        validationSchema={formValidation}
+        initialValues={getInitialValues(isDonor)}
+        validationSchema={getValidationSchema(isDonor)}
         onSubmit={(value, actions) => {
           handleSubmit(value, actions);
         }}
@@ -98,7 +104,7 @@ function Register() {
                     align="center"
                     fontWeight="bold"
                   >
-                    Cadastro do Doador
+                    {title}
                   </Text>
                   <Grid
                     templateColumns={[
@@ -222,38 +228,40 @@ function Register() {
                       )}
                     </Field>
 
-                    <Field name="cpf">
-                      {({ field, form }) => (
-                        <FormControl
-                          isInvalid={form.errors.cpf && form.touched.cpf}
-                          color="textInput"
-                        >
-                          <FormLabel htmlFor="cpf">CPF</FormLabel>
-                          <Input
-                            maxLength={14}
-                            {...field}
-                            id="cpf"
-                            placeholder="999.999.999-99"
-                            bg="hemoSeconary"
-                            border="none"
+                    {isDonor && (
+                      <Field name="cpf">
+                        {({ field, form }) => (
+                          <FormControl
+                            isInvalid={form.errors.cpf && form.touched.cpf}
                             color="textInput"
-                            type="text"
-                            onChange={(e) =>
-                              form.setFieldValue(
-                                "cpf",
-                                sanitizeCPF(e.target.value)
-                              )
-                            }
-                          />
-                          <FormErrorMessage
-                            color="hemoSecondary"
-                            position="absolute"
                           >
-                            {form.errors.cpf}
-                          </FormErrorMessage>
-                        </FormControl>
-                      )}
-                    </Field>
+                            <FormLabel htmlFor="cpf">CPF</FormLabel>
+                            <Input
+                              maxLength={14}
+                              {...field}
+                              id="cpf"
+                              placeholder="999.999.999-99"
+                              bg="hemoSeconary"
+                              border="none"
+                              color="textInput"
+                              type="text"
+                              onChange={(e) =>
+                                form.setFieldValue(
+                                  "cpf",
+                                  sanitizeCPF(e.target.value)
+                                )
+                              }
+                            />
+                            <FormErrorMessage
+                              color="hemoSecondary"
+                              position="absolute"
+                            >
+                              {form.errors.cpf}
+                            </FormErrorMessage>
+                          </FormControl>
+                        )}
+                      </Field>
+                    )}
 
                     <Field name="cep">
                       {({ field, form }) => (
@@ -365,7 +373,7 @@ function Register() {
                       )}
                     </Field>
 
-                    <Field name="bloodType" as="select">
+                    {isDonor && <Field name="bloodType" as="select">
                       {({ field, form }) => (
                         <FormControl
                           isInvalid={
@@ -401,7 +409,7 @@ function Register() {
                           </FormErrorMessage>
                         </FormControl>
                       )}
-                    </Field>
+                    </Field>}
                   </Grid>
                   <Button
                     w={["100%", "100%", "100%", "60%"]}
@@ -432,7 +440,7 @@ function Register() {
         footerContent={
           successRegistration && (
             <>
-              <Link to="/login-doador">
+              <Link to={isDonor ? '/login-doador' : '/login-clinica'}>
                 <Button colorScheme="blue" onClick={onClose}>
                   OK
                 </Button>

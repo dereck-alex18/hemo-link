@@ -1,8 +1,10 @@
 import  { baseUrl }  from "../helpers/constants";
 
-export default async (userData) => {    
+export default async (userData, isDonor) => {    
+    const endpoint = isDonor ? 'donors' : 'clinics';
+
     try{
-        const response = await fetch(`${baseUrl}/donors`, {
+        const response = await fetch(`${baseUrl}/${endpoint}`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",

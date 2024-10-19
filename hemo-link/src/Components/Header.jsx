@@ -57,7 +57,7 @@ function Header() {
             </Button>
           </Link>
 
-          <Link to="/cadastro">
+          <Link to="/cadastro-doador">
             <Button
               bg="hemoPrimary"
               color="headerColor"
@@ -66,7 +66,20 @@ function Header() {
               borderRadius="23"
               _hover={{ bg: "hemoPrimaryHover" }}
             >
-              Cadastrar
+              Cadastro Doador
+            </Button>
+          </Link>
+
+          <Link to="/cadastro-clinica">
+            <Button
+              bg="hemoPrimary"
+              color="headerColor"
+              py="6"
+              px="10"
+              borderRadius="23"
+              _hover={{ bg: "hemoPrimaryHover" }}
+            >
+              Cadastro Clinica
             </Button>
           </Link>
         </Flex>
@@ -130,7 +143,7 @@ function Header() {
                     Entrar como Clinica
                   </Button>
                 </Link>
-                <Link to="/cadastro">
+                <Link to="/cadastro-doador">
                   <Button
                     bg="headerColor"
                     color="hemoPrimary"
@@ -139,7 +152,20 @@ function Header() {
                     fontSize={["2xl", "2xl", "5xl", "5xl"]}
                     onClick={onClose}
                   >
-                    Cadastrar
+                    Cadastro Doador
+                  </Button>
+                </Link>
+
+                <Link to="/cadastro-clinica">
+                  <Button
+                    bg="headerColor"
+                    color="hemoPrimary"
+                    borderRadius="23"
+                    textDecoration="underline"
+                    fontSize={["2xl", "2xl", "5xl", "5xl"]}
+                    onClick={onClose}
+                  >
+                    Cadastro Clinica
                   </Button>
                 </Link>
               </Flex>
