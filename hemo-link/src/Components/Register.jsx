@@ -44,6 +44,7 @@ function Register({ title, isDonor }) {
           header: "Cadastro não realizado.",
           body: response.message,
         });
+        setSuccessRegistration(false);
       }
       onOpen();
     } catch (error) {
