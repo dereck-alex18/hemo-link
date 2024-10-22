@@ -13,8 +13,8 @@ function App() {
         <Router>
         <Header/>
           <Routes>
-              <Route path="/login-doador" element={ <Login loginType={ "Login do Doador" }/> }/>
-              <Route path="/login-clinica" element={ <Login loginType={ "Login da Clinica" }/> }/>
+              <Route path="/login-doador" element={ <Login loginType={ "Login do Doador" } isDonor={true}/> }/>
+              <Route path="/login-clinica" element={ <Login loginType={ "Login da Clinica" } isDonor={false}/> }/>
               <Route path="/cadastro-doador" element={<Register title={" Cadastro do Doador "} isDonor={true}/>}/>
               <Route path="/cadastro-clinica" element={<Register title={" Cadastro da Clinica "} isDonor={false}/>}/>
               {/* <Route path="/" element={ <Header/> }/> */}

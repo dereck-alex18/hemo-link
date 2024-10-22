@@ -13,9 +13,10 @@ import { Link } from "react-router-dom";
 import { useState } from "react";
 import { useDocumentTitle } from "./UseDocumentTitle";
 
-function Login({ loginType }) {
+function Login({ loginType, isDonor }) {
   const [userName, setUserName] = useState("");
   const [password, setPassword] = useState("");
+  const registerUrl = isDonor ? '/cadastro-doador' : '/cadastro-clinica';
 
   function onUsernameChange(event) {
     setUserName(event.target.value);
@@ -100,7 +101,7 @@ function Login({ loginType }) {
               >
                 Entrar
               </Button>
-              <Link>
+              <Link to={`${registerUrl}`}>
                 <Text
                   _hover={{ textDecoration: "underline" }}
                   textAlign="center"
