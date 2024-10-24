@@ -59,7 +59,7 @@ function Register({ title, isDonor }) {
     }
   };
 
-  const getInitialValues = (isDonor, actions) => {
+  const getInitialValues = (isDonor) => {
     const initialValues = {
       name: "",
       email: "",
