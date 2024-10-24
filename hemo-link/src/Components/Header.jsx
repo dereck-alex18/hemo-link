@@ -1,3 +1,4 @@
+
 import {
   Flex,
   Box,
@@ -31,6 +32,19 @@ function Header() {
         </Heading>
 
         <Flex gap="3" display={["none", "none", "none", "flex"]}>
+          <Link to="/">
+            <Button
+              bg="hemoPrimary"
+              color="headerColor"
+              py="6"
+              px="10"
+              borderRadius="23"
+              _hover={{ bg: "hemoPrimaryHover" }}
+            >
+              Pagina Principal
+            </Button>
+          </Link>
+
           <Link to="/login-doador">
             <Button
               bg="hemoPrimary"
