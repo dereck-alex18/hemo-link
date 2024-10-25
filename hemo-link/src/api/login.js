@@ -10,6 +10,7 @@ export default async (userData) => {
             },
             body: JSON.stringify(userData),
         });
+        
         return await response.json();
     } catch(error){
         throw error;  

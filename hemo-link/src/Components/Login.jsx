@@ -10,12 +10,13 @@ import {
   Image,
   useDisclosure,
 } from "@chakra-ui/react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { useDocumentTitle } from "./UseDocumentTitle";
 import { Formik, Field, Form } from "formik";
 import login from "../api/login";
 import AppModal from "./AppModal";
+import { loginTokenHandling } from "../helpers/handleAuthentication";
 
 function Login({ loginType, isDonor }) {
   const [userName, setUserName] = useState("");
@@ -24,6 +25,7 @@ function Login({ loginType, isDonor }) {
   const [successRegistration, setSuccessRegistration] = useState(false);
   const registerUrl = isDonor ? "/cadastro-doador" : "/cadastro-clinica";
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const navigate = useNavigate();
 
   function onUsernameChange(event) {
     setUserName(event.target.value);
@@ -43,15 +45,18 @@ function Login({ loginType, isDonor }) {
 
   const handleSubmit = async (values, actions) => {
     actions.setSubmitting(true);
-
+    
     try {
       const response = await login(values);
-
+      
+      loginTokenHandling(response);
       if (response.access_token) {
+        loginTokenHandling(response, isDonor);
         actions.resetForm();
+        navigate(isDonor ? '/dashboard-doador' : '/dashboard-clinica');
         setModalContent({
           header: "Login realizado com sucesso",
-          body: response.access_token,
+          body: '',
         });
         console.log(response);
         setSuccessRegistration(true);
@@ -59,7 +64,7 @@ function Login({ loginType, isDonor }) {
         setPassword("");
       } else {
         setModalContent({
-          header: "Cadastro não realizado.",
+          header: "Login não realizado.",
           body: response.message,
         });
         setSuccessRegistration(false);
@@ -68,7 +73,7 @@ function Login({ loginType, isDonor }) {
     } catch (error) {
       setModalContent({
         header: "Cadastro não realizado.",
-        body: response.message,
+        body: "Something went wrong!",
       });
 
       onOpen();
