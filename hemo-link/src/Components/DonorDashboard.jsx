@@ -17,7 +17,6 @@ import {
              <Heading size="lg" mb="5">
                 Welcome, Donor!
               </Heading>
-              <Text>I am Here!!!</Text>
         </>
     );
   }

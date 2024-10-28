@@ -47,6 +47,7 @@ function Login({ loginType, isDonor }) {
     actions.setSubmitting(true);
     
     try {
+      values.isDonor = isDonor;
       const response = await login(values);
       
       loginTokenHandling(response);
