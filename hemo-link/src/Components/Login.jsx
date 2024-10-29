@@ -55,7 +55,7 @@ function Login({ loginType, isDonor }) {
         loginTokenHandling(response, isDonor);
         actions.resetForm();
         navigate(isDonor ? '/dashboard-doador' : '/dashboard-clinica');
-        window.dispatchEvent(new Event('authChange'));
+        window.dispatchEvent(new Event('storage'));
         setModalContent({
           header: "Login realizado com sucesso",
           body: '',

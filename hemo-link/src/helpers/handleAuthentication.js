@@ -7,6 +7,11 @@ export const loginTokenHandling = (loginData, isDonor) => {
       localStorage.setItem('userType', userType);
     }
   }
+
+export const handleLogout = () => {
+    localStorage.clear();
+    window.location.reload();
+}
       
   export const getAuthenticationStatus = () => {
     const isAuthenticated = !!localStorage.getItem('jwtToken');
