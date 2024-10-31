@@ -22,33 +22,43 @@ import {
 } from "@chakra-ui/react";
 import { PiHeartbeat } from "react-icons/pi";
 import { motion } from "framer-motion";
+import moment from 'moment';
+import 'moment/locale/pt';
 
 const MotionBox = motion(Box);
 
-function DonorCard(props) {
+
+function DonorCard({ props }) {
   const popoverTrigger = useBreakpointValue({
     base: "click",
     lg: "hover",
   });
+
+ 
+
+  const convertToReadableDate = (date) =>{ 
+    moment.locale('pt');
+    return moment(date).format('DD/MM/YYYY')
+  };
+
   return (
     <>
       <MotionBox whileHover={{ scale: 1.05 }} transition={{ duration: 0.2 }}>
         <Card bgColor="hemoSecondary" p="5" color="hemoTerciary" maxW="sm">
           <CardHeader>
             <Heading size="md">Clinica de Doação de sangue do Recife </Heading>
+            
             <Popover trigger={popoverTrigger} placement="top">
               <PopoverTrigger>
+                
                 <Text mt={3} noOfLines={2} as="b" cursor="pointer">
-                  Estamos fazendo doação para repor o estoque de sangue para o
-                  carnaval
+                {/* <Heading size="md">{props.title} </Heading> */}
+                  {props.description}
                 </Text>
               </PopoverTrigger>
               <PopoverContent>
                 <PopoverBody>
-                  <Text color="textInput">
-                    Estamos fazendo doação para repor o estoque de sangue para o
-                    carnaval
-                  </Text>
+                  <Text color="textInput">{props.description}</Text>
                 </PopoverBody>
               </PopoverContent>
             </Popover>
@@ -58,26 +68,26 @@ function DonorCard(props) {
 
           <CardBody>
             <Text mb="1">
-              Data inicial: <Text as="b">31 de Outubro de 2024</Text>
+              Data inicial: <Text as="b">{convertToReadableDate(props.startDate)}</Text>
             </Text>
             <Text mb="1">
-              Data final: <Text as="b">30 de Novembro de 2024</Text>
+              Data final: <Text as="b">{convertToReadableDate(props.endDate)}</Text>
             </Text>
             <Text mb="1">
-              CEP: <Text as="b">53130410</Text>
+              CEP: <Text as="b">{props.cep}</Text>
             </Text>
             <Text mb="1">
-              Cidade: <Text as="b">Recife</Text>
+              Cidade: <Text as="b">{props.city}</Text>
             </Text>
             <Text mb="1">
-              Estado: <Text as="b">Pernambuco</Text>
+              Estado: <Text as="b">{props.state}</Text>
             </Text>
             <Text mb="1">
-              Região: <Text as="b">Região metropolitana do Recife</Text>
+              Região: <Text as="b">{props.region}</Text>
             </Text>
           </CardBody>
 
-          <Flex justify="center" alingItems="center" gap={2}>
+          <Flex justify="center" align="center" gap={2}>
             <CardFooter>
               <Button type="submit" color="textInput">
                 Quero Doar
