@@ -10,13 +10,12 @@ import {
     Image,
     useDisclosure,
   } from "@chakra-ui/react";
-
+import DonorCard from "./DonorCard";
+  
   function DonorDashboard(){
     return(
         <>
-             <Heading size="lg" mb="5">
-                Welcome, Donor!
-              </Heading>
+            <DonorCard />
         </>
     );
   }

@@ -1,0 +1,86 @@
+import {
+  Flex,
+  Box,
+  Heading,
+  Button,
+  FormControl,
+  FormLabel,
+  Input,
+  Text,
+  Image,
+  useDisclosure,
+  Card,
+  CardHeader,
+  CardBody,
+  CardFooter,
+  Divider,
+  Popover,
+  PopoverTrigger,
+  PopoverBody,
+  PopoverContent,
+  useBreakpointValue,
+} from "@chakra-ui/react";
+import { base } from "framer-motion/client";
+
+function DonorCard(props) {
+  const popoverTrigger = useBreakpointValue({
+    base: "click",
+    lg: "hover",
+  });
+  return (
+    <>
+      <Card bgColor="hemoSecondary" p="5" color="hemoTerciary" maxW="sm">
+        <CardHeader>
+          <Heading size="md">Clinica de Doação de sangue do Recife </Heading>
+          <Popover trigger={popoverTrigger} placement="auto">
+            <PopoverTrigger>
+              <Text mt={3} noOfLines={2} as="b" cursor="pointer">
+                Estamos fazendo doação para repor o estoque de sangue para o
+                carnaval
+              </Text>
+            </PopoverTrigger>
+            <PopoverContent>
+              <PopoverBody>
+                <Text color="textInput">
+                  Estamos fazendo doação para repor o estoque de sangue para o
+                  carnaval
+                </Text>
+              </PopoverBody>
+            </PopoverContent>
+          </Popover>
+        </CardHeader>
+
+        <Divider />
+
+        <CardBody>
+          <Text mb="1">
+            Data inicial: <Text as="b">31 de Outubro de 2024</Text>
+          </Text>
+          <Text mb="1">
+            Data final: <Text as="b">30 de Novembro de 2024</Text>
+          </Text>
+          <Text mb="1">
+            CEP: <Text as="b">53130410</Text>
+          </Text>
+          <Text mb="1">
+            Cidade: <Text as="b">Recife</Text>
+          </Text>
+          <Text mb="1">
+            Estado: <Text as="b">Pernambuco</Text>
+          </Text>
+          <Text mb="1">
+            Região: <Text as="b">Região metropolitana do Recife</Text>
+          </Text>
+        </CardBody>
+
+        <Flex justify="center">
+          <CardFooter>
+            <Button type="submit" color="textInput">Quero Doar</Button>
+          </CardFooter>
+        </Flex>
+      </Card>
+    </>
+  );
+}
+
+export default DonorCard;
