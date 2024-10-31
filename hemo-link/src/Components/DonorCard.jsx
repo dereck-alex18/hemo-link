@@ -20,7 +20,7 @@ import {
   PopoverContent,
   useBreakpointValue,
 } from "@chakra-ui/react";
-import { base } from "framer-motion/client";
+import { PiHeartbeat } from "react-icons/pi";
 
 function DonorCard(props) {
   const popoverTrigger = useBreakpointValue({
@@ -73,9 +73,14 @@ function DonorCard(props) {
           </Text>
         </CardBody>
 
-        <Flex justify="center">
+        <Flex justify="center" alingItems="center" gap={2}>
           <CardFooter>
-            <Button type="submit" color="textInput">Quero Doar</Button>
+            <Button type="submit" color="textInput">
+              Quero Doar
+              <Box alignSelf="center" ml={1} color="hemoSecondary">
+                <PiHeartbeat />
+              </Box>
+            </Button>
           </CardFooter>
         </Flex>
       </Card>
