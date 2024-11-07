@@ -100,7 +100,7 @@ function ClinicDashboard() {
             exit={{ opacity: 0, y: 10 }}
             transition={{ duration: 0.3, ease: "easeInOut" }}
           >
-            <ModalHeader textAlign="center">Create Campaign</ModalHeader>
+            <ModalHeader textAlign="center">Criar Campanha</ModalHeader>
             <ModalCloseButton />
 
             <Formik
