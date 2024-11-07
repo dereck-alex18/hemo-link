@@ -14,6 +14,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import {
   getAuthenticationStatus,
   handleLogout,
+  getAllLocalStorageItems
 } from "../helpers/handleAuthentication";
 import { useEffect, useState } from "react";
 
@@ -24,6 +25,7 @@ function Header() {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const MotionBox = motion(Box);
   const MotionIconButton = motion(IconButton);
+  const username = getAllLocalStorageItems().name;
 
   useEffect(() => {
     const handleStorageChange = () => {
@@ -114,7 +116,7 @@ function Header() {
                   backgroundColor="hemoPrimary"
                 />
                 <Text color="hemoPrimary" fontSize="xl">
-                  Bem vindo, doador
+                  Bem vindo, {username}
                 </Text>
                 <Link to="/login-doador">
                   <Button
