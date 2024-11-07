@@ -22,11 +22,58 @@ import {
 import { validateCampaingForm } from "../helpers/formValidator";
 import { motion, AnimatePresence } from "framer-motion";
 import { Formik, Field, Form } from "formik";
+import "moment/locale/pt-br";
+import moment from "moment";
+import { getAllLocalStorageItems } from "../helpers/handleAuthentication";
+import { createCampaign } from "../api/campaigns";
+
+moment.locale("pt-br");
 
 function ClinicDashboard() {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const toast = useToast();
   const MotionModalContent = motion(ModalContent);
+
+  const handleSubmit = async (values, actions) => {
+    actions.setSubmitting(true);
+    values.startDate = moment(values.startDate).toISOString();
+    values.endDate = moment(values.endDate).toISOString();
+    values.clinicId = getAllLocalStorageItems().id;
+
+    try {
+      const response = await createCampaign(values);
+      if (response.id) {
+        actions.resetForm();
+        onClose();
+        toast({
+          title: "Campanha criada com sucesso!",
+          description: "Agora os doadores poderão se cadastrar na campanha.",
+          status: "success",
+          duration: 9000,
+          isClosable: true,
+        });
+      } else if (response.statusCode === 400) {
+        toast({
+          title: "Campanha não criada!",
+          description:
+            "Favor, verifique os dados da campanha e tente novamente",
+          status: "error",
+          duration: 9000,
+          isClosable: true,
+        });
+      }
+    } catch (e) {
+      toast({
+        title: "Campanha não criada!",
+        description: "Favor, verifique os dados da campanha e tente novamente",
+        status: "error",
+        duration: 9000,
+        isClosable: true,
+      });
+    } finally {
+      actions.setSubmitting(false);
+    }
+  };
 
   return (
     <>
@@ -36,6 +83,7 @@ function ClinicDashboard() {
           color="hemoTerciary"
           size="lg"
           p="10"
+          boxShadow="dark-lg"
           fontSize="2xl"
           _hover={{ bg: "hemoPrimaryHover", color: "textInput" }}
           onClick={onOpen}
@@ -67,7 +115,9 @@ function ClinicDashboard() {
                 region: "",
               }}
               validationSchema={validateCampaingForm}
-              // onSubmit={handleSubmit}
+              onSubmit={(value, actions) => {
+                handleSubmit(value, actions);
+              }}
             >
               {({ isSubmitting, errors, touched }) => (
                 <Form>
@@ -113,58 +163,63 @@ function ClinicDashboard() {
                       </FormErrorMessage>
                     </FormControl>
 
-                    <Flex justify="center" align="center" gap={["0", "0", "5", "5"]} direction={['column', 'column', 'row', 'row']}>
-                    <FormControl
-                      mt={8}
-                      id="startDate"
-                      isInvalid={errors.startDate && touched.startDate}
+                    <Flex
+                      justify="center"
+                      align="center"
+                      gap={["0", "0", "5", "5"]}
+                      direction={["column", "column", "row", "row"]}
                     >
-                      <FormLabel>Data inicial</FormLabel>
-                      <Field as={Input} type="date" name="startDate" />
-
-                      <FormErrorMessage
-                        name="startDate"
-                        component="div"
-                        color="hemoSecondary"
-                        position="absolute"
+                      <FormControl
+                        mt={8}
+                        id="startDate"
+                        isInvalid={errors.startDate && touched.startDate}
                       >
-                        {errors.startDate}
-                      </FormErrorMessage>
-                    </FormControl>
+                        <FormLabel>Data inicial</FormLabel>
+                        <Field as={Input} type="date" name="startDate" />
 
-                    <FormControl
-                      mt={8}
-                      id="endDate"
-                      isInvalid={errors.endDate && touched.endDate}
-                    >
-                      <FormLabel>Data final</FormLabel>
-                      <Field as={Input} type="date" name="endDate" />
-                      <FormErrorMessage
-                        name="endDate"
-                        component="div"
-                        color="hemoSecondary"
-                        position="absolute"
-                      >
-                        {errors.endDate}
-                      </FormErrorMessage>
-                    </FormControl>
+                        <FormErrorMessage
+                          name="startDate"
+                          component="div"
+                          color="hemoSecondary"
+                          position="absolute"
+                        >
+                          {errors.startDate}
+                        </FormErrorMessage>
+                      </FormControl>
 
-                    <FormControl
-                      mt={8}
-                      id="cep"
-                      isInvalid={errors.cep && touched.cep}
-                    >
-                      <FormLabel>CEP</FormLabel>
-                      <Field as={Input} name="cep" placeholder="CEP" />
-                      <FormErrorMessage
-                        name="cep"
-                        component="div"
-                        color="hemoSecondary"
-                        position="absolute"
+                      <FormControl
+                        mt={8}
+                        id="endDate"
+                        isInvalid={errors.endDate && touched.endDate}
                       >
-                        {errors.cep}
-                      </FormErrorMessage>
-                    </FormControl>
+                        <FormLabel>Data final</FormLabel>
+                        <Field as={Input} type="date" name="endDate" />
+                        <FormErrorMessage
+                          name="endDate"
+                          component="div"
+                          color="hemoSecondary"
+                          position="absolute"
+                        >
+                          {errors.endDate}
+                        </FormErrorMessage>
+                      </FormControl>
+
+                      <FormControl
+                        mt={8}
+                        id="cep"
+                        isInvalid={errors.cep && touched.cep}
+                      >
+                        <FormLabel>CEP</FormLabel>
+                        <Field as={Input} name="cep" placeholder="CEP" />
+                        <FormErrorMessage
+                          name="cep"
+                          component="div"
+                          color="hemoSecondary"
+                          position="absolute"
+                        >
+                          {errors.cep}
+                        </FormErrorMessage>
+                      </FormControl>
                     </Flex>
                     <FormControl
                       mt={8}
@@ -189,11 +244,7 @@ function ClinicDashboard() {
                       isInvalid={errors.state && touched.state}
                     >
                       <FormLabel>Estado</FormLabel>
-                      <Field
-                        as={Input}
-                        name="state"
-                        placeholder="Estado"
-                      />
+                      <Field as={Input} name="state" placeholder="Estado" />
                       <FormErrorMessage
                         name="state"
                         component="div"
@@ -210,11 +261,7 @@ function ClinicDashboard() {
                       isInvalid={errors.region && touched.region}
                     >
                       <FormLabel>Região</FormLabel>
-                      <Field
-                        as={Input}
-                        name="region"
-                        placeholder="Região"
-                      />
+                      <Field as={Input} name="region" placeholder="Região" />
                       <FormErrorMessage
                         name="region"
                         component="div"
