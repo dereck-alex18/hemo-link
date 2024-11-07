@@ -110,7 +110,7 @@ function Header() {
             <>
               <Flex align="center" gap="5">
                 <Avatar
-                  name="Dereck Portela"
+                  name={username}
                   size="md"
                   color="hemoSecondary"
                   backgroundColor="hemoPrimary"
