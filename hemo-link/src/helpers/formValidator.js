@@ -31,5 +31,16 @@ export default function getValidationSchema(isDonor){
   }
   return baseSchema
 }
+
+export const validateCampaingForm = Yup.object({
+    title: Yup.string().required("Titulo é obrigatório"),
+    description: Yup.string().required("Descrição é obrigatória"),
+    startDate: Yup.date().required("Data inicial é obrigatória"),
+    endDate: Yup.date().required("Data final é obrigatória"),
+    cep: Yup.string().required("CEP é obrigatório"),
+    city: Yup.string().required("Descrição é obrigatória"),
+    state: Yup.string().required("Estado é obrigatório"),
+    region: Yup.string().required("Região é obrigatória"),
+});
  
  

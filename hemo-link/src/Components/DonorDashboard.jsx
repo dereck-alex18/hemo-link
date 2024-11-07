@@ -7,7 +7,7 @@ import {
   Spinner
 } from "@chakra-ui/react";
 import DonorCard from "./DonorCard";
-import getCampaings from "../api/getCampaings";
+import {getCampaigns} from "../api/campaigns";
 
 function DonorDashboard() {
   const [allCampaings, setCampaings] = useState([]);
@@ -15,7 +15,7 @@ function DonorDashboard() {
   useEffect(() => {
     const handleCampaingsRequest = async () => {
       setIsFetching(true);
-      const campaings = await getCampaings();
+      const campaings = await getCampaigns();
       if (campaings) {
         setCampaings(campaings);
         setIsFetching(false);
