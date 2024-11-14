@@ -19,6 +19,8 @@ import { PiHeartbeat } from "react-icons/pi";
 import { motion } from "framer-motion";
 import moment from 'moment';
 import 'moment/locale/pt';
+import { getAllLocalStorageItems } from "../helpers/handleAuthentication";
+import { subscribeDonorToCampaign } from "../api/donor";
 
 const MotionBox = motion(Box);
 
@@ -33,6 +35,21 @@ function CampaignCard({ props }) {
     moment.locale('pt');
     return moment(date).format('DD/MM/YYYY')
   };
+
+  const handleDonorSubscription = async(campaignId) => {
+    const donorAndCampaignIds = {
+      id: getAllLocalStorageItems().id,
+      campaignId,
+
+    }
+    try{
+      const response = await subscribeDonorToCampaign(donorAndCampaignIds);
+      console.log(response);
+    }catch(e){
+      console.log('deu merda!');
+    }
+    
+  }
 
   return (
     <>
@@ -82,7 +99,7 @@ function CampaignCard({ props }) {
 
           <Flex justify="center" align="center" gap={2}>
             <CardFooter>
-              <Button type="submit" color="textInput">
+              <Button type="submit" color="textInput" onClick={() => handleDonorSubscription(props.id)}>
                 Quero Doar
                 <Box alignSelf="center" ml={1} color="hemoSecondary">
                   <PiHeartbeat />
