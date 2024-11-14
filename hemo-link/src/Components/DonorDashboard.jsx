@@ -6,7 +6,7 @@ import {
   GridItem,
   Spinner
 } from "@chakra-ui/react";
-import DonorCard from "./DonorCard";
+import CampaignCard from "./CampaignCard";
 import {getCampaigns} from "../api/campaigns";
 
 function DonorDashboard() {
@@ -44,7 +44,7 @@ function DonorDashboard() {
           {allCampaings.length > 0 &&
             allCampaings.map((campaing, index) => (
               <GridItem>
-                <DonorCard key={index} props={campaing} />
+                <CampaignCard key={index} props={campaing} />
               </GridItem>
             ))}
         </Grid>

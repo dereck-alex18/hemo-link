@@ -23,13 +23,11 @@ import 'moment/locale/pt';
 const MotionBox = motion(Box);
 
 
-function DonorCard({ props }) {
+function CampaignCard({ props }) {
   const popoverTrigger = useBreakpointValue({
     base: "click",
     lg: "hover",
   });
-
- 
 
   const convertToReadableDate = (date) =>{ 
     moment.locale('pt');
@@ -98,4 +96,4 @@ function DonorCard({ props }) {
   );
 }
 
-export default DonorCard;
+export default CampaignCard;
