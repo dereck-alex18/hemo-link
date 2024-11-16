@@ -22,18 +22,26 @@ import { motion } from "framer-motion";
 import moment from "moment";
 import "moment/locale/pt";
 import { getAllLocalStorageItems } from "../helpers/handleAuthentication";
-import { subscribeDonorToCampaign } from "../api/donor";
+import { subscribeDonorToCampaign, cancelDonorSubscription } from "../api/donor";
 import AppModal from "./AppModal";
+import { useState, useEffect } from "react";
 
 const MotionBox = motion(Box);
 
 function CampaignCard({ props }) {
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const [isFetching, setIsFetching] = useState(false);
+  const [campaignId, setCampaignId] = useState(props.donorCampaignId);
+  // const [isSubscribed, setIsSubscribed] = useState(campaignId ? true : false);
+  // const [subscribedCampaignId, setSubscribedCampaignId] = useState(null);
   const toast = useToast();
+  const id = getAllLocalStorageItems().id;
   const popoverTrigger = useBreakpointValue({
     base: "click",
     lg: "hover",
   });
+
+
 
   const convertToReadableDate = (date) => {
     moment.locale("pt");
@@ -42,13 +50,16 @@ function CampaignCard({ props }) {
 
   const handleDonorSubscription = async (campaignId) => {
     onClose();
+    setIsFetching(true);
     const donorAndCampaignIds = {
-      id: getAllLocalStorageItems().id,
+      id,
       campaignId,
     };
     try {
       const response = await subscribeDonorToCampaign(donorAndCampaignIds);
       if (response.id) {
+        setCampaignId(response.campaignId);
+       // setSubscribedCampaignId(campaignId); 
         toast({
           title: "Inscrição realizada com sucesso!",
           description: "Agora é só aguardar o contato da clinica.",
@@ -57,7 +68,7 @@ function CampaignCard({ props }) {
           duration: 9000,
           isClosable: true,
         });
-      } else{
+      } else {
         toast({
           title: "Inscrição não realizada!",
           description: `${response.message}`,
@@ -76,8 +87,50 @@ function CampaignCard({ props }) {
         duration: 9000,
         isClosable: true,
       });
+    } finally {
+      setIsFetching(false);
     }
   };
+
+  const cancelSubscription = async() => {
+    setIsFetching(true);
+
+    try {
+      const response = await cancelDonorSubscription(id);
+      if (response.id) {
+        setCampaignId(null);
+      //  setSubscribedCampaignId(null); 
+        toast({
+          title: "Inscrição cancelada com sucesso!",
+          description: "Agora você pode se inscrever em outra campanha",
+          status: "success",
+          position: "bottom-left",
+          duration: 9000,
+          isClosable: true,
+        });
+      } else {
+        toast({
+          title: "Inscrição não realizada!",
+          description: `${response.message}`,
+          status: "error",
+          position: "bottom-left",
+          duration: 9000,
+          isClosable: true,
+        });
+      }
+    } catch (e) {
+      toast({
+        title: "Algo deu errado!",
+        description: "Por favor, tente novamente mais tarde.",
+        position: "bottom-left",
+        status: "error",
+        duration: 9000,
+        isClosable: true,
+      });
+    } finally {
+      setIsFetching(false);
+    }
+  }
 
   return (
     <>
@@ -128,12 +181,31 @@ function CampaignCard({ props }) {
 
           <Flex justify="center" align="center" gap={2}>
             <CardFooter>
-              <Button type="submit" color="textInput" onClick={onOpen}>
+              {campaignId != props.id ? 
+              <Button
+                type="submit"
+                color="textInput"
+                onClick={() => handleDonorSubscription(props.id)}
+                isLoading={isFetching}
+              >
                 Quero Doar
                 <Box alignSelf="center" ml={1} color="hemoSecondary">
                   <PiHeartbeat />
                 </Box>
               </Button>
+              :
+              <Button
+                type="submit"
+                color="textInput"
+                onClick={cancelSubscription}
+                isLoading={isFetching}
+              >
+                Cancelar
+                <Box alignSelf="center" ml={1} color="hemoSecondary">
+                  <PiHeartbeat />
+                </Box>
+              </Button>
+              }
             </CardFooter>
           </Flex>
         </Card>

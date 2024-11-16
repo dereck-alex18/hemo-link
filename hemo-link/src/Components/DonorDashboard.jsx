@@ -8,15 +8,30 @@ import {
 } from "@chakra-ui/react";
 import CampaignCard from "./CampaignCard";
 import {getCampaigns} from "../api/campaigns";
+import { getAllLocalStorageItems } from "../helpers/handleAuthentication";
+import {  getDonorCampaignId } from "../api/donor";
 
 function DonorDashboard() {
   const [allCampaings, setCampaings] = useState([]);
   const [isFetching, setIsFetching] = useState(false);
+  const id = getAllLocalStorageItems().id;
   useEffect(() => {
     const handleCampaingsRequest = async () => {
       setIsFetching(true);
+      const donorCampaign = await getDonorCampaignId(id);
       const campaings = await getCampaigns();
+      let donorCampaignId;
+      if( donorCampaign ){
+        console.log("Entrei!")
+        donorCampaignId = donorCampaign.user.campaignId;
+      }
       if (campaings) {
+        campaings.forEach((campaing) => {
+          if(campaing.id == donorCampaignId){
+            campaing.donorCampaignId = donorCampaignId;
+          }
+        })
+        
         setCampaings(campaings);
         setIsFetching(false);
       }
