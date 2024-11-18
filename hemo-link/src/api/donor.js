@@ -42,7 +42,7 @@ export const getDonorCampaignId = async(id) => {
         }
 
         try {
-            return JSON.parse(responseBody); // Manually parse the response text
+            return JSON.parse(responseBody); 
         } catch (parseError) {
             return false;
         }

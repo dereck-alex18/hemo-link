@@ -14,7 +14,6 @@ import {
   PopoverBody,
   PopoverContent,
   useBreakpointValue,
-  useDisclosure,
   useToast,
 } from "@chakra-ui/react";
 import { PiHeartbeat } from "react-icons/pi";
@@ -22,18 +21,17 @@ import { motion } from "framer-motion";
 import moment from "moment";
 import "moment/locale/pt";
 import { getAllLocalStorageItems } from "../helpers/handleAuthentication";
-import { subscribeDonorToCampaign, cancelDonorSubscription } from "../api/donor";
-import AppModal from "./AppModal";
-import { useState, useEffect } from "react";
+import {
+  subscribeDonorToCampaign,
+  cancelDonorSubscription,
+} from "../api/donor";
+import { useState } from "react";
 
 const MotionBox = motion(Box);
 
 function CampaignCard({ props }) {
-  const { isOpen, onOpen, onClose } = useDisclosure();
   const [isFetching, setIsFetching] = useState(false);
   const [campaignId, setCampaignId] = useState(props.donorCampaignId);
-  // const [isSubscribed, setIsSubscribed] = useState(campaignId ? true : false);
-  // const [subscribedCampaignId, setSubscribedCampaignId] = useState(null);
   const toast = useToast();
   const id = getAllLocalStorageItems().id;
   const popoverTrigger = useBreakpointValue({
@@ -41,15 +39,13 @@ function CampaignCard({ props }) {
     lg: "hover",
   });
 
-
-
   const convertToReadableDate = (date) => {
     moment.locale("pt");
     return moment(date).format("DD/MM/YYYY");
   };
 
   const handleDonorSubscription = async (campaignId) => {
-    onClose();
+   
     setIsFetching(true);
     const donorAndCampaignIds = {
       id,
@@ -59,7 +55,6 @@ function CampaignCard({ props }) {
       const response = await subscribeDonorToCampaign(donorAndCampaignIds);
       if (response.id) {
         setCampaignId(response.campaignId);
-       // setSubscribedCampaignId(campaignId); 
         toast({
           title: "Inscrição realizada com sucesso!",
           description: "Agora é só aguardar o contato da clinica.",
@@ -92,14 +87,14 @@ function CampaignCard({ props }) {
     }
   };
 
-  const cancelSubscription = async() => {
+  const cancelSubscription = async () => {
     setIsFetching(true);
 
     try {
       const response = await cancelDonorSubscription(id);
       if (response.id) {
         setCampaignId(null);
-      //  setSubscribedCampaignId(null); 
+
         toast({
           title: "Inscrição cancelada com sucesso!",
           description: "Agora você pode se inscrever em outra campanha",
@@ -130,7 +125,7 @@ function CampaignCard({ props }) {
     } finally {
       setIsFetching(false);
     }
-  }
+  };
 
   return (
     <>
@@ -181,59 +176,35 @@ function CampaignCard({ props }) {
 
           <Flex justify="center" align="center" gap={2}>
             <CardFooter>
-              {campaignId != props.id ? 
-              <Button
-                type="submit"
-                color="textInput"
-                onClick={() => handleDonorSubscription(props.id)}
-                isLoading={isFetching}
-              >
-                Quero Doar
-                <Box alignSelf="center" ml={1} color="hemoSecondary">
-                  <PiHeartbeat />
-                </Box>
-              </Button>
-              :
-              <Button
-                type="submit"
-                color="textInput"
-                onClick={cancelSubscription}
-                isLoading={isFetching}
-              >
-                Cancelar
-                <Box alignSelf="center" ml={1} color="hemoSecondary">
-                  <PiHeartbeat />
-                </Box>
-              </Button>
-              }
+              {campaignId != props.id ? (
+                <Button
+                  type="submit"
+                  color="textInput"
+                  onClick={() => handleDonorSubscription(props.id)}
+                  isLoading={isFetching}
+                >
+                  Quero Doar
+                  <Box alignSelf="center" ml={1} color="hemoSecondary">
+                    <PiHeartbeat />
+                  </Box>
+                </Button>
+              ) : (
+                <Button
+                  type="submit"
+                  color="textInput"
+                  onClick={cancelSubscription}
+                  isLoading={isFetching}
+                >
+                  Cancelar
+                  <Box alignSelf="center" ml={1} color="hemoSecondary">
+                    <PiHeartbeat />
+                  </Box>
+                </Button>
+              )}
             </CardFooter>
           </Flex>
         </Card>
       </MotionBox>
-
-      <AppModal
-        isOpen={isOpen}
-        onClose={onClose}
-        modalContent={{
-          header: "Inscrição na campanha de doação",
-          body: "Tem certeza que deseja se inscrever na campanha?",
-        }}
-        footerContent={
-          <>
-            <Flex align="center" justify="space-between" gap={5}>
-              <Button
-                colorScheme="blue"
-                onClick={() => handleDonorSubscription(props.id)}
-              >
-                Sim
-              </Button>
-              <Button colorScheme="blue" onClick={onClose}>
-                Não
-              </Button>
-            </Flex>
-          </>
-        }
-      />
     </>
   );
 }
