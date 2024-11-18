@@ -4,19 +4,34 @@ import CampaignCard from "./CampaignCard";
 import { getCampaigns } from "../api/campaigns";
 import { getAllLocalStorageItems } from "../helpers/handleAuthentication";
 import { getDonorCampaignId } from "../api/donor";
+import { getClinic } from "../api/clinic";
 
 function DonorDashboard() {
   const [allCampaings, setCampaings] = useState([]);
   const [isFetching, setIsFetching] = useState(false);
   const id = getAllLocalStorageItems().id;
+
+  const getClinicNames = (clinics, campaignId) => {
+    for (let clinic of clinics) {
+      if (clinic.id == campaignId) {
+        return clinic.name;
+      }
+    }
+  };
+
   useEffect(() => {
     const handleCampaingsRequest = async () => {
       setIsFetching(true);
       const donorCampaign = await getDonorCampaignId(id);
       const campaings = await getCampaigns();
+      const clinics = await getClinic();
+
+      campaings.forEach(async (campaing) => {
+        campaing.clinicName = getClinicNames(clinics, campaing.clinicId);
+      });
+     
       let donorCampaignId;
       if (donorCampaign) {
-        console.log("Entrei!");
         donorCampaignId = donorCampaign.user.campaignId;
       }
       if (campaings) {

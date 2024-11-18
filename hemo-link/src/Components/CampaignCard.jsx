@@ -132,12 +132,12 @@ function CampaignCard({ props }) {
       <MotionBox whileHover={{ scale: 1.05 }} transition={{ duration: 0.2 }}>
         <Card bgColor="hemoSecondary" p="5" color="hemoTerciary" maxW="sm">
           <CardHeader>
-            <Heading size="md">{props.name} </Heading>
+            <Heading size="lg" textAlign="center">{props.clinicName} </Heading>
 
             <Popover trigger={popoverTrigger} placement="top">
               <PopoverTrigger>
                 <Text mt={3} noOfLines={2} as="b" cursor="pointer">
-                  {/* <Heading size="md">{props.title} </Heading> */}
+                  <Heading size="md">{props.title} </Heading>
                   {props.description}
                 </Text>
               </PopoverTrigger>

@@ -26,10 +26,6 @@ function SubscribedDonors() {
     handleSubscribedDonors();
   }, []);
 
-  useEffect(() => {
-    console.log(donorsSubscribed);
-  },[donorsSubscribed])
-
   return (
     <>
       <Flex
