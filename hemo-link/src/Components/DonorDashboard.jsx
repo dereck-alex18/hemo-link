@@ -40,8 +40,11 @@ function DonorDashboard() {
             campaing.donorCampaignId = donorCampaignId;
           }
         });
-
-        setCampaings(campaings);
+        const sortedCampaigns = campaings.sort((a, b) => {
+          return new Date(a.startDate) - new Date(b.startDate);
+        });
+        
+        setCampaings(sortedCampaigns);
         setIsFetching(false);
       }
     };
