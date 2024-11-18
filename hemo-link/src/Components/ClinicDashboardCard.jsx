@@ -19,6 +19,7 @@ import {
   ModalCloseButton,
   ModalContent,
 } from "@chakra-ui/react";
+import { Link } from "react-router-dom";
 import { validateCampaingForm } from "../helpers/formValidator";
 import { motion, AnimatePresence } from "framer-motion";
 import { Formik, Field, Form } from "formik";
@@ -29,7 +30,7 @@ import { createCampaign } from "../api/campaigns";
 
 moment.locale("pt-br");
 
-function ClinicDashboard() {
+function ClinicDashboardCard() {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const toast = useToast();
   const MotionModalContent = motion(ModalContent);
@@ -77,7 +78,13 @@ function ClinicDashboard() {
 
   return (
     <>
-      <Flex h="80vh" justify="center" align="center">
+      <Flex
+        h="80vh"
+        justify="center"
+        align="center"
+        flexDirection={["column", "column", "row", "row"]}
+        gap={10}
+      >
         <Button
           bgColor="hemoSecondary"
           color="hemoTerciary"
@@ -90,6 +97,20 @@ function ClinicDashboard() {
         >
           Criar Campanha
         </Button>
+        <Link to="/dashboard-clinica/doadores-inscritos">
+          <Button
+            bgColor="hemoSecondary"
+            color="hemoTerciary"
+            size="lg"
+            p="10"
+            boxShadow="dark-lg"
+            fontSize="2xl"
+            _hover={{ bg: "hemoPrimaryHover", color: "textInput" }}
+            onClick={onOpen}
+          >
+            Doadores Inscritos
+          </Button>
+        </Link>
         <Modal isOpen={isOpen} onClose={onClose}>
           <ModalOverlay />
           <MotionModalContent
@@ -296,4 +317,4 @@ function ClinicDashboard() {
   );
 }
 
-export default ClinicDashboard;
+export default ClinicDashboardCard;

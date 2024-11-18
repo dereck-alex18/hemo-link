@@ -116,7 +116,7 @@ function Header() {
                   backgroundColor="hemoPrimary"
                 />
                 <Text color="hemoPrimary" fontSize="xl">
-                  Bem vindo, {username}
+                  Bem vindo(a), {username}
                 </Text>
                 <Link to="/login-doador">
                   <Button

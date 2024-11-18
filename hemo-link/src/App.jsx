@@ -6,7 +6,8 @@ import Login from "./Components/Login";
 import Register from "./Components/Register";
 import PrivateRoute from "./Components/PrivateRoute";
 import DonorDashboard from "./Components/DonorDashboard";
-import ClinicDashboard from "./Components/ClinicDashboard";
+import ClinicDashboardCard from "./Components/ClinicDashboardCard";
+import SubscribedDonors from "./Components/SubscribedDonors";
 
 function App() {
   return (
@@ -46,7 +47,8 @@ function App() {
               path="/dashboard-clinica"
               element={<PrivateRoute isDonor={false} />}
             >
-              <Route path="" element={<ClinicDashboard />} />
+              <Route path="" element={<ClinicDashboardCard />} />
+              <Route path="/dashboard-clinica/doadores-inscritos" element={<SubscribedDonors />} />
             </Route>
             {/* <Route path="/" element={ <Header/> }/> */}
           </Routes>
