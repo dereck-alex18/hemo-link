@@ -132,7 +132,7 @@ function CampaignCard({ props }) {
       <MotionBox whileHover={{ scale: 1.05 }} transition={{ duration: 0.2 }}>
         <Card bgColor="hemoSecondary" p="5" color="hemoTerciary" maxW="sm">
           <CardHeader>
-            <Heading size="md">Clinica de Doação de sangue do Recife </Heading>
+            <Heading size="md">{props.name} </Heading>
 
             <Popover trigger={popoverTrigger} placement="top">
               <PopoverTrigger>
