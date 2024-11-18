@@ -52,3 +52,12 @@ export const getDonorCampaignId = async(id) => {
         
     }
 }
+
+export const getAllDonors = async() => {
+    try{
+        const response = await fetch(`${baseUrl}/donors/all`);
+        return await response.json();
+    }catch(e){
+        throw e
+    }
+}

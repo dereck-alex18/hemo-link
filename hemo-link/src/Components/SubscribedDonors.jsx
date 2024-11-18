@@ -9,8 +9,28 @@ import {
 import CampaignCard from "./CampaignCard";
 import {getCampaigns} from "../api/campaigns";
 import SubscribedDonorsCard from "./SubscribedDonnorsCard";
+import { getAllDonors } from "../api/donor";
+import { getAllLocalStorageItems } from "../helpers/handleAuthentication";
 
 function SubscribedDonors(){
+    const [donorsSubscribed, setDonorsSubscribed] = useState([]);
+    useEffect(() => {
+        const handleSubscribedDonors = async() => {
+            const donorsSubscribedAux = [];
+            const campaignId = getAllLocalStorageItems().id;
+            const allDonors = await getAllDonors();
+            console.log();
+            allDonors.forEach((donor) => {
+                if(donor.campaign.Clinic.id === campaignId){
+                    donorsSubscribedAux.push(donor);
+                }
+            })
+            setDonorsSubscribed(donorsSubscribedAux);
+        }
+
+        handleSubscribedDonors();
+    }, []);
+
     return (
         <>
           <Flex
