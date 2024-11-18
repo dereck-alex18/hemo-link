@@ -1,10 +1,11 @@
 import { useState, useEffect } from "react";
-import { Flex, Text, Grid, GridItem, Spinner } from "@chakra-ui/react";
+import { Flex, Text, Grid, GridItem, Spinner, Heading, Box } from "@chakra-ui/react";
 import CampaignCard from "./CampaignCard";
 import { getCampaigns } from "../api/campaigns";
 import { getAllLocalStorageItems } from "../helpers/handleAuthentication";
 import { getDonorCampaignId } from "../api/donor";
 import { getClinic } from "../api/clinic";
+import CustomDivider from "./CustomDivider";
 
 function DonorDashboard() {
   const [allCampaings, setCampaings] = useState([]);
@@ -29,7 +30,7 @@ function DonorDashboard() {
       campaings.forEach(async (campaing) => {
         campaing.clinicName = getClinicNames(clinics, campaing.clinicId);
       });
-     
+
       let donorCampaignId;
       if (donorCampaign) {
         donorCampaignId = donorCampaign.user.campaignId;
@@ -43,7 +44,7 @@ function DonorDashboard() {
         const sortedCampaigns = campaings.sort((a, b) => {
           return new Date(a.startDate) - new Date(b.startDate);
         });
-        
+
         setCampaings(sortedCampaigns);
         setIsFetching(false);
       }
@@ -54,6 +55,21 @@ function DonorDashboard() {
 
   return (
     <>
+      <Heading
+        textAlign="center"
+        color="textInput"
+        size={["xl", "xl", "2xl", "2xl"]}
+        mt={10}
+        mb={15}
+      >
+        Campanhas Ativas
+   
+       
+        
+      </Heading>
+      {/* <Divider height="2px" bgGradient="linear('to-r', 'red', 'green')"/> */}
+
+      <CustomDivider />
       <Flex
         justify="center"
         mt={["5", "5", "10", "10"]}
