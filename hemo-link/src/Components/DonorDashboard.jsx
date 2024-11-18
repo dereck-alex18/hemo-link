@@ -1,15 +1,9 @@
 import { useState, useEffect } from "react";
-import {
-  Flex,
-  Text,
-  Grid,
-  GridItem,
-  Spinner
-} from "@chakra-ui/react";
+import { Flex, Text, Grid, GridItem, Spinner } from "@chakra-ui/react";
 import CampaignCard from "./CampaignCard";
-import {getCampaigns} from "../api/campaigns";
+import { getCampaigns } from "../api/campaigns";
 import { getAllLocalStorageItems } from "../helpers/handleAuthentication";
-import {  getDonorCampaignId } from "../api/donor";
+import { getDonorCampaignId } from "../api/donor";
 
 function DonorDashboard() {
   const [allCampaings, setCampaings] = useState([]);
@@ -21,17 +15,17 @@ function DonorDashboard() {
       const donorCampaign = await getDonorCampaignId(id);
       const campaings = await getCampaigns();
       let donorCampaignId;
-      if( donorCampaign ){
-        console.log("Entrei!")
+      if (donorCampaign) {
+        console.log("Entrei!");
         donorCampaignId = donorCampaign.user.campaignId;
       }
       if (campaings) {
         campaings.forEach((campaing) => {
-          if(campaing.id == donorCampaignId){
+          if (campaing.id == donorCampaignId) {
             campaing.donorCampaignId = donorCampaignId;
           }
-        })
-        
+        });
+
         setCampaings(campaings);
         setIsFetching(false);
       }
@@ -76,12 +70,22 @@ function DonorDashboard() {
         </Flex>
       )}
 
-      {allCampaings.length === 0 && !isFetching &&
-        <Flex h="80vh" justify="center" flexDirection="column" align="center" color="textInput">
-          <Text fontSize={["lg", "xl", "3xl", "3xl"]}>Ainda não tem campanhas disponíveis.</Text>  
-          <Text fontSize={["lg", "xl", "3xl", "3xl"]}>Nós mostraremos aqui assim tiver.</Text>
-      </Flex>
-      }
+      {allCampaings.length === 0 && !isFetching && (
+        <Flex
+          h="80vh"
+          justify="center"
+          flexDirection="column"
+          align="center"
+          color="textInput"
+        >
+          <Text fontSize={["lg", "xl", "3xl", "3xl"]}>
+            Ainda não tem campanhas disponíveis.
+          </Text>
+          <Text fontSize={["lg", "xl", "3xl", "3xl"]}>
+            Nós mostraremos aqui assim tiver.
+          </Text>
+        </Flex>
+      )}
     </>
   );
 }
