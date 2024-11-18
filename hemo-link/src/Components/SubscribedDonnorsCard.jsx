@@ -24,7 +24,8 @@ import "moment/locale/pt";
 
 const MotionBox = motion(Box);
 
-function SubscribedDonorsCard() {
+function SubscribedDonorsCard({ props }) {
+  console.log(props);
   return (
     <>
       <MotionBox whileHover={{ scale: 1.05 }} transition={{ duration: 0.2 }}>
@@ -33,7 +34,7 @@ function SubscribedDonorsCard() {
             <Flex align="center" justify="center">
             <Heading size="md">
             <Avatar
-                  name="Dereck Portela"
+                  name={props.name}
                   size="lg"
                   color="hemoSecondary"
                   backgroundColor="hemoPrimary"
@@ -51,23 +52,23 @@ function SubscribedDonorsCard() {
 
           <CardBody>
             <Text mb="1">
-              Nome: <Text as="b">Dereck Portela</Text>
+              Nome: <Text as="b">{props.name}</Text>
             </Text>
             <Text mb="1">
               Email:
-              <Text as="b"> dereck.port@test.com</Text>
+              <Text as="b"> {props.email}</Text>
             </Text>
             <Text mb="1">
-              Telefone: <Text as="b"> 81999999999</Text>
+              Telefone: <Text as="b"> {props.phone}</Text>
             </Text>
             <Text mb="1">
-              Cidade: <Text as="b">Recife</Text>
+              Cidade: <Text as="b">{props.city}</Text>
             </Text>
             <Text mb="1">
-              Estado: <Text as="b">Pernambuco</Text>
+              Estado: <Text as="b">{props.state}</Text>
             </Text>
             <Text mb="1">
-              Região: <Text as="b">Região Metropolitana do Recife</Text>
+              Tipo Sanguíneo: <Text as="b">{props.bloodType}</Text>
             </Text>
           </CardBody>
 
