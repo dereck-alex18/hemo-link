@@ -30,6 +30,7 @@ function SubscribedDonors() {
 
   return (
     <>
+    
     <Heading
         textAlign="center"
         color="textInput"
@@ -46,6 +47,12 @@ function SubscribedDonors() {
         justify="center"
         mt={["5", "5", "10", "10"]}
         mb={["5", "5", "10", "10"]}
+        bg="hemoTerciary"
+        maxWidth={["100%", "100%", "80%", "70%"]}
+        m="auto"
+        p={10}
+        boxShadow='xl'
+        borderRadius="md"
       >
         <Grid
           templateColumns={[
@@ -58,10 +65,10 @@ function SubscribedDonors() {
         >
           {donorsSubscribed.length > 0 &&
             donorsSubscribed.map((donorSubscribed, index) => (
-              <GridItem>
+              <GridItem >
                 <SubscribedDonorsCard key={index} props={donorSubscribed} />
               </GridItem>
-            ))};
+            ))}
           
           {isFetching && (
             <Flex h="80vh" justify="center" align="center">

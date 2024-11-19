@@ -43,7 +43,7 @@ function SubscribedDonorsCard({ props }) {
   return (
     <>
       <MotionBox whileHover={{ scale: 1.05 }} transition={{ duration: 0.2 }}>
-        <Card bgColor="hemoSecondary" p="5" color="hemoTerciary" maxW="sm">
+        <Card bgColor="hemoSecondary" p="5" color="hemoTerciary" maxW="sm" minHeight="480px" boxShadow='2xl'>
           <CardHeader>
             <Flex align="center" justify="center" direction="column">
               <Heading size="md">
@@ -73,23 +73,23 @@ function SubscribedDonorsCard({ props }) {
           <Divider />
 
           <CardBody>
-            <Text mb="1">
+            <Text mb="2">
               Nome: <Text as="b">{props.name}</Text>
             </Text>
-            <Text mb="1">
+            <Text mb="2">
               Email:
               <Text as="b"> {props.email}</Text>
             </Text>
-            <Text mb="1">
+            <Text mb="2">
               Telefone: <Text as="b"> {props.phone}</Text>
             </Text>
-            <Text mb="1">
+            <Text mb="2">
               Cidade:{" "}
               <Text as="b">
                 {props.city} ({props.state})
               </Text>
             </Text>
-            <Text mb="1">
+            <Text mb="2">
               Tipo Sanguíneo: <Text as="b">{props.bloodType}</Text>
             </Text>
           </CardBody>
