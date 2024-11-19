@@ -15,73 +15,105 @@ import {
   PopoverBody,
   PopoverContent,
   useBreakpointValue,
+  Link,
 } from "@chakra-ui/react";
 
 import { PiHeartbeat } from "react-icons/pi";
 import { motion } from "framer-motion";
-import moment from "moment";
 import "moment/locale/pt";
+import { LogosWhatsappIcon } from "../assets/Icons/WhatsappIcon";
+import whatsappUrlFormatting from "../helpers/whatsappUrlFormatting";
+import { useState } from "react";
+import { getAllLocalStorageItems } from "../helpers/handleAuthentication";
 
 const MotionBox = motion(Box);
 
 function SubscribedDonorsCard({ props }) {
-  console.log(props);
+  const popoverTrigger = useBreakpointValue({
+    base: "click",
+    lg: "hover",
+  });
+  const[sanatizedNumber, setSanatizedNumber] = useState("");
+
+  const sanitizePhoneNumber = (phoneNumber) => {
+    setSanatizedNumber(phoneNumber.replace(/[()-]/g, ""));
+  }
+    
+
   return (
     <>
       <MotionBox whileHover={{ scale: 1.05 }} transition={{ duration: 0.2 }}>
-        <Card bgColor="hemoSecondary" p="5" color="hemoTerciary" maxW="sm">
+        <Card bgColor="hemoSecondary" p="5" color="hemoTerciary" maxW="sm" minHeight="480px" boxShadow='2xl'>
           <CardHeader>
-            <Flex align="center" justify="center">
-            <Heading size="md">
-            <Avatar
+            <Flex align="center" justify="center" direction="column">
+              <Heading size="md">
+                <Avatar
                   name={props.name}
                   size="lg"
                   color="hemoSecondary"
                   backgroundColor="hemoPrimary"
                 />
-            </Heading>
+              </Heading>
+
+              <Popover trigger={popoverTrigger} placement="top">
+                <PopoverTrigger>
+                  <Heading size="sm" mt={3} noOfLines={2} cursor="pointer">
+                    {props.campaign.title}
+                  </Heading>
+                </PopoverTrigger>
+                <PopoverContent>
+                  <PopoverBody>
+                    <Text color="textInput"> {props.campaign.title}</Text>
+                  </PopoverBody>
+                </PopoverContent>
+              </Popover>
             </Flex>
-
-            {/* <Text mt={3} noOfLines={2} as="b" cursor="pointer"> */}
-            {/* <Heading size="md">{props.title} </Heading> */}
-
-            {/* </Text> */}
           </CardHeader>
 
           <Divider />
 
           <CardBody>
-            <Text mb="1">
+            <Text mb="2">
               Nome: <Text as="b">{props.name}</Text>
             </Text>
-            <Text mb="1">
+            <Text mb="2">
               Email:
               <Text as="b"> {props.email}</Text>
             </Text>
-            <Text mb="1">
+            <Text mb="2">
               Telefone: <Text as="b"> {props.phone}</Text>
             </Text>
-            <Text mb="1">
-              Cidade: <Text as="b">{props.city}</Text>
+            <Text mb="2">
+              Cidade:{" "}
+              <Text as="b">
+                {props.city} ({props.state})
+              </Text>
             </Text>
-            <Text mb="1">
-              Estado: <Text as="b">{props.state}</Text>
-            </Text>
-            <Text mb="1">
+            <Text mb="2">
               Tipo Sanguíneo: <Text as="b">{props.bloodType}</Text>
             </Text>
           </CardBody>
 
-          {/* <Flex justify="center" align="center" gap={2}>
+          <Flex justify="center" align="center" gap={2}>
             <CardFooter>
-              <Button type="submit" color="textInput">
-                Quero Doar
-                <Box alignSelf="center" ml={1} color="hemoSecondary">
-                  <PiHeartbeat />
-                </Box>
-              </Button>
+              <Link
+                href={whatsappUrlFormatting(
+                    sanatizedNumber,
+                    props.name,
+                    getAllLocalStorageItems().name,
+                    props.campaign.title
+                  
+                )}
+                color="textInput"
+                isExternal
+                textDecor="none"
+              >
+                <Button onClick={() => sanitizePhoneNumber(props.phone)} rightIcon={<LogosWhatsappIcon />}>
+                  Entrar em contato
+                </Button>
+              </Link>
             </CardFooter>
-          </Flex> */}
+          </Flex>
         </Card>
       </MotionBox>
     </>

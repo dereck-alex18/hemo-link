@@ -1,15 +1,16 @@
 import { useState, useEffect } from "react";
-import { Flex, Text, Grid, GridItem, Spinner } from "@chakra-ui/react";
-import CampaignCard from "./CampaignCard";
-import { getCampaigns } from "../api/campaigns";
+import { Flex, Text, Grid, GridItem, Spinner, Heading } from "@chakra-ui/react";
 import SubscribedDonorsCard from "./SubscribedDonnorsCard";
 import { getAllDonors } from "../api/donor";
 import { getAllLocalStorageItems } from "../helpers/handleAuthentication";
+import CustomDivider from "./CustomDivider";
 
 function SubscribedDonors() {
   const [donorsSubscribed, setDonorsSubscribed] = useState([]);
+  const [isFetching, setIsFetching] = useState(false);
   useEffect(() => {
     const handleSubscribedDonors = async () => {
+      setIsFetching(true);
       const donorsSubscribedAux = [];
       const campaignId = getAllLocalStorageItems().id;
       const allDonors = await getAllDonors();
@@ -20,18 +21,38 @@ function SubscribedDonors() {
         }
       });
       setDonorsSubscribed(donorsSubscribedAux);
-
+      setIsFetching(false);
     };
-   
+
     handleSubscribedDonors();
+    
   }, []);
 
   return (
     <>
+    
+    <Heading
+        textAlign="center"
+        color="textInput"
+        size={["xl", "xl", "2xl", "2xl"]}
+        mt={10}
+        mb={15}
+      >
+        Doadores Inscritos
+      </Heading>
+
+      <CustomDivider />
+
       <Flex
         justify="center"
         mt={["5", "5", "10", "10"]}
         mb={["5", "5", "10", "10"]}
+        bg="hemoTerciary"
+        maxWidth={["100%", "100%", "80%", "70%"]}
+        m="auto"
+        p={10}
+        boxShadow='xl'
+        borderRadius="md"
       >
         <Grid
           templateColumns={[
@@ -42,19 +63,13 @@ function SubscribedDonors() {
           ]}
           gap={["5", "10", "10"]}
         >
-          {
+          {donorsSubscribed.length > 0 &&
             donorsSubscribed.map((donorSubscribed, index) => (
-              <GridItem>
+              <GridItem >
                 <SubscribedDonorsCard key={index} props={donorSubscribed} />
               </GridItem>
             ))}
-
-          {/* {true &&
-                allCampaings.map((campaing, index) => (
-                  
-                ))} */}
-        </Grid>
-        {/* </Flex>
+          
           {isFetching && (
             <Flex h="80vh" justify="center" align="center">
               <Spinner
@@ -66,13 +81,14 @@ function SubscribedDonors() {
               />
             </Flex>
           )}
-    
-          {allCampaings.length === 0 && !isFetching &&
+        </Grid>
+        
+          {donorsSubscribed.length === 0 && !isFetching &&
             <Flex h="80vh" justify="center" flexDirection="column" align="center" color="textInput">
-              <Text fontSize={["lg", "xl", "3xl", "3xl"]}>Ainda não tem campanhas disponíveis.</Text>  
+              <Text fontSize={["lg", "xl", "3xl", "3xl"]}>Ainda não tem campanhas doadores cadastrados.</Text>  
               <Text fontSize={["lg", "xl", "3xl", "3xl"]}>Nós mostraremos aqui assim tiver.</Text>
           </Flex>
-          } */}
+          } 
       </Flex>
     </>
   );
