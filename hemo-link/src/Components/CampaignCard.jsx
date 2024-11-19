@@ -32,7 +32,9 @@ const MotionBox = motion(Box);
 function CampaignCard({ props }) {
   const [isFetching, setIsFetching] = useState(false);
   const [campaignId, setCampaignId] = useState(props.donorCampaignId);
-  const [isSubscribed, setSubscribed] = useState(campaignId ? "hemoSuccess" : "hemoSecondary");
+  const [subscribedColor, setSubscribedColor] = useState(
+    campaignId ? "hemoSuccess" : "hemoSecondary"
+  );
   const toast = useToast();
   const id = getAllLocalStorageItems().id;
   const popoverTrigger = useBreakpointValue({
@@ -46,7 +48,6 @@ function CampaignCard({ props }) {
   };
 
   const handleDonorSubscription = async (campaignId) => {
-   
     setIsFetching(true);
     const donorAndCampaignIds = {
       id,
@@ -56,7 +57,7 @@ function CampaignCard({ props }) {
       const response = await subscribeDonorToCampaign(donorAndCampaignIds);
       if (response.id) {
         setCampaignId(response.campaignId);
-        setSubscribed("hemoSuccess");
+        setSubscribedColor("hemoSuccess");
         toast({
           title: "Inscrição realizada com sucesso!",
           description: "Agora é só aguardar o contato da clinica.",
@@ -96,7 +97,7 @@ function CampaignCard({ props }) {
       const response = await cancelDonorSubscription(id);
       if (response.id) {
         setCampaignId(null);
-        setSubscribed("hemoSecondary");
+        setSubscribedColor("hemoSecondary");
         toast({
           title: "Inscrição cancelada com sucesso!",
           description: "Agora você pode se inscrever em outra campanha",
@@ -132,9 +133,18 @@ function CampaignCard({ props }) {
   return (
     <>
       <MotionBox whileHover={{ scale: 1.05 }} transition={{ duration: 0.2 }}>
-        <Card bgColor={isSubscribed} p="5" color="hemoTerciary" maxW="sm">
+        <Card
+          bgColor={subscribedColor}
+          p="5"
+          color="hemoTerciary"
+          minWidth={["350px", "350px", "350px", "sm"]}
+          minHeight="480px"
+          boxShadow="2xl"
+        >
           <CardHeader>
-            <Heading size="lg" textAlign="center">{props.clinicName} </Heading>
+            <Heading size="lg" textAlign="center">
+              {props.clinicName}{" "}
+            </Heading>
 
             <Popover trigger={popoverTrigger} placement="top">
               <PopoverTrigger>
@@ -163,7 +173,10 @@ function CampaignCard({ props }) {
               <Text as="b">{convertToReadableDate(props.endDate)}</Text>
             </Text>
             <Text mb="1">
-              Cidade: <Text as="b">{props.city} ({props.state})</Text>
+              Cidade:{" "}
+              <Text as="b">
+                {props.city} ({props.state})
+              </Text>
             </Text>
             <Text mb="1">
               Horário: <Text as="b">08:00 às 17:00</Text>

@@ -36,7 +36,7 @@ function DonorDashboard() {
       const clinics = await getClinic();
 
       campaings.forEach(async (campaing) => {
-        const {name, address} = getClinicNames(clinics, campaing.clinicId);
+        const { name, address } = getClinicNames(clinics, campaing.clinicId);
         campaing.clinicName = name;
         campaing.address = address;
       });
@@ -65,39 +65,47 @@ function DonorDashboard() {
 
   return (
     <>
-      <Heading
-        textAlign="center"
-        color="textInput"
-        size={["xl", "xl", "2xl", "2xl"]}
-        mt={10}
-        mb={15}
-      >
-        Campanhas Ativas
-      </Heading>
-
-      <CustomDivider />
-      <Flex
-        justify="center"
-        mt={["5", "5", "10", "10"]}
-        mb={["5", "5", "10", "10"]}
-      >
-        <Grid
-          templateColumns={[
-            "repeat(1, 1fr)",
-            "repeat(1, 1fr)",
-            "repeat(1, 1fr)",
-            "repeat(3, 1fr)",
-          ]}
-          gap={["5", "10", "10", "20"]}
-        >
-          {allCampaings.length > 0 &&
-            allCampaings.map((campaing, index) => (
-              <GridItem>
-                <CampaignCard key={index} props={campaing} />
-              </GridItem>
-            ))}
-        </Grid>
-      </Flex>
+      {allCampaings.length > 0 && (
+        <>
+          <Heading
+            textAlign="center"
+            color="textInput"
+            size={["xl", "xl", "2xl", "2xl"]}
+            mt={10}
+            mb={15}
+          >
+            Campanhas Ativas
+          </Heading>
+          <CustomDivider />
+          <Flex
+            justify="center"
+            mt={["5", "5", "10", "10"]}
+            mb={["5", "5", "10", "10"]}
+            bg="hemoTerciary"
+            width={["100%", "100%", "80%", "80%"]}
+            m="auto"
+            p={10}
+            boxShadow="xl"
+            borderRadius="md"
+          >
+            <Grid
+              templateColumns={[
+                "repeat(1, 1fr)",
+                "repeat(1, 1fr)",
+                "repeat(1, 1fr)",
+                "repeat(3, 1fr)",
+              ]}
+              gap={["5", "10", "10", "20"]}
+            >
+              {allCampaings.map((campaing, index) => (
+                <GridItem>
+                  <CampaignCard key={index} props={campaing} />
+                </GridItem>
+              ))}
+            </Grid>
+          </Flex>
+        </>
+      )}
       {isFetching && (
         <Flex h="80vh" justify="center" align="center">
           <Spinner
