@@ -8,8 +8,10 @@ import { getAllLocalStorageItems } from "../helpers/handleAuthentication";
 
 function SubscribedDonors() {
   const [donorsSubscribed, setDonorsSubscribed] = useState([]);
+  const [isFetching, setIsFetching] = useState(false);
   useEffect(() => {
     const handleSubscribedDonors = async () => {
+      setIsFetching(true);
       const donorsSubscribedAux = [];
       const campaignId = getAllLocalStorageItems().id;
       const allDonors = await getAllDonors();
@@ -20,10 +22,11 @@ function SubscribedDonors() {
         }
       });
       setDonorsSubscribed(donorsSubscribedAux);
-
+      setIsFetching(false);
     };
-   
+
     handleSubscribedDonors();
+    
   }, []);
 
   return (
@@ -42,19 +45,13 @@ function SubscribedDonors() {
           ]}
           gap={["5", "10", "10"]}
         >
-          {
+          {donorsSubscribed.length > 0 &&
             donorsSubscribed.map((donorSubscribed, index) => (
               <GridItem>
                 <SubscribedDonorsCard key={index} props={donorSubscribed} />
               </GridItem>
-            ))}
-
-          {/* {true &&
-                allCampaings.map((campaing, index) => (
-                  
-                ))} */}
-        </Grid>
-        {/* </Flex>
+            ))};
+          
           {isFetching && (
             <Flex h="80vh" justify="center" align="center">
               <Spinner
@@ -66,13 +63,14 @@ function SubscribedDonors() {
               />
             </Flex>
           )}
-    
-          {allCampaings.length === 0 && !isFetching &&
+        </Grid>
+        
+          {donorsSubscribed.length === 0 && !isFetching &&
             <Flex h="80vh" justify="center" flexDirection="column" align="center" color="textInput">
-              <Text fontSize={["lg", "xl", "3xl", "3xl"]}>Ainda não tem campanhas disponíveis.</Text>  
+              <Text fontSize={["lg", "xl", "3xl", "3xl"]}>Ainda não tem campanhas doadores cadastrados.</Text>  
               <Text fontSize={["lg", "xl", "3xl", "3xl"]}>Nós mostraremos aqui assim tiver.</Text>
           </Flex>
-          } */}
+          } 
       </Flex>
     </>
   );
