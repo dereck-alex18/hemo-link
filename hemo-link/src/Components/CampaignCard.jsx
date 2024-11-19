@@ -15,6 +15,7 @@ import {
   PopoverContent,
   useBreakpointValue,
   useToast,
+  Link,
 } from "@chakra-ui/react";
 import { PiHeartbeat } from "react-icons/pi";
 import { motion } from "framer-motion";
@@ -26,6 +27,8 @@ import {
   cancelDonorSubscription,
 } from "../api/donor";
 import { useState } from "react";
+import mapsUrl from "../helpers/googleMapsUrlFormatting";
+import { TfiLocationPin } from "react-icons/tfi";
 
 const MotionBox = motion(Box);
 
@@ -149,7 +152,9 @@ function CampaignCard({ props }) {
             <Popover trigger={popoverTrigger} placement="top">
               <PopoverTrigger>
                 <Text mt={3} noOfLines={2} as="b" cursor="pointer">
-                  <Heading size={["sm", "sm", "md", "md"]} mt={1}>{props.title} </Heading>
+                  <Heading size={["sm", "sm", "md", "md"]} mt={1}>
+                    {props.title}{" "}
+                  </Heading>
                   {props.description}
                 </Text>
               </PopoverTrigger>
@@ -182,37 +187,61 @@ function CampaignCard({ props }) {
               Horário: <Text as="b">08:00 às 17:00</Text>
             </Text>
             <Text mb="2">
-              Endereço: <Text as="b">{props.address}</Text>
+              Endereço:{" "}
+              <Text as="b">
+                {props.address}
+              </Text>
             </Text>
           </CardBody>
 
-          <Flex justify="center" align="center" gap={2}>
+          <Flex justify="center" align="center" direction="column" gap={2}>
             <CardFooter>
-              {campaignId != props.id ? (
-                <Button
-                  type="submit"
-                  color="textInput"
-                  onClick={() => handleDonorSubscription(props.id)}
-                  isLoading={isFetching}
-                >
-                  Quero Doar
-                  <Box alignSelf="center" ml={1} color="hemoSecondary">
-                    <PiHeartbeat />
-                  </Box>
+              <Flex
+                align="center"
+                justify="center"
+                gap={4}
+                flexDirection="column"
+              >
+                <Button color="hemoSecondary" rightIcon={<TfiLocationPin />}>
+                  <Link
+                    color="textInput"
+                    href={mapsUrl(props.address)}
+                    _hover={{
+                      textDecoration: "none",
+                    }}
+                    isExternal
+                  >
+                    Como chegar
+                  </Link>
                 </Button>
-              ) : (
-                <Button
-                  type="submit"
-                  color="textInput"
-                  onClick={cancelSubscription}
-                  isLoading={isFetching}
-                >
-                  Cancelar
-                  <Box alignSelf="center" ml={1} color="hemoSecondary">
-                    <PiHeartbeat />
-                  </Box>
-                </Button>
-              )}
+                <Box>
+                  {campaignId != props.id ? (
+                    <Button
+                      type="submit"
+                      color="textInput"
+                      onClick={() => handleDonorSubscription(props.id)}
+                      isLoading={isFetching}
+                    >
+                      Quero Doar
+                      <Box alignSelf="center" ml={1} color="hemoSecondary">
+                        <PiHeartbeat />
+                      </Box>
+                    </Button>
+                  ) : (
+                    <Button
+                      type="submit"
+                      color="textInput"
+                      onClick={cancelSubscription}
+                      isLoading={isFetching}
+                    >
+                      Cancelar
+                      <Box alignSelf="center" ml={1} color="hemoSecondary">
+                        <PiHeartbeat />
+                      </Box>
+                    </Button>
+                  )}
+                </Box>
+              </Flex>
             </CardFooter>
           </Flex>
         </Card>
