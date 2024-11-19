@@ -161,16 +161,13 @@ function CampaignCard({ props }) {
               <Text as="b">{convertToReadableDate(props.endDate)}</Text>
             </Text>
             <Text mb="1">
-              CEP: <Text as="b">{props.cep}</Text>
+              Cidade: <Text as="b">{props.city} ({props.state})</Text>
             </Text>
             <Text mb="1">
-              Cidade: <Text as="b">{props.city}</Text>
+              Horário: <Text as="b">08:00 às 17:00</Text>
             </Text>
             <Text mb="1">
-              Estado: <Text as="b">{props.state}</Text>
-            </Text>
-            <Text mb="1">
-              Região: <Text as="b">{props.region}</Text>
+              Endereço: <Text as="b">{props.address}</Text>
             </Text>
           </CardBody>
 

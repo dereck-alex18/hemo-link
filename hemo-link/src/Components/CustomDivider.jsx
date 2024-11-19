@@ -1,10 +1,4 @@
 import {
-  Flex,
-  Text,
-  Grid,
-  GridItem,
-  Spinner,
-  Heading,
   Box,
 } from "@chakra-ui/react";
 

@@ -1,5 +1,13 @@
 import { useState, useEffect } from "react";
-import { Flex, Text, Grid, GridItem, Spinner, Heading, Box } from "@chakra-ui/react";
+import {
+  Flex,
+  Text,
+  Grid,
+  GridItem,
+  Spinner,
+  Heading,
+  Box,
+} from "@chakra-ui/react";
 import CampaignCard from "./CampaignCard";
 import { getCampaigns } from "../api/campaigns";
 import { getAllLocalStorageItems } from "../helpers/handleAuthentication";
@@ -15,7 +23,7 @@ function DonorDashboard() {
   const getClinicNames = (clinics, campaignId) => {
     for (let clinic of clinics) {
       if (clinic.id == campaignId) {
-        return clinic.name;
+        return clinic;
       }
     }
   };
@@ -28,7 +36,9 @@ function DonorDashboard() {
       const clinics = await getClinic();
 
       campaings.forEach(async (campaing) => {
-        campaing.clinicName = getClinicNames(clinics, campaing.clinicId);
+        const {name, address} = getClinicNames(clinics, campaing.clinicId);
+        campaing.clinicName = name;
+        campaing.address = address;
       });
 
       let donorCampaignId;
@@ -63,11 +73,7 @@ function DonorDashboard() {
         mb={15}
       >
         Campanhas Ativas
-   
-       
-        
       </Heading>
-      {/* <Divider height="2px" bgGradient="linear('to-r', 'red', 'green')"/> */}
 
       <CustomDivider />
       <Flex
