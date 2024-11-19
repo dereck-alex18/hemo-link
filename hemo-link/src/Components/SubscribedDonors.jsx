@@ -1,9 +1,23 @@
 import { useState, useEffect } from "react";
-import { Flex, Text, Grid, GridItem, Spinner, Heading } from "@chakra-ui/react";
+import {
+  Flex,
+  Text,
+  Grid,
+  GridItem,
+  Spinner,
+  Heading,
+  Button,
+  Box,
+} from "@chakra-ui/react";
 import SubscribedDonorsCard from "./SubscribedDonnorsCard";
 import { getAllDonors } from "../api/donor";
 import { getAllLocalStorageItems } from "../helpers/handleAuthentication";
 import CustomDivider from "./CustomDivider";
+import { Link } from "react-router-dom";
+import { IoChevronBack } from "react-icons/io5";
+import { motion } from "framer-motion";
+
+const MotionBox = motion(Box);
 
 function SubscribedDonors() {
   const [donorsSubscribed, setDonorsSubscribed] = useState([]);
@@ -31,6 +45,24 @@ function SubscribedDonors() {
     <>
       {donorsSubscribed.length > 0 && (
         <>
+          <Flex justify="flex-start" align="center">
+            <Link color="textInput" to="/dashboard-clinica">
+              <Button
+                m={2}
+                fontSize="4xl"
+                bg="transparent"
+                _hover={{ bgColor: "transparent" }}
+                color="hemoButton"
+              >
+                <MotionBox
+                  whileHover={{ x: -10 }} 
+                  transition={{ duration: 0.2 }} 
+                >
+                  <IoChevronBack />
+                </MotionBox>
+              </Button>
+            </Link>
+          </Flex>
           <Heading
             textAlign="center"
             color="textInput"
