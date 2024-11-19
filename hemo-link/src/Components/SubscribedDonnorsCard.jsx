@@ -15,12 +15,15 @@ import {
   PopoverBody,
   PopoverContent,
   useBreakpointValue,
+  Link,
 } from "@chakra-ui/react";
 
 import { PiHeartbeat } from "react-icons/pi";
 import { motion } from "framer-motion";
-import moment from "moment";
 import "moment/locale/pt";
+import { LogosWhatsappIcon } from "../assets/Icons/WhatsappIcon";
+import whatsappUrlFormatting from "../helpers/whatsappUrlFormatting";
+import { useState } from "react";
 
 const MotionBox = motion(Box);
 
@@ -29,6 +32,12 @@ function SubscribedDonorsCard({ props }) {
     base: "click",
     lg: "hover",
   });
+  const[sanatizedNumber, setSanatizedNumber] = useState("");
+
+  const sanitizePhoneNumber = (phoneNumber) => {
+    setSanatizedNumber(phoneNumber.replace(/[()-]/g, ""));
+  }
+    
 
   return (
     <>
@@ -84,16 +93,25 @@ function SubscribedDonorsCard({ props }) {
             </Text>
           </CardBody>
 
-          {/* <Flex justify="center" align="center" gap={2}>
+          <Flex justify="center" align="center" gap={2}>
             <CardFooter>
-              <Button type="submit" color="textInput">
-                Quero Doar
-                <Box alignSelf="center" ml={1} color="hemoSecondary">
-                  <PiHeartbeat />
-                </Box>
-              </Button>
+              <Link
+                href={whatsappUrlFormatting(
+                    sanatizedNumber,
+                    props.name,
+                    props.campaign.title
+                  
+                )}
+                color="textInput"
+                isExternal
+                textDecor="none"
+              >
+                <Button onClick={() => sanitizePhoneNumber(props.phone)} rightIcon={<LogosWhatsappIcon />}>
+                  Entrar em contato
+                </Button>
+              </Link>
             </CardFooter>
-          </Flex> */}
+          </Flex>
         </Card>
       </MotionBox>
     </>
