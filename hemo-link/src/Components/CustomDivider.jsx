@@ -10,7 +10,7 @@ function CustomDivider() {
         bgGradient="linear(to-r, hemoPrimary, hemoSecondary, transparent)"
         borderRadius="full"
         my={4}
-        w="60%"
+        w={["90%", "90%", "70%", "60%"]}
         m="auto"
       />
     </>
