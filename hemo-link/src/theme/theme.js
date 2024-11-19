@@ -10,7 +10,8 @@ const theme = extendTheme({
     textInput: "#4a4a4a",
     hemoButton: "#ef5350", 
     hemoButtonDisabled: "#cacaca",
-    hemoTerciary: "#fafafa"
+    hemoTerciary: "#fafafa",
+    hemoSuccess: "#4BB543",
   },
   fonts: {
     heading: "Poppins, sans-serif",

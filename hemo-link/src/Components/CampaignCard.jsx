@@ -32,7 +32,7 @@ const MotionBox = motion(Box);
 function CampaignCard({ props }) {
   const [isFetching, setIsFetching] = useState(false);
   const [campaignId, setCampaignId] = useState(props.donorCampaignId);
-  const [isSubscribed, setSubscribed] = useState(campaignId ? "green" : "hemoSecondary");
+  const [isSubscribed, setSubscribed] = useState(campaignId ? "hemoSuccess" : "hemoSecondary");
   const toast = useToast();
   const id = getAllLocalStorageItems().id;
   const popoverTrigger = useBreakpointValue({
@@ -56,7 +56,7 @@ function CampaignCard({ props }) {
       const response = await subscribeDonorToCampaign(donorAndCampaignIds);
       if (response.id) {
         setCampaignId(response.campaignId);
-        setSubscribed("green");
+        setSubscribed("hemoSuccess");
         toast({
           title: "Inscrição realizada com sucesso!",
           description: "Agora é só aguardar o contato da clinica.",
