@@ -149,7 +149,7 @@ function CampaignCard({ props }) {
             <Popover trigger={popoverTrigger} placement="top">
               <PopoverTrigger>
                 <Text mt={3} noOfLines={2} as="b" cursor="pointer">
-                  <Heading size="md">{props.title} </Heading>
+                  <Heading size={["sm", "sm", "md", "md"]} mt={1}>{props.title} </Heading>
                   {props.description}
                 </Text>
               </PopoverTrigger>
@@ -164,24 +164,24 @@ function CampaignCard({ props }) {
           <Divider />
 
           <CardBody>
-            <Text mb="1">
+            <Text mb="2">
               Data inicial:{" "}
               <Text as="b">{convertToReadableDate(props.startDate)}</Text>
             </Text>
-            <Text mb="1">
+            <Text mb="2">
               Data final:{" "}
               <Text as="b">{convertToReadableDate(props.endDate)}</Text>
             </Text>
-            <Text mb="1">
+            <Text mb="2">
               Cidade:{" "}
               <Text as="b">
                 {props.city} ({props.state})
               </Text>
             </Text>
-            <Text mb="1">
+            <Text mb="2">
               Horário: <Text as="b">08:00 às 17:00</Text>
             </Text>
-            <Text mb="1">
+            <Text mb="2">
               Endereço: <Text as="b">{props.address}</Text>
             </Text>
           </CardBody>
