@@ -1,10 +1,10 @@
-export default function whatsUrlFormatting(phoneNumber, nomeClinica, nomeDaCampanha) {
+export default function whatsUrlFormatting(phoneNumber, donorName, nomeClinica, nomeDaCampanha) {
     const message = `
-Olá, somos da clinica de doação de sangue ${nomeClinica}.
-Vimos que você se inscreveu na campanha ${nomeDaCampanha} 
+Olá, ${donorName}. Somos da clinica de doação de sangue "${nomeClinica}".
+Vimos que você se inscreveu na campanha "${nomeDaCampanha}" 
 e ficamos muito felizes com sua vontade de ajudar. Estamos
 te enviado esse primeiro contato para confirmarmos o seu
-interesso, caso positivo, agendamos o dia e hora da coleta.
+interesse, caso positivo, agendamos o dia e hora da coleta.
 Vem ser o nosso herói ou heroina! 🦸🦸‍♀️🩸 
 `;
     

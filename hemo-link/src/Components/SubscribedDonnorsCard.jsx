@@ -24,6 +24,7 @@ import "moment/locale/pt";
 import { LogosWhatsappIcon } from "../assets/Icons/WhatsappIcon";
 import whatsappUrlFormatting from "../helpers/whatsappUrlFormatting";
 import { useState } from "react";
+import { getAllLocalStorageItems } from "../helpers/handleAuthentication";
 
 const MotionBox = motion(Box);
 
@@ -99,6 +100,7 @@ function SubscribedDonorsCard({ props }) {
                 href={whatsappUrlFormatting(
                     sanatizedNumber,
                     props.name,
+                    getAllLocalStorageItems().name,
                     props.campaign.title
                   
                 )}

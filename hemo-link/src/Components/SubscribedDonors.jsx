@@ -1,10 +1,9 @@
 import { useState, useEffect } from "react";
-import { Flex, Text, Grid, GridItem, Spinner } from "@chakra-ui/react";
-import CampaignCard from "./CampaignCard";
-import { getCampaigns } from "../api/campaigns";
+import { Flex, Text, Grid, GridItem, Spinner, Heading } from "@chakra-ui/react";
 import SubscribedDonorsCard from "./SubscribedDonnorsCard";
 import { getAllDonors } from "../api/donor";
 import { getAllLocalStorageItems } from "../helpers/handleAuthentication";
+import CustomDivider from "./CustomDivider";
 
 function SubscribedDonors() {
   const [donorsSubscribed, setDonorsSubscribed] = useState([]);
@@ -31,6 +30,18 @@ function SubscribedDonors() {
 
   return (
     <>
+    <Heading
+        textAlign="center"
+        color="textInput"
+        size={["xl", "xl", "2xl", "2xl"]}
+        mt={10}
+        mb={15}
+      >
+        Doadores Inscritos
+      </Heading>
+
+      <CustomDivider />
+
       <Flex
         justify="center"
         mt={["5", "5", "10", "10"]}
