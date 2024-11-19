@@ -33,17 +33,23 @@ function SubscribedDonorsCard({ props }) {
     base: "click",
     lg: "hover",
   });
-  const[sanatizedNumber, setSanatizedNumber] = useState("");
+  const [sanatizedNumber, setSanatizedNumber] = useState("");
 
   const sanitizePhoneNumber = (phoneNumber) => {
     setSanatizedNumber(phoneNumber.replace(/[()-]/g, ""));
-  }
-    
+  };
 
   return (
     <>
       <MotionBox whileHover={{ scale: 1.05 }} transition={{ duration: 0.2 }}>
-        <Card bgColor="hemoSecondary" p="5" color="hemoTerciary" maxW="sm" minHeight="480px" boxShadow='2xl'>
+        <Card
+          bgColor="hemoSecondary"
+          p="5"
+          color="hemoTerciary"
+          maxW="sm"
+          minHeight="480px"
+          boxShadow="2xl"
+        >
           <CardHeader>
             <Flex align="center" justify="center" direction="column">
               <Heading size="md">
@@ -98,17 +104,19 @@ function SubscribedDonorsCard({ props }) {
             <CardFooter>
               <Link
                 href={whatsappUrlFormatting(
-                    sanatizedNumber,
-                    props.name,
-                    getAllLocalStorageItems().name,
-                    props.campaign.title
-                  
+                  sanatizedNumber,
+                  props.name,
+                  getAllLocalStorageItems().name,
+                  props.campaign.title
                 )}
                 color="textInput"
                 isExternal
                 textDecor="none"
               >
-                <Button onClick={() => sanitizePhoneNumber(props.phone)} rightIcon={<LogosWhatsappIcon />}>
+                <Button
+                  onClick={() => sanitizePhoneNumber(props.phone)}
+                  rightIcon={<LogosWhatsappIcon />}
+                >
                   Entrar em contato
                 </Button>
               </Link>
