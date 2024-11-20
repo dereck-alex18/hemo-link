@@ -18,6 +18,9 @@ import CustomDivider from "./CustomDivider";
 import { useDocumentTitle } from "./UseDocumentTitle";
 import ReactPaginate from "react-paginate";
 import { GrCaretPrevious, GrCaretNext } from "react-icons/gr";
+import { AnimatePresence, motion } from "framer-motion";
+
+const MotionBox = motion(Box);
 
 function DonorDashboard({ title }) {
   const [allCampaings, setCampaings] = useState([]);
@@ -122,6 +125,17 @@ function DonorDashboard({ title }) {
             boxShadow="xl"
             borderRadius="md"
           >
+              <AnimatePresence mode="wait">
+              <MotionBox
+                key={currentItems.map(item => item.id).join('-')}
+                initial={{ rotateY: 90 }} 
+                animate={{ rotateY: 0 }} 
+                exit={{ rotateY: -90 }} 
+                transition={{
+                  duration: 0.8, 
+                  ease: 'easeInOut',
+                }}
+              >
             <Grid
               templateColumns={[
                 "repeat(1, 1fr)",
@@ -131,6 +145,9 @@ function DonorDashboard({ title }) {
               ]}
               gap={["5", "10", "10", "20"]}
             >
+            
+
+            
               {currentItems.map((campaing, index) => (
                 <GridItem>
                   <CampaignCard
@@ -142,7 +159,10 @@ function DonorDashboard({ title }) {
                   />
                 </GridItem>
               ))}
+               
             </Grid>
+            </MotionBox>
+            </AnimatePresence>
           </Flex>
 
           <ReactPaginate
