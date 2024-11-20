@@ -142,7 +142,11 @@ function CampaignCard({ props }) {
           color="hemoTerciary"
           minWidth={["350px", "350px", "350px", "sm"]}
           minHeight="480px"
+<<<<<<< HEAD
           boxShadow="dark-lg"
+=======
+          boxShadow="2xl"
+>>>>>>> main
         >
           <CardHeader>
             <Heading size="lg" textAlign="center">
