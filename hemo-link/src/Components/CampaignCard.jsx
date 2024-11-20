@@ -34,7 +34,6 @@ const MotionBox = motion(Box);
 
 function CampaignCard({ props, isSubscribed, onSubscribe, onCancel }) {
   const [isFetching, setIsFetching] = useState(false);
-  const [campaignId, setCampaignId] = useState(props.donorCampaignId);
   const [subscribedColor, setSubscribedColor] = useState(
     isSubscribed ? "hemoSuccess" : "hemoSecondary"
   );
@@ -59,7 +58,6 @@ function CampaignCard({ props, isSubscribed, onSubscribe, onCancel }) {
     try {
       const response = await subscribeDonorToCampaign(donorAndCampaignIds);
       if (response.id) {
-        setCampaignId(response.campaignId);
         setSubscribedColor("hemoSuccess");
         onSubscribe(props.id);
         toast({
@@ -100,7 +98,6 @@ function CampaignCard({ props, isSubscribed, onSubscribe, onCancel }) {
     try {
       const response = await cancelDonorSubscription(id);
       if (response.id) {
-        setCampaignId(null);
         setSubscribedColor("hemoSecondary");
         onCancel(props.id);
         toast({
