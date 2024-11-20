@@ -47,14 +47,14 @@ function DonorDashboard({ title }) {
   const handleDonorSubscription = (campaignId) => {
     setSubscribedCampaigns((prevState) => ({
       ...prevState,
-      [campaignId]: true, // Mark the campaign as subscribed
+      [campaignId]: true, 
     }));
   };
 
   const cancelSubscription = (campaignId) => {
     setSubscribedCampaigns((prevState) => ({
       ...prevState,
-      [campaignId]: false, // Mark the campaign as unsubscribed
+      [campaignId]: false, 
     }));
   };
 
