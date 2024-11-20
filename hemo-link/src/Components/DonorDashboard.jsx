@@ -7,6 +7,7 @@ import {
   Spinner,
   Heading,
   Box,
+  Button,
 } from "@chakra-ui/react";
 import CampaignCard from "./CampaignCard";
 import { getCampaigns } from "../api/campaigns";
@@ -15,11 +16,17 @@ import { getDonorCampaignId } from "../api/donor";
 import { getClinic } from "../api/clinic";
 import CustomDivider from "./CustomDivider";
 import { useDocumentTitle } from "./UseDocumentTitle";
+import ReactPaginate from "react-paginate";
+import { GrCaretPrevious, GrCaretNext } from "react-icons/gr";
 
 function DonorDashboard({ title }) {
   const [allCampaings, setCampaings] = useState([]);
   const [isFetching, setIsFetching] = useState(false);
+  const [currentItems, setCurrentItems] = useState([]);
+  const [subscribedCampaigns, setSubscribedCampaigns] = useState({});
+  const [pageCount, setPageCount] = useState(0);
   const id = getAllLocalStorageItems().id;
+  const itemsPerPage = 3;
 
   const getClinicNames = (clinics, campaignId) => {
     for (let clinic of clinics) {
@@ -28,6 +35,26 @@ function DonorDashboard({ title }) {
       }
     }
   };
+
+  const handlePageClick = (event) => {
+    const newOffset = event.selected * itemsPerPage;
+    setCurrentItems(allCampaings.slice(newOffset, newOffset + itemsPerPage));
+  };
+
+  const handleDonorSubscription = (campaignId) => {
+    setSubscribedCampaigns((prevState) => ({
+      ...prevState,
+      [campaignId]: true, // Mark the campaign as subscribed
+    }));
+  };
+
+  const cancelSubscription = (campaignId) => {
+    setSubscribedCampaigns((prevState) => ({
+      ...prevState,
+      [campaignId]: false, // Mark the campaign as unsubscribed
+    }));
+  };
+
   useDocumentTitle(title);
   useEffect(() => {
     const handleCampaingsRequest = async () => {
@@ -50,6 +77,7 @@ function DonorDashboard({ title }) {
         campaings.forEach((campaing) => {
           if (campaing.id == donorCampaignId) {
             campaing.donorCampaignId = donorCampaignId;
+            handleDonorSubscription(donorCampaignId);
           }
         });
         const sortedCampaigns = campaings.sort((a, b) => {
@@ -63,6 +91,11 @@ function DonorDashboard({ title }) {
 
     handleCampaingsRequest();
   }, []);
+
+  useEffect(() => {
+    setPageCount(Math.ceil(allCampaings.length / itemsPerPage));
+    setCurrentItems(allCampaings.slice(0, itemsPerPage));
+  }, [allCampaings]);
 
   return (
     <>
@@ -98,13 +131,56 @@ function DonorDashboard({ title }) {
               ]}
               gap={["5", "10", "10", "20"]}
             >
-              {allCampaings.map((campaing, index) => (
+              {currentItems.map((campaing, index) => (
                 <GridItem>
-                  <CampaignCard key={index} props={campaing} />
+                  <CampaignCard
+                    key={campaing.id}
+                    props={campaing}
+                    isSubscribed={subscribedCampaigns[campaing.id] || false}
+                    onSubscribe={handleDonorSubscription}
+                    onCancel={cancelSubscription}
+                  />
                 </GridItem>
               ))}
             </Grid>
           </Flex>
+
+          <ReactPaginate
+            breakLabel="..."
+            nextLabel={
+              <Button
+                bgColor="hemoSecondary"
+                color="hemoPrimary"
+                fontSize="xl"
+                _hover={{
+                  bgColor: "hemoCardBackground",
+                  color: "hemoSecondary",
+                }}
+              >
+                <GrCaretNext />
+              </Button>
+            }
+            onPageChange={handlePageClick}
+            pageRangeDisplayed={3}
+            pageCount={pageCount}
+            previousLabel={
+              <Button
+                bgColor="hemoSecondary"
+                color="hemoPrimary"
+                fontSize="xl"
+                _hover={{
+                  bgColor: "hemoCardBackground",
+                  color: "hemoSecondary",
+                }}
+              >
+                <GrCaretPrevious />
+              </Button>
+            }
+            containerClassName="pagination"
+            activeClassName="active"
+            pageClassName="pagination-item"
+            pageLinkClassName="pagination-link"
+          />
         </>
       )}
       {isFetching && (
