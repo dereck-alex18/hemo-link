@@ -12,6 +12,7 @@ const theme = extendTheme({
     hemoButtonDisabled: "#cacaca",
     hemoTerciary: "#fafafa",
     hemoSuccess: "#4BB543",
+    hemoCardBackground: "#f9d3d3",
   },
   fonts: {
     heading: "Poppins, sans-serif",

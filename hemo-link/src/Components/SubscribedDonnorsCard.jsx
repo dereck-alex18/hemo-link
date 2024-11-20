@@ -48,7 +48,7 @@ function SubscribedDonorsCard({ props }) {
           color="hemoTerciary"
           maxW="sm"
           minHeight="480px"
-          boxShadow="2xl"
+          boxShadow="dark-lg"
         >
           <CardHeader>
             <Flex align="center" justify="center" direction="column">

@@ -16,12 +16,14 @@ import CustomDivider from "./CustomDivider";
 import { Link } from "react-router-dom";
 import { IoChevronBack } from "react-icons/io5";
 import { motion } from "framer-motion";
+import { useDocumentTitle } from "./UseDocumentTitle";
 
 const MotionBox = motion(Box);
 
-function SubscribedDonors() {
+function SubscribedDonors({ title }) {
   const [donorsSubscribed, setDonorsSubscribed] = useState([]);
   const [isFetching, setIsFetching] = useState(false);
+  useDocumentTitle(title);
   useEffect(() => {
     const handleSubscribedDonors = async () => {
       setIsFetching(true);
@@ -77,7 +79,7 @@ function SubscribedDonors() {
             justify="center"
             mt={["5", "5", "10", "10"]}
             mb={["5", "5", "10", "10"]}
-            bg="hemoTerciary"
+            bg="hemoCardBackground"
             maxWidth={["100%", "100%", "80%", "80%"]}
             m="auto"
             p={10}

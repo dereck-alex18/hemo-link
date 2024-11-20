@@ -40,15 +40,15 @@ function App() {
               path="/dashboard-doador"
               element={<PrivateRoute isDonor={true} />}
             >
-              <Route path="" element={<DonorDashboard />} />
+              <Route path=""  element={<DonorDashboard title={"Dashboard do Doador"}/>} />
             </Route>
 
             <Route
               path="/dashboard-clinica"
               element={<PrivateRoute isDonor={false} />}
             >
-              <Route path="" element={<ClinicDashboardCard />} />
-              <Route path="/dashboard-clinica/doadores-inscritos" element={<SubscribedDonors />} />
+              <Route path="" element={<ClinicDashboardCard title={"Dashboard da Clinica"} />} />
+              <Route path="/dashboard-clinica/doadores-inscritos"   element={<SubscribedDonors title={"Dashboard da Clinica"}/>} />
             </Route>
             {/* <Route path="/" element={ <Header/> }/> */}
           </Routes>

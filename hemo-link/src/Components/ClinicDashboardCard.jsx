@@ -27,20 +27,21 @@ import "moment/locale/pt-br";
 import moment from "moment";
 import { getAllLocalStorageItems } from "../helpers/handleAuthentication";
 import { createCampaign } from "../api/campaigns";
+import { useDocumentTitle } from "./UseDocumentTitle";
 
 moment.locale("pt-br");
 
-function ClinicDashboardCard() {
+function ClinicDashboardCard({ title }) {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const toast = useToast();
   const MotionModalContent = motion(ModalContent);
-
+  useDocumentTitle(title);
   const handleSubmit = async (values, actions) => {
     actions.setSubmitting(true);
     values.startDate = moment(values.startDate).toISOString();
     values.endDate = moment(values.endDate).toISOString();
     values.clinicId = getAllLocalStorageItems().id;
-
+    
     try {
       const response = await createCampaign(values);
       if (response.id) {
