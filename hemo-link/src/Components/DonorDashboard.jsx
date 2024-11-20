@@ -14,8 +14,9 @@ import { getAllLocalStorageItems } from "../helpers/handleAuthentication";
 import { getDonorCampaignId } from "../api/donor";
 import { getClinic } from "../api/clinic";
 import CustomDivider from "./CustomDivider";
+import { useDocumentTitle } from "./UseDocumentTitle";
 
-function DonorDashboard() {
+function DonorDashboard({ title }) {
   const [allCampaings, setCampaings] = useState([]);
   const [isFetching, setIsFetching] = useState(false);
   const id = getAllLocalStorageItems().id;
@@ -27,7 +28,7 @@ function DonorDashboard() {
       }
     }
   };
-
+  useDocumentTitle(title);
   useEffect(() => {
     const handleCampaingsRequest = async () => {
       setIsFetching(true);
@@ -81,7 +82,7 @@ function DonorDashboard() {
             justify="center"
             mt={["5", "5", "10", "10"]}
             mb={["5", "5", "10", "10"]}
-            bg="hemoTerciary"
+            bg="hemoCardBackground"
             width={["100%", "100%", "80%", "80%"]}
             m="auto"
             p={10}
