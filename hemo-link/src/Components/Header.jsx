@@ -7,6 +7,10 @@ import {
   IconButton,
   useDisclosure,
   Text,
+  Menu,
+  MenuButton,
+  MenuList,
+  MenuItem,
 } from "@chakra-ui/react";
 import { HamburgerIcon, CloseIcon } from "@chakra-ui/icons";
 import { Link } from "react-router-dom";
@@ -14,9 +18,10 @@ import { motion, AnimatePresence } from "framer-motion";
 import {
   getAuthenticationStatus,
   handleLogout,
-  getAllLocalStorageItems
+  getAllLocalStorageItems,
 } from "../helpers/handleAuthentication";
 import { useEffect, useState } from "react";
+import { RiUserHeartLine, RiHospitalLine } from "react-icons/ri";
 
 function Header() {
   const [isAuthenticated, setIsAuthenticated] = useState(
@@ -25,6 +30,17 @@ function Header() {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const MotionBox = motion(Box);
   const MotionIconButton = motion(IconButton);
+  const {
+    isOpen: isEntrarOpen,
+    onOpen: onEntrarOpen,
+    onClose: onEntrarClose,
+  } = useDisclosure();
+  const {
+    isOpen: isCadastrarOpen,
+    onOpen: onCadastrarOpen,
+    onClose: onCadastrarClose,
+  } = useDisclosure();
+
   const username = getAllLocalStorageItems().name;
 
   useEffect(() => {
@@ -40,7 +56,7 @@ function Header() {
   return (
     <>
       <Flex
-        bg="headerColor"
+        bg="linear-gradient(to right, #b50000, #930c0c)"
         direction="row"
         gap={["5", "5"]}
         justify="space-between"
@@ -52,57 +68,94 @@ function Header() {
           <a href="#">Hemo Link</a>
         </Heading>
 
-        <Flex gap="3" align="center" display={["none", "none", "none", "flex"]}>
+        <Flex gap="5" align="center" display={["none", "none", "none", "flex"]}>
           {!isAuthenticated && (
             <>
-              <Link to="/login-doador">
-                <Button
+              <Menu isOpen={isEntrarOpen}>
+                <MenuButton
+                  as={Button}
                   bg="hemoPrimary"
                   color="headerColor"
                   py="6"
                   px="10"
-                  borderRadius="23"
-                  _hover={{ bg: "hemoPrimaryHover" }}
+                  rounded="full"
+                  onMouseEnter={onEntrarOpen}
+                  onMouseLeave={onEntrarClose}
                 >
-                  Entrar como doador
-                </Button>
-              </Link>
-              <Link to="/login-clinica">
-                <Button
+                  Entrar
+                </MenuButton>
+
+                <MenuList
+                  bg="hemoTerciary"
+                  color="headerColor"
+                  onMouseEnter={onEntrarOpen}
+                  onMouseLeave={onEntrarClose}
+                >
+                  <MenuItem
+                    as={Link}
+                    to="/login-doador"
+                    _hover={{ bg: "hemoCardBackground" }}
+                  >
+                    <Flex justify="center" align="center" gap={2}>
+                      Entrar como doador
+                      {<RiUserHeartLine />}
+                    </Flex>
+                  </MenuItem>
+                  <MenuItem
+                    as={Link}
+                    to="/login-clinica"
+                    _hover={{ bg: "red.100" }}
+                  >
+                    <Flex justify="center" align="center" gap={3}>
+                      Entrar como clínica
+                      {<RiHospitalLine />}
+                    </Flex>
+                  </MenuItem>
+                </MenuList>
+              </Menu>
+
+              <Menu isOpen={isCadastrarOpen}>
+                <MenuButton
+                  as={Button}
                   bg="hemoPrimary"
                   color="headerColor"
                   py="6"
                   px="10"
-                  borderRadius="23"
-                  _hover={{ bg: "hemoPrimaryHover" }}
+                  rounded="full"
+                  onMouseEnter={onCadastrarOpen}
+                  onMouseLeave={onCadastrarClose}
                 >
-                  Entrar como Clinica
-                </Button>
-              </Link>
-              <Link to="/cadastro-doador">
-                <Button
-                  bg="hemoPrimary"
+                  Cadastrar
+                </MenuButton>
+
+                <MenuList
+                  bg="hemoTerciary"
                   color="headerColor"
-                  py="6"
-                  px="10"
-                  borderRadius="23"
-                  _hover={{ bg: "hemoPrimaryHover" }}
+                  onMouseEnter={onCadastrarOpen}
+                  onMouseLeave={onCadastrarClose}
                 >
-                  Cadastro Doador
-                </Button>
-              </Link>
-              <Link to="/cadastro-clinica">
-                <Button
-                  bg="hemoPrimary"
-                  color="headerColor"
-                  py="6"
-                  px="10"
-                  borderRadius="23"
-                  _hover={{ bg: "hemoPrimaryHover" }}
-                >
-                  Cadastro Clinica
-                </Button>
-              </Link>
+                  <MenuItem
+                    as={Link}
+                    to="/cadastro-doador"
+                    _hover={{ bg: "hemoCardBackground" }}
+                  >
+                    <Flex justify="center" align="center" gap={2}>
+                      Cadastrar Doador
+                      {<RiUserHeartLine />}
+                    </Flex>
+                  </MenuItem>
+                  <MenuItem
+                    as={Link}
+                    to="/cadastro-clinica"
+                    _hover={{ bg: "red.100" }}
+                  >
+                    <Flex justify="center" align="center" gap={3}>
+                      Cadastrar Clinica
+                      {<RiHospitalLine />}
+                    </Flex>
+                  </MenuItem>
+                </MenuList>
+              </Menu>
             </>
           )}
 
@@ -238,8 +291,10 @@ function Header() {
                         color="hemoPrimary"
                         textDecoration="underline"
                         fontSize={["2xl", "3xl", "5xl", "5xl"]}
-                        onClick={() => {onClose(); handleLogout(); }}
-                        
+                        onClick={() => {
+                          onClose();
+                          handleLogout();
+                        }}
                       >
                         Sair
                       </Button>
