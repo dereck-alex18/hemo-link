@@ -211,7 +211,8 @@ function Login({ loginType, isDonor }) {
                 borderRadius="143px"
                 boxSize="450px"
                 objectFit="cover"
-                src="src/assets/saveLives.png"
+                src="src/assets/images/saveLives.png"
+                
               />
             </Box>
           </Flex>
