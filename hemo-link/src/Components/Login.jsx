@@ -18,6 +18,7 @@ import login from "../api/login";
 import AppModal from "./AppModal";
 import { loginTokenHandling } from "../helpers/handleAuthentication";
 
+
 function Login({ loginType, isDonor }) {
   const [userName, setUserName] = useState("");
   const [password, setPassword] = useState("");
@@ -45,20 +46,20 @@ function Login({ loginType, isDonor }) {
 
   const handleSubmit = async (values, actions) => {
     actions.setSubmitting(true);
-    
+
     try {
       values.isDonor = isDonor;
       const response = await login(values);
-      
+
       loginTokenHandling(response);
       if (response.access_token) {
         loginTokenHandling(response, isDonor);
         actions.resetForm();
-        navigate(isDonor ? '/dashboard-doador' : '/dashboard-clinica');
-        window.dispatchEvent(new Event('storage'));
+        navigate(isDonor ? "/dashboard-doador" : "/dashboard-clinica");
+        window.dispatchEvent(new Event("storage"));
         setModalContent({
           header: "Login realizado com sucesso",
-          body: '',
+          body: "",
         });
         setSuccessRegistration(true);
         setUserName("");
@@ -95,11 +96,12 @@ function Login({ loginType, isDonor }) {
       >
         {(props) => (
           <Flex
-            height={["70vh", "70vh", "90vh"]}
+            height={["90vh", "90vh", "92vh"]}
             bg="hemoPrimary"
-            justify="center"
+            justify="space-around"
             align="center"
-            gap={["0", "0", "10", "24"]}
+            overflow="hidden"
+            gap={["0", "0", "10", "30"]}
             sx={{
               "@media (orientation: landscape) and (max-width: 1023px)": {
                 alignItems: "flex-start",
@@ -107,32 +109,37 @@ function Login({ loginType, isDonor }) {
               },
             }}
           >
-            <Box
-              m="3"
+            <Flex
               p={["4", "7", "10", "10"]}
               border="1px"
               bg="hemoSecondary"
               borderColor="hemoSecondary"
               color="white"
               boxShadow="dark-lg"
+              justify="center"
+              flex="1"
+              flexDirection="column"
+              h="100%"
             >
-              <Heading size="lg" mb="5">
+              <Heading size="xl" mb="5" textAlign="center">
                 {loginType}
               </Heading>
               <Form>
                 <FormControl>
-                  <Flex direction="column" gap="2">
+                  <Flex direction="column" gap="5">
                     <Field name="email">
                       {({ field, form }) => (
-                        <FormControl isRequired>
+                        <FormControl>
                           <FormLabel htmlFor="email">Email</FormLabel>
                           <Input
-                       d2238160-fe79-4377-9f94-de9571bdd240     {...field}
+                            {...field}
                             id="email"
                             type="email"
                             bg="hemoSeconary"
                             border="none"
+                            borderRadius="25px"
                             color="textInput"
+                            placeholder="Email"
                             _focus={{ boxShadow: "none" }}
                             onChange={(e) => {
                               field.onChange(e);
@@ -153,6 +160,8 @@ function Login({ loginType, isDonor }) {
                             bg="hemoSeconary"
                             border="none"
                             color="textInput"
+                            borderRadius="25px"
+                            placeholder="Senha"
                             _focus={{ boxShadow: "none" }}
                             onChange={(e) => {
                               field.onChange(e);
@@ -171,16 +180,36 @@ function Login({ loginType, isDonor }) {
                     <Button
                       isDisabled={!userName || !password}
                       mt="2"
-                      bg="hemoButton"
+                      background="linear-gradient(to right, #b50000, #cacaca)"
                       boxShadow="xl"
+                      backgroundSize="200% 200%" 
                       isLoading={props.isSubmitting}
+                      rounded="3xl"
                       color="white"
                       type="submit"
-                      _hover={{ bg: "hemoSecondary" }}
+                      
+                      _hover={{
+                        transform: "scale(1.1)",
+                        animation: "moveGradient 2s linear infinite",
+                      }}
                       _disabled={{
                         cursor: "not-allowed",
                         bg: "hemoButtonDisabled",
                         color: "white",
+                      }}
+                      transition="all 0.5s ease-in-out"
+                      sx={{
+                        "@keyframes moveGradient": {
+                          "0%": {
+                            backgroundPosition: "0% 50%",
+                          },
+                          "50%": {
+                            backgroundPosition: "100% 50%",
+                          },
+                          "100%": {
+                            backgroundPosition: "0% 50%",
+                          },
+                        },
                       }}
                     >
                       Entrar
@@ -197,24 +226,30 @@ function Login({ loginType, isDonor }) {
                   </Flex>
                 </FormControl>
               </Form>
-            </Box>
+            </Flex>
 
-            <Box
-              display={["none", "none", "block", "block"]}
+            <Flex
+              display={["none", "none", "none", "flex"]}
               p="1"
               border="1px"
               borderColor="hemoPrimary"
               color="white"
               borderRadius="xl"
+              flex="2"
+              justify="center"
+              backgroundImage="url('images/salvarVidas.jpeg')"
+              backgroundSize="cover"
+              backgroundPosition="center"
+              h="50%"
+              mr={10}
             >
-              <Image
+              {/* <Image
                 borderRadius="143px"
                 boxSize="450px"
                 objectFit="cover"
-                src="images/saveLives.png"
-                
-              />
-            </Box>
+                src="images/salvarVidas.jpeg"
+              /> */}
+            </Flex>
           </Flex>
         )}
       </Formik>

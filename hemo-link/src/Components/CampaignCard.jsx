@@ -17,7 +17,7 @@ import {
   useToast,
   Link,
 } from "@chakra-ui/react";
-import { PiHeartbeat } from "react-icons/pi";
+import { FaHeartBroken } from "react-icons/fa";
 import { motion } from "framer-motion";
 import moment from "moment";
 import "moment/locale/pt";
@@ -29,6 +29,7 @@ import {
 import { useState } from "react";
 import mapsUrl from "../helpers/googleMapsUrlFormatting";
 import { TfiLocationPin } from "react-icons/tfi";
+import HeartBeatIcon from "../assets/Icons/HeartBeatIcon";
 
 const MotionBox = motion(Box);
 
@@ -219,14 +220,12 @@ function CampaignCard({ props, isSubscribed, onSubscribe, onCancel, subscribedCa
                     <Button
                       type="submit"
                       color="textInput"
+                      rightIcon={<HeartBeatIcon />}
                       onClick={() => handleDonorSubscription(props.id)}
                       isLoading={isFetching}
                       isDisabled= {subscribedCampaignId !== null && subscribedCampaignId !== props.id}
                     >
                       Quero Doar
-                      <Box alignSelf="center" ml={1} color="hemoSecondary">
-                        <PiHeartbeat />
-                      </Box>
                     </Button>
                   ) : (
                     <Button
@@ -234,11 +233,10 @@ function CampaignCard({ props, isSubscribed, onSubscribe, onCancel, subscribedCa
                       color="textInput"
                       onClick={cancelSubscription}
                       isLoading={isFetching}
-                     // isDisabled={isSubscribed}
                     >
                       Cancelar
                       <Box alignSelf="center" ml={1} color="hemoSecondary">
-                        <PiHeartbeat />
+                        <FaHeartBroken />
                       </Box>
                     </Button>
                   )}

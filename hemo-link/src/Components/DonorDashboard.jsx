@@ -130,7 +130,7 @@ function DonorDashboard({ title }) {
             size="md"
             mt={3}
             textAlign="center"
-            bgColor={subscribedCampaignId ? "hemoSuccess" : "hemoSecondary"}
+            bgColor={subscribedCampaignId ? "hemoSuccess" : "headerColor"}
             color="hemoTerciary"
             minW="300px"
             maxWidth="600px"
@@ -200,7 +200,7 @@ function DonorDashboard({ title }) {
                 color="hemoPrimary"
                 fontSize="xl"
                 _hover={{
-                  bgColor: "hemoCardBackground",
+                  bg: "hemoCardBackground",
                   color: "hemoSecondary",
                 }}
               >

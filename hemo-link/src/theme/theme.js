@@ -4,9 +4,9 @@ const theme = extendTheme({
   colors: {
     hemoPrimary: "#ededed",
     hemoPrimaryDisabled: "#d3363685",
-    hemoSecondary: "#d33636",
+    hemoSecondary: "#930c0c",
     hemoPrimaryHover: "#c0c0c0",
-    headerColor: "#d33636",
+    headerColor: "#b50000",
     textInput: "#4a4a4a",
     hemoButton: "#ef5350", 
     hemoButtonDisabled: "#cacaca",
