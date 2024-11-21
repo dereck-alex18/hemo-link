@@ -15,15 +15,32 @@ import { getAllLocalStorageItems } from "../helpers/handleAuthentication";
 import CustomDivider from "./CustomDivider";
 import { Link } from "react-router-dom";
 import { IoChevronBack } from "react-icons/io5";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import { useDocumentTitle } from "./UseDocumentTitle";
+import ReactPaginate from "react-paginate";
+import { GrCaretPrevious, GrCaretNext } from "react-icons/gr";
+
 
 const MotionBox = motion(Box);
 
 function SubscribedDonors({ title }) {
   const [donorsSubscribed, setDonorsSubscribed] = useState([]);
   const [isFetching, setIsFetching] = useState(false);
+  const [currentItems, setCurrentItems] = useState([]);
+  const [pageCount, setPageCount] = useState(0);
+  const itemsPerPage = 3;
   useDocumentTitle(title);
+
+  const handlePageClick = (event) => {
+    const newOffset = event.selected * itemsPerPage;
+    setCurrentItems(donorsSubscribed.slice(newOffset, newOffset + itemsPerPage));
+  };
+
+  useEffect(() => {
+    setPageCount(Math.ceil(donorsSubscribed.length / itemsPerPage));
+    setCurrentItems(donorsSubscribed.slice(0, itemsPerPage));
+  }, [donorsSubscribed]);
+ 
   useEffect(() => {
     const handleSubscribedDonors = async () => {
       setIsFetching(true);
@@ -86,6 +103,17 @@ function SubscribedDonors({ title }) {
             boxShadow="xl"
             borderRadius="md"
           >
+             <AnimatePresence mode="wait">
+              <MotionBox
+                key={currentItems.map((item) => item.id).join("-")}
+                initial={{ rotateY: 90 }}
+                animate={{ rotateY: 0 }}
+                exit={{ rotateY: -90 }}
+                transition={{
+                  duration: 0.5,
+                  ease: "easeInOut",
+                }}
+              >
             <Grid
               templateColumns={[
                 "repeat(1, 1fr)",
@@ -95,13 +123,52 @@ function SubscribedDonors({ title }) {
               ]}
               gap={["5", "10", "10"]}
             >
-              {donorsSubscribed.map((donorSubscribed, index) => (
+              {currentItems.map((donorSubscribed, index) => (
                 <GridItem>
                   <SubscribedDonorsCard key={index} props={donorSubscribed} />
                 </GridItem>
               ))}
             </Grid>
+            </MotionBox>
+            </AnimatePresence>
           </Flex>
+
+          <ReactPaginate
+            breakLabel="..."
+            nextLabel={
+              <Button
+                bgColor="hemoSecondary"
+                color="hemoPrimary"
+                fontSize="xl"
+                _hover={{
+                  bgColor: "hemoCardBackground",
+                  color: "hemoSecondary",
+                }}
+              >
+                <GrCaretNext />
+              </Button>
+            }
+            onPageChange={handlePageClick}
+            pageRangeDisplayed={3}
+            pageCount={pageCount}
+            previousLabel={
+              <Button
+                bgColor="hemoSecondary"
+                color="hemoPrimary"
+                fontSize="xl"
+                _hover={{
+                  bgColor: "hemoCardBackground",
+                  color: "hemoSecondary",
+                }}
+              >
+                <GrCaretPrevious />
+              </Button>
+            }
+            containerClassName="pagination"
+            activeClassName="active"
+            pageClassName="pagination-item"
+            pageLinkClassName="pagination-link"
+          />
         </>
       )}
       {isFetching && (

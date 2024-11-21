@@ -175,7 +175,7 @@ function DonorDashboard({ title }) {
                   ]}
                   gap={["5", "10", "10", "20"]}
                 >
-                  {currentItems.map((campaing, index) => (
+                  {currentItems.map((campaing) => (
                     <GridItem>
                       <CampaignCard
                         key={campaing.id}
