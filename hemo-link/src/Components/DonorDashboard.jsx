@@ -146,8 +146,8 @@ function DonorDashboard({ title }) {
           </MotionBox>
           <Flex
             justify="center"
-            mt={["5", "5", "10", "10"]}
-            mb={["5", "5", "10", "10"]}
+            mt={["5", "5", "7", "7"]}
+            mb={["5", "5", "8", "8"]}
             bg="hemoCardBackground"
             width={["100%", "100%", "80%", "80%"]}
             m="auto"

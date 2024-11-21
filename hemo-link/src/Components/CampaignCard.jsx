@@ -141,7 +141,7 @@ function CampaignCard({ props, isSubscribed, onSubscribe, onCancel, subscribedCa
           p="5"
           color="hemoTerciary"
           minWidth={["350px", "350px", "350px", "sm"]}
-          minHeight="504px"
+          minHeight="564px"
           boxShadow="dark-lg"
         >
           <CardHeader>
@@ -205,7 +205,7 @@ function CampaignCard({ props, isSubscribed, onSubscribe, onCancel, subscribedCa
                 <Button color="hemoSecondary" rightIcon={<TfiLocationPin />}>
                   <Link
                     color="textInput"
-                    href={mapsUrl(props.address)}
+                    href={mapsUrl(props.address, props.cep)}
                     _hover={{
                       textDecoration: "none",
                     }}

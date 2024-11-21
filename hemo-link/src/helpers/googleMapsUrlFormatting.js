@@ -1,5 +1,5 @@
 import { googleMaps } from "./constants"
 
-export default function mapsUrl(address){
-    return `${googleMaps}${encodeURIComponent(address)}`
+export default function mapsUrl(address, cep){
+    return `${googleMaps}${encodeURIComponent(address)},${encodeURIComponent(cep)}`;
 }
