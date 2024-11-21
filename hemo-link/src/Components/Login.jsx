@@ -211,7 +211,7 @@ function Login({ loginType, isDonor }) {
                 borderRadius="143px"
                 boxSize="450px"
                 objectFit="cover"
-                src="src/assets/images/saveLives.png"
+                src="images/saveLives.png"
                 
               />
             </Box>
