@@ -130,7 +130,7 @@ function DonorDashboard({ title }) {
             size="md"
             mt={3}
             textAlign="center"
-            bgColor={subscribedCampaignId ? "hemoSuccess" : "hemoSecondary"}
+            bgColor={subscribedCampaignId ? "hemoSuccess" : "headerColor"}
             color="hemoTerciary"
             minW="300px"
             maxWidth="600px"
@@ -146,8 +146,8 @@ function DonorDashboard({ title }) {
           </MotionBox>
           <Flex
             justify="center"
-            mt={["5", "5", "10", "10"]}
-            mb={["5", "5", "10", "10"]}
+            mt={["5", "5", "7", "7"]}
+            mb={["5", "5", "8", "8"]}
             bg="hemoCardBackground"
             width={["100%", "100%", "80%", "80%"]}
             m="auto"
@@ -200,7 +200,7 @@ function DonorDashboard({ title }) {
                 color="hemoPrimary"
                 fontSize="xl"
                 _hover={{
-                  bgColor: "hemoCardBackground",
+                  bg: "hemoCardBackground",
                   color: "hemoSecondary",
                 }}
               >
