@@ -7,6 +7,7 @@ import {
   Spinner,
   Heading,
   Box,
+  Button,
 } from "@chakra-ui/react";
 import CampaignCard from "./CampaignCard";
 import { getCampaigns } from "../api/campaigns";
@@ -15,11 +16,21 @@ import { getDonorCampaignId } from "../api/donor";
 import { getClinic } from "../api/clinic";
 import CustomDivider from "./CustomDivider";
 import { useDocumentTitle } from "./UseDocumentTitle";
+import ReactPaginate from "react-paginate";
+import { GrCaretPrevious, GrCaretNext } from "react-icons/gr";
+import { AnimatePresence, motion } from "framer-motion";
+
+const MotionBox = motion(Box);
 
 function DonorDashboard({ title }) {
   const [allCampaings, setCampaings] = useState([]);
   const [isFetching, setIsFetching] = useState(false);
+  const [currentItems, setCurrentItems] = useState([]);
+  const [subscribedCampaigns, setSubscribedCampaigns] = useState({});
+  const [pageCount, setPageCount] = useState(0);
+  const [subscribedCampaignId, setSubscribedCampaignId] = useState(null);
   const id = getAllLocalStorageItems().id;
+  const itemsPerPage = 3;
 
   const getClinicNames = (clinics, campaignId) => {
     for (let clinic of clinics) {
@@ -28,6 +39,28 @@ function DonorDashboard({ title }) {
       }
     }
   };
+
+  const handlePageClick = (event) => {
+    const newOffset = event.selected * itemsPerPage;
+    setCurrentItems(allCampaings.slice(newOffset, newOffset + itemsPerPage));
+  };
+
+  const handleDonorSubscription = (campaignId) => {
+    setSubscribedCampaigns((prevState) => ({
+      ...prevState,
+      [campaignId]: true,
+    }));
+    setSubscribedCampaignId(campaignId);
+  };
+
+  const cancelSubscription = (campaignId) => {
+    setSubscribedCampaigns((prevState) => ({
+      ...prevState,
+      [campaignId]: false,
+    }));
+    setSubscribedCampaignId(null);
+  };
+
   useDocumentTitle(title);
   useEffect(() => {
     const handleCampaingsRequest = async () => {
@@ -45,11 +78,13 @@ function DonorDashboard({ title }) {
       let donorCampaignId;
       if (donorCampaign) {
         donorCampaignId = donorCampaign.user.campaignId;
+        setSubscribedCampaignId(donorCampaignId);
       }
       if (campaings) {
         campaings.forEach((campaing) => {
           if (campaing.id == donorCampaignId) {
             campaing.donorCampaignId = donorCampaignId;
+            handleDonorSubscription(donorCampaignId);
           }
         });
         const sortedCampaigns = campaings.sort((a, b) => {
@@ -64,6 +99,11 @@ function DonorDashboard({ title }) {
     handleCampaingsRequest();
   }, []);
 
+  useEffect(() => {
+    setPageCount(Math.ceil(allCampaings.length / itemsPerPage));
+    setCurrentItems(allCampaings.slice(0, itemsPerPage));
+  }, [allCampaings]);
+
   return (
     <>
       {allCampaings.length > 0 && (
@@ -72,12 +112,38 @@ function DonorDashboard({ title }) {
             textAlign="center"
             color="textInput"
             size={["xl", "xl", "2xl", "2xl"]}
-            mt={10}
+            mt={5}
             mb={15}
           >
             Campanhas Ativas
           </Heading>
           <CustomDivider />
+          <MotionBox
+          key={subscribedCampaignId}
+          initial={{ rotateY: 180 }}
+          animate={{ rotateY: 0 }}
+          exit={{ rotateY: -180 }}
+            transition={{ duration: 0.3, ease: "easeInOut" }}
+          >
+          <Heading
+            
+            size="md"
+            mt={3}
+            textAlign="center"
+            bgColor={subscribedCampaignId ? "hemoSuccess" : "hemoSecondary"}
+            color="hemoTerciary"
+            minW="300px"
+            maxWidth="600px"
+            margin="10px auto"
+            rounded={["sm", "sm", "md"]}
+            p={2}
+            boxShadow="dark-lg"
+          >
+            {subscribedCampaignId
+              ? "Voce esta inscrito em uma campanha."
+              : "Se inscreva em uma campanha para salvar vidas!"}
+          </Heading>
+          </MotionBox>
           <Flex
             justify="center"
             mt={["5", "5", "10", "10"]}
@@ -89,22 +155,79 @@ function DonorDashboard({ title }) {
             boxShadow="xl"
             borderRadius="md"
           >
-            <Grid
-              templateColumns={[
-                "repeat(1, 1fr)",
-                "repeat(1, 1fr)",
-                "repeat(1, 1fr)",
-                "repeat(3, 1fr)",
-              ]}
-              gap={["5", "10", "10", "20"]}
-            >
-              {allCampaings.map((campaing, index) => (
-                <GridItem>
-                  <CampaignCard key={index} props={campaing} />
-                </GridItem>
-              ))}
-            </Grid>
+            <AnimatePresence mode="wait">
+              <MotionBox
+                key={currentItems.map((item) => item.id).join("-")}
+                initial={{ rotateY: 90 }}
+                animate={{ rotateY: 0 }}
+                exit={{ rotateY: -90 }}
+                transition={{
+                  duration: 0.5,
+                  ease: "easeInOut",
+                }}
+              >
+                <Grid
+                  templateColumns={[
+                    "repeat(1, 1fr)",
+                    "repeat(1, 1fr)",
+                    "repeat(1, 1fr)",
+                    "repeat(3, 1fr)",
+                  ]}
+                  gap={["5", "10", "10", "20"]}
+                >
+                  {currentItems.map((campaing) => (
+                    <GridItem>
+                      <CampaignCard
+                        key={campaing.id}
+                        props={campaing}
+                        isSubscribed={subscribedCampaigns[campaing.id] || false}
+                        onSubscribe={handleDonorSubscription}
+                        onCancel={cancelSubscription}
+                        subscribedCampaignId={subscribedCampaignId}
+                      />
+                    </GridItem>
+                  ))}
+                </Grid>
+              </MotionBox>
+            </AnimatePresence>
           </Flex>
+
+          <ReactPaginate
+            breakLabel="..."
+            nextLabel={
+              <Button
+                bgColor="hemoSecondary"
+                color="hemoPrimary"
+                fontSize="xl"
+                _hover={{
+                  bgColor: "hemoCardBackground",
+                  color: "hemoSecondary",
+                }}
+              >
+                <GrCaretNext />
+              </Button>
+            }
+            onPageChange={handlePageClick}
+            pageRangeDisplayed={3}
+            pageCount={pageCount}
+            previousLabel={
+              <Button
+                bgColor="hemoSecondary"
+                color="hemoPrimary"
+                fontSize="xl"
+                _hover={{
+                  bgColor: "hemoCardBackground",
+                  color: "hemoSecondary",
+                }}
+              >
+                <GrCaretPrevious />
+              </Button>
+            }
+            containerClassName="pagination"
+            activeClassName="active"
+            pageClassName="pagination-item"
+            pageLinkClassName="pagination-link"
+          />
         </>
       )}
       {isFetching && (

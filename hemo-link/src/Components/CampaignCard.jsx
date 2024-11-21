@@ -32,12 +32,12 @@ import { TfiLocationPin } from "react-icons/tfi";
 
 const MotionBox = motion(Box);
 
-function CampaignCard({ props }) {
+function CampaignCard({ props, isSubscribed, onSubscribe, onCancel, subscribedCampaignId }) {
   const [isFetching, setIsFetching] = useState(false);
-  const [campaignId, setCampaignId] = useState(props.donorCampaignId);
   const [subscribedColor, setSubscribedColor] = useState(
-    campaignId ? "hemoSuccess" : "hemoSecondary"
+    isSubscribed ? "hemoSuccess" : "hemoSecondary"
   );
+  
   const toast = useToast();
   const id = getAllLocalStorageItems().id;
   const popoverTrigger = useBreakpointValue({
@@ -59,8 +59,8 @@ function CampaignCard({ props }) {
     try {
       const response = await subscribeDonorToCampaign(donorAndCampaignIds);
       if (response.id) {
-        setCampaignId(response.campaignId);
         setSubscribedColor("hemoSuccess");
+        onSubscribe(props.id);
         toast({
           title: "Inscrição realizada com sucesso!",
           description: "Agora é só aguardar o contato da clinica.",
@@ -99,8 +99,8 @@ function CampaignCard({ props }) {
     try {
       const response = await cancelDonorSubscription(id);
       if (response.id) {
-        setCampaignId(null);
         setSubscribedColor("hemoSecondary");
+        onCancel(props.id);
         toast({
           title: "Inscrição cancelada com sucesso!",
           description: "Agora você pode se inscrever em outra campanha",
@@ -141,7 +141,7 @@ function CampaignCard({ props }) {
           p="5"
           color="hemoTerciary"
           minWidth={["350px", "350px", "350px", "sm"]}
-          minHeight="480px"
+          minHeight="504px"
           boxShadow="dark-lg"
         >
           <CardHeader>
@@ -215,12 +215,13 @@ function CampaignCard({ props }) {
                   </Link>
                 </Button>
                 <Box>
-                  {campaignId != props.id ? (
+                  {!isSubscribed ? (
                     <Button
                       type="submit"
                       color="textInput"
                       onClick={() => handleDonorSubscription(props.id)}
                       isLoading={isFetching}
+                      isDisabled= {subscribedCampaignId !== null && subscribedCampaignId !== props.id}
                     >
                       Quero Doar
                       <Box alignSelf="center" ml={1} color="hemoSecondary">
@@ -233,6 +234,7 @@ function CampaignCard({ props }) {
                       color="textInput"
                       onClick={cancelSubscription}
                       isLoading={isFetching}
+                     // isDisabled={isSubscribed}
                     >
                       Cancelar
                       <Box alignSelf="center" ml={1} color="hemoSecondary">
