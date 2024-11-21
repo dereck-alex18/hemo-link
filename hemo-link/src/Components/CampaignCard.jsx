@@ -32,11 +32,12 @@ import { TfiLocationPin } from "react-icons/tfi";
 
 const MotionBox = motion(Box);
 
-function CampaignCard({ props, isSubscribed, onSubscribe, onCancel }) {
+function CampaignCard({ props, isSubscribed, onSubscribe, onCancel, subscribedCampaignId }) {
   const [isFetching, setIsFetching] = useState(false);
   const [subscribedColor, setSubscribedColor] = useState(
     isSubscribed ? "hemoSuccess" : "hemoSecondary"
   );
+  
   const toast = useToast();
   const id = getAllLocalStorageItems().id;
   const popoverTrigger = useBreakpointValue({
@@ -220,6 +221,7 @@ function CampaignCard({ props, isSubscribed, onSubscribe, onCancel }) {
                       color="textInput"
                       onClick={() => handleDonorSubscription(props.id)}
                       isLoading={isFetching}
+                      isDisabled= {subscribedCampaignId !== null && subscribedCampaignId !== props.id}
                     >
                       Quero Doar
                       <Box alignSelf="center" ml={1} color="hemoSecondary">
@@ -232,6 +234,7 @@ function CampaignCard({ props, isSubscribed, onSubscribe, onCancel }) {
                       color="textInput"
                       onClick={cancelSubscription}
                       isLoading={isFetching}
+                     // isDisabled={isSubscribed}
                     >
                       Cancelar
                       <Box alignSelf="center" ml={1} color="hemoSecondary">

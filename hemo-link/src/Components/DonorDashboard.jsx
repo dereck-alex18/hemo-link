@@ -28,6 +28,7 @@ function DonorDashboard({ title }) {
   const [currentItems, setCurrentItems] = useState([]);
   const [subscribedCampaigns, setSubscribedCampaigns] = useState({});
   const [pageCount, setPageCount] = useState(0);
+  const [subscribedCampaignId, setSubscribedCampaignId] = useState(null);
   const id = getAllLocalStorageItems().id;
   const itemsPerPage = 3;
 
@@ -49,6 +50,7 @@ function DonorDashboard({ title }) {
       ...prevState,
       [campaignId]: true, 
     }));
+    setSubscribedCampaignId(campaignId);
   };
 
   const cancelSubscription = (campaignId) => {
@@ -56,6 +58,7 @@ function DonorDashboard({ title }) {
       ...prevState,
       [campaignId]: false, 
     }));
+    setSubscribedCampaignId(null);
   };
 
   useDocumentTitle(title);
@@ -156,6 +159,7 @@ function DonorDashboard({ title }) {
                     isSubscribed={subscribedCampaigns[campaing.id] || false}
                     onSubscribe={handleDonorSubscription}
                     onCancel={cancelSubscription}
+                    subscribedCampaignId={subscribedCampaignId}
                   />
                 </GridItem>
               ))}
