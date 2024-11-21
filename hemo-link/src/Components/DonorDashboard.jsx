@@ -48,7 +48,7 @@ function DonorDashboard({ title }) {
   const handleDonorSubscription = (campaignId) => {
     setSubscribedCampaigns((prevState) => ({
       ...prevState,
-      [campaignId]: true, 
+      [campaignId]: true,
     }));
     setSubscribedCampaignId(campaignId);
   };
@@ -56,7 +56,7 @@ function DonorDashboard({ title }) {
   const cancelSubscription = (campaignId) => {
     setSubscribedCampaigns((prevState) => ({
       ...prevState,
-      [campaignId]: false, 
+      [campaignId]: false,
     }));
     setSubscribedCampaignId(null);
   };
@@ -78,6 +78,7 @@ function DonorDashboard({ title }) {
       let donorCampaignId;
       if (donorCampaign) {
         donorCampaignId = donorCampaign.user.campaignId;
+        setSubscribedCampaignId(donorCampaignId);
       }
       if (campaings) {
         campaings.forEach((campaing) => {
@@ -111,12 +112,38 @@ function DonorDashboard({ title }) {
             textAlign="center"
             color="textInput"
             size={["xl", "xl", "2xl", "2xl"]}
-            mt={10}
+            mt={5}
             mb={15}
           >
             Campanhas Ativas
           </Heading>
           <CustomDivider />
+          <MotionBox
+          key={subscribedCampaignId}
+          initial={{ rotateY: 180 }}
+          animate={{ rotateY: 0 }}
+          exit={{ rotateY: -180 }}
+            transition={{ duration: 0.3, ease: "easeInOut" }}
+          >
+          <Heading
+            
+            size="md"
+            mt={3}
+            textAlign="center"
+            bgColor={subscribedCampaignId ? "hemoSuccess" : "hemoSecondary"}
+            color="hemoTerciary"
+            minW="300px"
+            maxWidth="600px"
+            margin="10px auto"
+            rounded={["sm", "sm", "md"]}
+            p={2}
+            boxShadow="dark-lg"
+          >
+            {subscribedCampaignId
+              ? "Voce esta inscrito em uma campanha."
+              : "Se inscreva em uma campanha para salvar vidas!"}
+          </Heading>
+          </MotionBox>
           <Flex
             justify="center"
             mt={["5", "5", "10", "10"]}
@@ -128,44 +155,40 @@ function DonorDashboard({ title }) {
             boxShadow="xl"
             borderRadius="md"
           >
-              <AnimatePresence mode="wait">
+            <AnimatePresence mode="wait">
               <MotionBox
-                key={currentItems.map(item => item.id).join('-')}
-                initial={{ rotateY: 90 }} 
-                animate={{ rotateY: 0 }} 
-                exit={{ rotateY: -90 }} 
+                key={currentItems.map((item) => item.id).join("-")}
+                initial={{ rotateY: 90 }}
+                animate={{ rotateY: 0 }}
+                exit={{ rotateY: -90 }}
                 transition={{
-                  duration: 0.8, 
-                  ease: 'easeInOut',
+                  duration: 0.5,
+                  ease: "easeInOut",
                 }}
               >
-            <Grid
-              templateColumns={[
-                "repeat(1, 1fr)",
-                "repeat(1, 1fr)",
-                "repeat(1, 1fr)",
-                "repeat(3, 1fr)",
-              ]}
-              gap={["5", "10", "10", "20"]}
-            >
-            
-
-            
-              {currentItems.map((campaing, index) => (
-                <GridItem>
-                  <CampaignCard
-                    key={campaing.id}
-                    props={campaing}
-                    isSubscribed={subscribedCampaigns[campaing.id] || false}
-                    onSubscribe={handleDonorSubscription}
-                    onCancel={cancelSubscription}
-                    subscribedCampaignId={subscribedCampaignId}
-                  />
-                </GridItem>
-              ))}
-               
-            </Grid>
-            </MotionBox>
+                <Grid
+                  templateColumns={[
+                    "repeat(1, 1fr)",
+                    "repeat(1, 1fr)",
+                    "repeat(1, 1fr)",
+                    "repeat(3, 1fr)",
+                  ]}
+                  gap={["5", "10", "10", "20"]}
+                >
+                  {currentItems.map((campaing, index) => (
+                    <GridItem>
+                      <CampaignCard
+                        key={campaing.id}
+                        props={campaing}
+                        isSubscribed={subscribedCampaigns[campaing.id] || false}
+                        onSubscribe={handleDonorSubscription}
+                        onCancel={cancelSubscription}
+                        subscribedCampaignId={subscribedCampaignId}
+                      />
+                    </GridItem>
+                  ))}
+                </Grid>
+              </MotionBox>
             </AnimatePresence>
           </Flex>
 
