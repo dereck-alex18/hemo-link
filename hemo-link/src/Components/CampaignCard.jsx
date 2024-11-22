@@ -33,12 +33,18 @@ import HeartBeatIcon from "../assets/Icons/HeartBeatIcon";
 
 const MotionBox = motion(Box);
 
-function CampaignCard({ props, isSubscribed, onSubscribe, onCancel, subscribedCampaignId }) {
+function CampaignCard({
+  props,
+  isSubscribed,
+  onSubscribe,
+  onCancel,
+  subscribedCampaignId,
+}) {
   const [isFetching, setIsFetching] = useState(false);
   const [subscribedColor, setSubscribedColor] = useState(
     isSubscribed ? "hemoSuccess" : "hemoSecondary"
   );
-  
+
   const toast = useToast();
   const id = getAllLocalStorageItems().id;
   const popoverTrigger = useBreakpointValue({
@@ -146,10 +152,8 @@ function CampaignCard({ props, isSubscribed, onSubscribe, onCancel, subscribedCa
           boxShadow="dark-lg"
         >
           <CardHeader>
-          <Heading size={["lg", "xl", "xl", "lg"]} textAlign="center">
-              <Text>
-              {props.clinicName}{" "}
-              </Text>
+            <Heading size={["lg", "xl", "xl", "lg"]} textAlign="center">
+              <Text>{props.clinicName} </Text>
             </Heading>
 
             <Popover trigger={popoverTrigger} placement="top">
@@ -163,7 +167,7 @@ function CampaignCard({ props, isSubscribed, onSubscribe, onCancel, subscribedCa
               </PopoverTrigger>
               <PopoverContent>
                 <PopoverBody>
-                <Text color="textInput">{props.title}</Text>
+                  <Text color="textInput">{props.title}</Text>
                   <Text color="textInput">{props.description}</Text>
                 </PopoverBody>
               </PopoverContent>
@@ -191,10 +195,7 @@ function CampaignCard({ props, isSubscribed, onSubscribe, onCancel, subscribedCa
               Horário: <Text as="b">08:00 às 17:00</Text>
             </Text>
             <Text mb="2">
-              Endereço:{" "}
-              <Text as="b">
-                {props.address}
-              </Text>
+              Endereço: <Text as="b">{props.address}</Text>
             </Text>
           </CardBody>
 
@@ -206,17 +207,18 @@ function CampaignCard({ props, isSubscribed, onSubscribe, onCancel, subscribedCa
                 gap={4}
                 flexDirection="column"
               >
-                <Button color="hemoSecondary" rightIcon={<TfiLocationPin />}>
-                  <Link
-                    color="textInput"
-                    href={mapsUrl(props.address, props.cep)}
-                    _hover={{
-                      textDecoration: "none",
-                    }}
-                    isExternal
-                  >
-                    Como chegar
-                  </Link>
+                <Button
+                 // bgColor="hemoSecondary"
+                  as={Link}
+                  rightIcon={<TfiLocationPin color="#930c0c" />}
+                  color="textInput"
+                  href={mapsUrl(props.address, props.cep)}
+                  _hover={{
+                    textDecoration: "none",
+                  }}
+                  isExternal
+                >
+                  Como chegar
                 </Button>
                 <Box>
                   {!isSubscribed ? (
@@ -226,7 +228,10 @@ function CampaignCard({ props, isSubscribed, onSubscribe, onCancel, subscribedCa
                       rightIcon={<HeartBeatIcon />}
                       onClick={() => handleDonorSubscription(props.id)}
                       isLoading={isFetching}
-                      isDisabled= {subscribedCampaignId !== null && subscribedCampaignId !== props.id}
+                      isDisabled={
+                        subscribedCampaignId !== null &&
+                        subscribedCampaignId !== props.id
+                      }
                     >
                       Quero Doar
                     </Button>
