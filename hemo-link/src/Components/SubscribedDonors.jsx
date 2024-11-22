@@ -82,22 +82,20 @@ function SubscribedDonors({ title }) {
               </Button>
             </Link>
           </Flex>
+          <Flex align="center" justify="flex-start" direction="column" gap={5}>
           <Heading
             textAlign="center"
             color="textInput"
             size={["xl", "xl", "2xl", "2xl"]}
-            mt={10}
-            mb={15}
           >
             Doadores Inscritos
           </Heading>
           <CustomDivider />
           <Flex
             justify="center"
-            mt={["5", "5", "10", "10"]}
-            mb={["5", "5", "10", "10"]}
             bg="hemoCardBackground"
-            width={["100%", "100%", "80%", "80%"]}
+            width="100%"
+            maxWidth="1400px"
             m="auto"
             p={10}
             boxShadow="xl"
@@ -122,9 +120,10 @@ function SubscribedDonors({ title }) {
                 "repeat(3, 1fr)",
               ]}
               gap={["8", "5", "5"]}
+             
             >
               {currentItems.map((donorSubscribed, index) => (
-                <GridItem>
+                <GridItem >
                   <SubscribedDonorsCard key={index} props={donorSubscribed} />
                 </GridItem>
               ))}
@@ -169,6 +168,7 @@ function SubscribedDonors({ title }) {
             pageClassName="pagination-item"
             pageLinkClassName="pagination-link"
           />
+          </Flex>
         </>
       )}
       {isFetching && (

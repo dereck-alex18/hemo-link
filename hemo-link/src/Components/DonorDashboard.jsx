@@ -108,12 +108,12 @@ function DonorDashboard({ title }) {
     <>
       {allCampaings.length > 0 && (
         <>
+        <Flex justify="flex-start" align="center" direction="column" gap={3}>
           <Heading
             textAlign="center"
             color="textInput"
             size={["xl", "xl", "2xl", "2xl"]}
             mt={5}
-            mb={15}
           >
             Campanhas Ativas
           </Heading>
@@ -128,7 +128,6 @@ function DonorDashboard({ title }) {
           <Heading
             
             size="md"
-            mt={3}
             textAlign="center"
             bgColor={subscribedCampaignId ? "hemoSuccess" : "headerColor"}
             color="hemoTerciary"
@@ -146,8 +145,6 @@ function DonorDashboard({ title }) {
           </MotionBox>
           <Flex
             justify="center"
-            mt={["5", "5", "7", "7"]}
-            mb={["5", "5", "8", "8"]}
             bg="hemoCardBackground"
             width="100%"
             maxWidth="1400px"
@@ -177,7 +174,7 @@ function DonorDashboard({ title }) {
                   gap={["5", "10", "10", "10"]}
                 >
                   {currentItems.map((campaing) => (
-                    <GridItem>
+                    <GridItem >
                       <CampaignCard
                         key={campaing.id}
                         props={campaing}
@@ -229,6 +226,7 @@ function DonorDashboard({ title }) {
             pageClassName="pagination-item"
             pageLinkClassName="pagination-link"
           />
+          </Flex>
         </>
       )}
       {isFetching && (

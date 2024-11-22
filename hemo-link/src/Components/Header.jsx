@@ -40,8 +40,13 @@ function Header() {
     onOpen: onCadastrarOpen,
     onClose: onCadastrarClose,
   } = useDisclosure();
+  const {
+    isOpen: isAuthOpen,
+    onOpen: onAuthOpen,
+    onClose: onAuthClose,
+  } = useDisclosure();
 
-  const username = getAllLocalStorageItems().name;
+  const { name, userType } = getAllLocalStorageItems();
 
   useEffect(() => {
     const handleStorageChange = () => {
@@ -81,6 +86,8 @@ function Header() {
                   rounded="full"
                   onMouseEnter={onEntrarOpen}
                   onMouseLeave={onEntrarClose}
+                  outline="none"
+                  _focus={{ boxShadow: "none" }}
                 >
                   Entrar
                 </MenuButton>
@@ -124,6 +131,7 @@ function Header() {
                   rounded="full"
                   onMouseEnter={onCadastrarOpen}
                   onMouseLeave={onCadastrarClose}
+                  _focus={{ boxShadow: "none" }}
                 >
                   Cadastrar
                 </MenuButton>
@@ -161,17 +169,72 @@ function Header() {
 
           {isAuthenticated && (
             <>
-              <Flex align="center" gap="5">
-                <Avatar
-                  name={username}
-                  size="md"
-                  color="hemoSecondary"
-                  backgroundColor="hemoPrimary"
-                />
-                <Text color="hemoPrimary" fontSize="xl">
-                  Bem vindo(a), {username}
-                </Text>
-                <Link to="/login-doador">
+              <Flex align="center" gap="1">
+                <Menu isOpen={isAuthOpen}>
+                  <MenuButton
+                    as={Button}
+                    bg="transparent"
+                    // color="headerColor"
+                    rounded="full"
+                    onMouseEnter={onAuthOpen}
+                    onMouseLeave={onAuthClose}
+                    border="none"
+                    outline="none"
+                    _hover={{ bg: "transparent" }}
+                    _focus={{ boxShadow: "none" }} // Removes blue outline
+                    _active={{ bg: "transparent" }}
+                  >
+                    <Flex align="center" justify="flex-start" gap={2}>
+                      <Avatar
+                        name={name}
+                        size="md"
+                        color="hemoSecondary"
+                        backgroundColor="hemoPrimary"
+                      />
+                      <Text color="hemoPrimary" fontSize="xl">
+                        Bem vindo(a), {name}
+                      </Text>
+                    </Flex>
+                  </MenuButton>
+
+                  <MenuList
+                    bg="transparent"
+                    color="headerColor"
+                    onMouseEnter={onAuthOpen}
+                    onMouseLeave={onAuthClose}
+                    border="none"
+                  >
+                    <MenuItem
+                      as={Link}
+                      to={
+                        userType === "donor"
+                          ? "/dashboard-doador"
+                          : "/dashboard-clinica"
+                      }
+                    >
+                      <Flex justify="center" align="center" gap={2}>
+                        Dashboard {userType === "donor" ? "Doador" : "Clinica"}
+                        {<RiUserHeartLine />}
+                      </Flex>
+                    </MenuItem>
+                    <MenuItem
+                      as={Link}
+                      to={
+                        userType === "donor"
+                          ? "/login-doador"
+                          : "/login-clinica"
+                      }
+                      onClick={handleLogout}
+                    >
+                      Sair
+                    </MenuItem>
+                  </MenuList>
+                </Menu>
+                {/* <Link
+                  to={
+                    userType == 'donor' ? (to = "/login-doador") : "login-clinica"
+                  }
+                >
                   <Button
                     bg="hemoPrimary"
                     color="headerColor"
@@ -183,7 +246,7 @@ function Header() {
                   >
                     Sair
                   </Button>
-                </Link>
+                </Link> */}
               </Flex>
             </>
           )}
@@ -280,12 +343,35 @@ function Header() {
                 {isAuthenticated && (
                   <>
                     <Avatar
-                      name={username}
+                      name={name}
                       size="md"
                       color="hemoSecondary"
                       backgroundColor="hemoPrimary"
                     />
-                    <Link to="/login-doador">
+                    <Link
+                      to={
+                        userType === "donor"
+                          ? "/dashboard-doador"
+                          : "dashboard-clinica"
+                      }
+                    >
+                      <Button
+                        bg="headerColor"
+                        color="hemoPrimary"
+                        textDecoration="underline"
+                        fontSize={["2xl", "3xl", "5xl", "5xl"]}
+                        onClick={() => {
+                          onClose();
+                        }}
+                      >
+                        Dashboard {userType === "donor" ? "Doador" : "Clinica"}
+                      </Button>
+                    </Link>
+                    <Link
+                      to={
+                        userType === "donor" ? "/login-doador" : "login-clinica"
+                      }
+                    >
                       <Button
                         bg="headerColor"
                         color="hemoPrimary"

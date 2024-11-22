@@ -46,9 +46,8 @@ function SubscribedDonorsCard({ props }) {
           bgColor="hemoSecondary"
           p="5"
           color="hemoTerciary"
-          maxW="sm"
-          minHeight="480px"
-          minWidth="293px"
+          width="100%"
+          height="100%"
           boxShadow="dark-lg"
         >
           <CardHeader>
