@@ -280,7 +280,7 @@ function Header() {
                 {isAuthenticated && (
                   <>
                     <Avatar
-                      name="Dereck Portela"
+                      name={username}
                       size="md"
                       color="hemoSecondary"
                       backgroundColor="hemoPrimary"
