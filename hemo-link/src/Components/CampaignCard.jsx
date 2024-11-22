@@ -147,7 +147,9 @@ function CampaignCard({ props, isSubscribed, onSubscribe, onCancel, subscribedCa
         >
           <CardHeader>
           <Heading size={["lg", "xl", "xl", "lg"]} textAlign="center">
+              <Text>
               {props.clinicName}{" "}
+              </Text>
             </Heading>
 
             <Popover trigger={popoverTrigger} placement="top">
