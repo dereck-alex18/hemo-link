@@ -98,8 +98,8 @@ function SubscribedDonors({ title }) {
             mb={["5", "5", "10", "10"]}
             bg="hemoCardBackground"
             width={["100%", "100%", "80%", "80%"]}
-        //    m="auto"
-           // p={10}
+            m="auto"
+            p={10}
             boxShadow="xl"
             borderRadius="md"
           >
