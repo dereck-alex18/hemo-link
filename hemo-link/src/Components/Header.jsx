@@ -22,6 +22,8 @@ import {
 } from "../helpers/handleAuthentication";
 import { useEffect, useState } from "react";
 import { RiUserHeartLine, RiHospitalLine } from "react-icons/ri";
+import { MdOutlineSpaceDashboard } from "react-icons/md";
+import { IoMdExit } from "react-icons/io";
 
 function Header() {
   const [isAuthenticated, setIsAuthenticated] = useState(
@@ -214,7 +216,7 @@ function Header() {
                     >
                       <Flex justify="center" align="center" gap={2}>
                         Dashboard {userType === "donor" ? "Doador" : "Clinica"}
-                        {<RiUserHeartLine />}
+                        {<MdOutlineSpaceDashboard />}
                       </Flex>
                     </MenuItem>
                     <MenuItem
@@ -226,27 +228,13 @@ function Header() {
                       }
                       onClick={handleLogout}
                     >
-                      Sair
+                      <Flex justify="center" align="center" gap={2}>
+                        Sair
+                        {<IoMdExit />}
+                      </Flex>
                     </MenuItem>
                   </MenuList>
                 </Menu>
-                {/* <Link
-                  to={
-                    userType == 'donor' ? (to = "/login-doador") : "login-clinica"
-                  }
-                >
-                  <Button
-                    bg="hemoPrimary"
-                    color="headerColor"
-                    py="6"
-                    px="10"
-                    rounded="full"
-                    onClick={handleLogout}
-                    _hover={{ bg: "hemoPrimaryHover" }}
-                  >
-                    Sair
-                  </Button>
-                </Link> */}
               </Flex>
             </>
           )}
