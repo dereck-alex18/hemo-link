@@ -11,7 +11,7 @@ import {
   useDisclosure,
 } from "@chakra-ui/react";
 import { Link, useNavigate } from "react-router-dom";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useDocumentTitle } from "./UseDocumentTitle";
 import { Formik, Field, Form } from "formik";
 import login from "../api/login";
@@ -24,6 +24,7 @@ function Login({ loginType, isDonor }) {
   const [password, setPassword] = useState("");
   const [modalContent, setModalContent] = useState({});
   const [successRegistration, setSuccessRegistration] = useState(false);
+  const [viewportHeight, setViewportHeight] = useState(window.innerHeight);
   const registerUrl = isDonor ? "/cadastro-doador" : "/cadastro-clinica";
   const { isOpen, onOpen, onClose } = useDisclosure();
   const navigate = useNavigate();
@@ -43,6 +44,18 @@ function Login({ loginType, isDonor }) {
     };
     return initialValues;
   };
+
+  useEffect(() => {
+    // Function to update height on resize
+    const updateHeight = () => setViewportHeight(window.innerHeight);
+
+    // Listen to the resize event
+    window.addEventListener('resize', updateHeight);
+
+    // Cleanup event listener on component unmount
+    return () => window.removeEventListener('resize', updateHeight);
+  }, []);
+
 
   const handleSubmit = async (values, actions) => {
     actions.setSubmitting(true);
@@ -96,7 +109,7 @@ function Login({ loginType, isDonor }) {
       >
         {(props) => (
           <Flex
-            height={["90vh", "90vh", "92vh"]}
+            height={[{viewportHeight}, {viewportHeight}, "92vh"]}
             bg="hemoPrimary"
             justify="space-around"
             align="center"

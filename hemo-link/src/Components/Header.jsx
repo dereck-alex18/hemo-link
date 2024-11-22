@@ -177,7 +177,7 @@ function Header() {
                     color="headerColor"
                     py="6"
                     px="10"
-                    borderRadius="23"
+                    rounded="full"
                     onClick={handleLogout}
                     _hover={{ bg: "hemoPrimaryHover" }}
                   >
