@@ -18,7 +18,6 @@ import login from "../api/login";
 import AppModal from "./AppModal";
 import { loginTokenHandling } from "../helpers/handleAuthentication";
 
-
 function Login({ loginType, isDonor }) {
   const [userName, setUserName] = useState("");
   const [password, setPassword] = useState("");
@@ -46,16 +45,12 @@ function Login({ loginType, isDonor }) {
   };
 
   useEffect(() => {
-    // Function to update height on resize
-    const updateHeight = () => setViewportHeight(window.innerHeight);
+    document.body.style.overflow = "hidden";
 
-    // Listen to the resize event
-    window.addEventListener('resize', updateHeight);
-
-    // Cleanup event listener on component unmount
-    return () => window.removeEventListener('resize', updateHeight);
+    return () => {
+      document.body.style.overflow = "auto";
+    };
   }, []);
-
 
   const handleSubmit = async (values, actions) => {
     actions.setSubmitting(true);
@@ -109,7 +104,7 @@ function Login({ loginType, isDonor }) {
       >
         {(props) => (
           <Flex
-            height={[{viewportHeight}, {viewportHeight}, "92vh"]}
+            height={["90vh", "90vh", "92vh"]}
             bg="hemoPrimary"
             justify="space-around"
             align="center"
@@ -195,12 +190,11 @@ function Login({ loginType, isDonor }) {
                       mt="2"
                       background="linear-gradient(to right, #b50000, #cacaca)"
                       boxShadow="xl"
-                      backgroundSize="200% 200%" 
+                      backgroundSize="200% 200%"
                       isLoading={props.isSubmitting}
                       rounded="3xl"
                       color="white"
                       type="submit"
-                      
                       _hover={{
                         transform: "scale(1.1)",
                         animation: "moveGradient 2s linear infinite",
