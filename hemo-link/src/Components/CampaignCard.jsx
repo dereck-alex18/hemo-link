@@ -141,19 +141,19 @@ function CampaignCard({ props, isSubscribed, onSubscribe, onCancel, subscribedCa
           bgColor={subscribedColor}
           p="5"
           color="hemoTerciary"
-          minWidth={["350px", "350px", "350px", "sm"]}
+          width="100%"
           minHeight="564px"
           boxShadow="dark-lg"
         >
           <CardHeader>
-            <Heading size="lg" textAlign="center">
+          <Heading size={["lg", "xl", "xl", "lg"]} textAlign="center">
               {props.clinicName}{" "}
             </Heading>
 
             <Popover trigger={popoverTrigger} placement="top">
               <PopoverTrigger>
                 <Text mt={3} noOfLines={2} as="b" cursor="pointer">
-                  <Heading size={["sm", "sm", "md", "md"]} mt={1}>
+                  <Heading size={["md", "lg", "lg", "md"]} mt={1}>
                     {props.title}{" "}
                   </Heading>
                   {props.description}
@@ -161,6 +161,7 @@ function CampaignCard({ props, isSubscribed, onSubscribe, onCancel, subscribedCa
               </PopoverTrigger>
               <PopoverContent>
                 <PopoverBody>
+                <Text color="textInput">{props.title}</Text>
                   <Text color="textInput">{props.description}</Text>
                 </PopoverBody>
               </PopoverContent>

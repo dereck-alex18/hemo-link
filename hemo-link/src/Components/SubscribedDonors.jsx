@@ -97,9 +97,9 @@ function SubscribedDonors({ title }) {
             mt={["5", "5", "10", "10"]}
             mb={["5", "5", "10", "10"]}
             bg="hemoCardBackground"
-            maxWidth={["100%", "100%", "80%", "80%"]}
-            m="auto"
-            p={10}
+            width={["100%", "100%", "80%", "80%"]}
+        //    m="auto"
+           // p={10}
             boxShadow="xl"
             borderRadius="md"
           >
@@ -121,7 +121,7 @@ function SubscribedDonors({ title }) {
                 "repeat(1, 1fr)",
                 "repeat(3, 1fr)",
               ]}
-              gap={["5", "10", "10"]}
+              gap={["8", "5", "5"]}
             >
               {currentItems.map((donorSubscribed, index) => (
                 <GridItem>

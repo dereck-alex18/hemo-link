@@ -149,7 +149,8 @@ function DonorDashboard({ title }) {
             mt={["5", "5", "7", "7"]}
             mb={["5", "5", "8", "8"]}
             bg="hemoCardBackground"
-            width={["100%", "100%", "80%", "80%"]}
+            width="100%"
+            maxWidth="1400px"
             m="auto"
             p={10}
             boxShadow="xl"
@@ -173,7 +174,7 @@ function DonorDashboard({ title }) {
                     "repeat(1, 1fr)",
                     "repeat(3, 1fr)",
                   ]}
-                  gap={["5", "10", "10", "20"]}
+                  gap={["5", "10", "10", "10"]}
                 >
                   {currentItems.map((campaing) => (
                     <GridItem>
