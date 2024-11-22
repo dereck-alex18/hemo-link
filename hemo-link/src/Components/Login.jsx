@@ -1,17 +1,15 @@
 import {
   Flex,
-  Box,
   Heading,
   Button,
   FormControl,
   FormLabel,
   Input,
   Text,
-  Image,
   useDisclosure,
 } from "@chakra-ui/react";
 import { Link, useNavigate } from "react-router-dom";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { useDocumentTitle } from "./UseDocumentTitle";
 import { Formik, Field, Form } from "formik";
 import login from "../api/login";
@@ -23,7 +21,6 @@ function Login({ loginType, isDonor }) {
   const [password, setPassword] = useState("");
   const [modalContent, setModalContent] = useState({});
   const [successRegistration, setSuccessRegistration] = useState(false);
-  const [viewportHeight, setViewportHeight] = useState(window.innerHeight);
   const registerUrl = isDonor ? "/cadastro-doador" : "/cadastro-clinica";
   const { isOpen, onOpen, onClose } = useDisclosure();
   const navigate = useNavigate();
@@ -43,14 +40,6 @@ function Login({ loginType, isDonor }) {
     };
     return initialValues;
   };
-
-  useEffect(() => {
-    document.body.style.overflow = "hidden";
-
-    return () => {
-      document.body.style.overflow = "auto";
-    };
-  }, []);
 
   const handleSubmit = async (values, actions) => {
     actions.setSubmitting(true);
