@@ -72,7 +72,7 @@ function Header() {
         px="8"
       >
         <Heading size="md" fontSize="44px" color="hemoPrimary">
-          <a href="#">Hemo Link</a>
+          <a href="https://hemo-link.vercel.app/">Hemo Link</a>
         </Heading>
 
         <Flex gap="5" align="center" display={["none", "none", "none", "flex"]}>
