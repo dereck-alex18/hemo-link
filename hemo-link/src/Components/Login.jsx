@@ -239,12 +239,6 @@ function Login({ loginType, isDonor }) {
               h="50%"
               mr={10}
             >
-              {/* <Image
-                borderRadius="143px"
-                boxSize="450px"
-                objectFit="cover"
-                src="images/salvarVidas.jpeg"
-              /> */}
             </Flex>
           </Flex>
         )}

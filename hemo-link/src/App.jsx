@@ -18,7 +18,7 @@ function App() {
           <Header />
           <Routes>
             {/* Landing Page */}
-            <Route path="/" element={<LandingPage />} />
+            <Route path="/" element={<LandingPage title="Home" />} />
 
             {/* Login Routes */}
             <Route

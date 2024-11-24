@@ -10,8 +10,10 @@ import {
   VStack,
   Stack,
 } from "@chakra-ui/react";
+import { useDocumentTitle } from "./UseDocumentTitle";
 
-const LandingPage = () => {
+const LandingPage = ({ title }) => {
+  useDocumentTitle(title);
   return (
     <Box display="flex" flexDirection="column" alignItems="space-between">
       <Heading
@@ -141,17 +143,7 @@ const LandingPage = () => {
             />
           </Box>
         </Stack>
-        <Button
-          border="2px solid red"
-          borderRadius="md"
-          bg="white"
-          color="red.500"
-          mt={4}
-          _hover={{ bg: "red.500", color: "white" }}
-          onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
-        >
-          Quero ser um herói
-        </Button>
+        
       </VStack>
 
       <Divider borderColor="gray.300" my={6} />
