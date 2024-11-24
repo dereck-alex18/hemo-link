@@ -72,7 +72,7 @@ function Header() {
         px="8"
       >
         <Heading size="md" fontSize="44px" color="hemoPrimary">
-          <a href="#">Hemo Link</a>
+          <Link to="/">Hemo Link</Link>
         </Heading>
 
         <Flex gap="5" align="center" display={["none", "none", "none", "flex"]}>
